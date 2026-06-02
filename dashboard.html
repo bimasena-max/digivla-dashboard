@@ -1303,6 +1303,7 @@ function updateKPICards(months) {
   const highest = nonZero.length ? nonZero.reduce((a, b) => (a.revenue||0) > (b.revenue||0) ? a : b) : null;
   const lowest  = nonZero.length ? nonZero.reduce((a, b) => (a.revenue||0) < (b.revenue||0) ? a : b) : null;
   const avgRev  = nonZero.length ? totalDv / nonZero.length : 0;
+  
   function getBulanShort(bulanName) {
     if (!bulanName) return '—';
     const idx = BULAN_LABEL.findIndex(b => b.toLowerCase() === String(bulanName).toLowerCase());
@@ -1347,6 +1348,14 @@ function updateKPICards(months) {
   }
   if (el('dv-stat-avg'))   el('dv-stat-avg').textContent   = fJtK(avgRev);
   if (el('dv-stat-total')) el('dv-stat-total').textContent = fM(totalDv);
+
+  // Update Sales tab banner
+  var sBannerNum = document.querySelector('#panel-sales .banner-num');
+  var sBannerPct = document.querySelector('#panel-sales .banner-pct');
+  var sBannerSub = document.querySelector('#panel-sales .banner-sub');
+  if (sBannerNum) sBannerNum.textContent = 'Rp ' + fM(totalDv);
+  if (sBannerPct) sBannerPct.textContent = pctDv + '%';
+  if (sBannerSub) sBannerSub.textContent = '7 sales · 91 kontrak · target Rp 32 Milyar';
 }
 
 function updateRekapTable(months) {
