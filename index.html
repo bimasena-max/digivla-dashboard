@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<script>
+/* ══════════════════════════════════════════════
+   SECURITY LAYER — Digivla Dashboard 2026
+   Password: Digivla2026
+══════════════════════════════════════════════ */
+(function() {
+  'use strict';
+
+  // ── 1. BLOCK HEADLESS / BOT ──
+  var isBot=(navigator.webdriver===true||/HeadlessChrome|PhantomJS|Selenium|puppeteer/i.test(navigator.userAgent)||typeof navigator.languages==='undefined'||(navigator.plugins&&navigator.plugins.length===0&&/Chrome/.test(navigator.userAgent)));
+  if(isBot){document.documentElement.innerHTML='<body style="font-family:sans-serif;padding:3rem;background:#111827;color:#fff"><h2>403 — Access Denied</h2><p style="opacity:.5">Automated access is not permitted.</p></body>';throw new Error('Bot');}
+
+  // ── 2. PASSWORD AUTH ──
+  var RPASS='Digivla2026',SKEY='_dvauth';
+  function hs(s){var h=0x811c9dc5;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=(h*0x01000193)>>>0;}return h.toString(16);}
+  if(sessionStorage.getItem(SKEY)!==hs(RPASS)){
+    document.documentElement.style.overflow='hidden';
+    function buildOverlay(){
+      var o=document.createElement('div');
+      o.id='_authOverlay';
+      o.style.cssText='position:fixed;inset:0;z-index:99999;background:#0d1117;display:flex;align-items:center;justify-content:center;font-family:Outfit,sans-serif';
+      o.innerHTML='<div style="background:#111827;border:1px solid #1f2937;border-radius:16px;padding:2.5rem 3rem;width:100%;max-width:380px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.6)">'
+        +'<div style="font-family:\'Playfair Display\',serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:.25rem">Digivla 2026</div>'
+        +'<div style="font-size:.72rem;color:#6b7280;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem">Performance Dashboard &mdash; Protected</div>'
+        +'<input id="_aIn" type="password" placeholder="Masukkan password" autocomplete="current-password" style="width:100%;box-sizing:border-box;background:#1f2937;border:1.5px solid #374151;color:#fff;border-radius:10px;padding:.75rem 1rem;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;margin-bottom:.75rem;display:block" onkeydown="if(event.key===\'Enter\')window._dvL()" onfocus="this.style.borderColor=\'#1a56ff\'" onblur="this.style.borderColor=\'#374151\'">'
+        +'<div id="_aErr" style="color:#e8003d;font-size:.72rem;margin-bottom:.75rem;min-height:1.1rem"></div>'
+        +'<button onclick="window._dvL()" style="width:100%;background:#1a56ff;color:#fff;border:none;border-radius:10px;padding:.75rem;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.04em" onmouseover="this.style.background=\'#1445d4\'" onmouseout="this.style.background=\'#1a56ff\'">Masuk &rarr;</button>'
+        +'<div style="font-size:.62rem;color:#374151;margin-top:1.5rem">Digivla &amp; Royston &middot; Confidential</div>'
+        +'</div>';
+      document.body.appendChild(o);
+      setTimeout(function(){var el=document.getElementById('_aIn');if(el)el.focus();},120);
+    }
+    window._dvL=function(){
+      var val=document.getElementById('_aIn').value;
+      if(val===RPASS){
+        sessionStorage.setItem(SKEY,hs(RPASS));
+        var ov=document.getElementById('_authOverlay');if(ov)ov.remove();
+        document.documentElement.style.overflow='';
+      } else {
+        var err=document.getElementById('_aErr');if(err)err.textContent='Password salah. Coba lagi.';
+        var inp=document.getElementById('_aIn');if(inp){inp.style.borderColor='#e8003d';inp.value='';}
+        setTimeout(function(){var e2=document.getElementById('_aErr');if(e2)e2.textContent='';var i2=document.getElementById('_aIn');if(i2)i2.style.borderColor='#374151';},3000);
+      }
+    };
+    if(document.body)buildOverlay();else document.addEventListener('DOMContentLoaded',buildOverlay);
+  }
+
+  // ── 3. ANTI-SCRAPING ──
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+  document.addEventListener('selectstart',function(e){e.preventDefault();});
+  document.addEventListener('keydown',function(e){
+    var k=e.key?e.key.toLowerCase():'';
+    if((e.ctrlKey||e.metaKey)&&['u','s','a','p'].includes(k)){e.preventDefault();return false;}
+    if(e.key==='F12'){e.preventDefault();return false;}
+  });
+  setInterval(function(){
+    if(window.outerWidth-window.innerWidth>160||window.outerHeight-window.innerHeight>160){
+      console.clear();
+      console.log('%c⛔ Restricted','color:#e8003d;font-size:20px;font-weight:bold');
+      console.log('%cDashboard ini bersifat rahasia. Unauthorized access dilarang.','color:#6b7280;font-size:11px');
+    }
+  },1500);
+
+  // ── 4. WATERMARK ──
+  document.addEventListener('DOMContentLoaded',function(){
+    var wm=document.createElement('div');
+    wm.style.cssText='position:fixed;bottom:8px;right:12px;font-size:.6rem;color:rgba(107,114,128,.35);pointer-events:none;z-index:9998;user-select:none;font-family:monospace';
+    wm.textContent='Digivla 2026 · Confidential';
+    document.body.appendChild(wm);
+  });
+
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Dashboard 2026 — Digivla & Royston</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --dv:#1a56ff; --dv-soft:rgba(26,86,255,0.12); --dv-xsoft:rgba(26,86,255,0.05);
+  --rs:#e8003d; --rs-soft:rgba(232,0,61,0.12); --rs-xsoft:rgba(232,0,61,0.05);
+  --ok:#059669; --ok-soft:rgba(5,150,105,0.1);
+  --warn:#d97706; --warn-soft:rgba(217,119,6,0.1);
+  --crit:#dc2626; --crit-soft:rgba(220,38,38,0.1);
+  --ink:#111827; --ink2:#374151; --muted:#6b7280;
+  --border:#e5e7eb; --border2:#f3f4f6; --surface:#ffffff; --bg:#f9fafb; --radius:12px;
+  --c0:#1a56ff; --c1:#7c3aed; --c2:#e8003d; --c3:#d97706; --c4:#059669;
+  --target-line:#fbbf24;
+}
+body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); font-size:13px; line-height:1.5; }
+
+.tab-nav-wrap {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--ink); border-bottom: 2px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+.tab-nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: stretch; gap: 0; }
+.tab-brand { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 800; color: #fff; opacity: 0.9; padding: 0 1.5rem 0 0; display: flex; align-items: center; border-right: 1px solid rgba(255,255,255,0.12); margin-right: 0.5rem; letter-spacing: -0.01em; white-space: nowrap; }
+.tab-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.25rem; font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: color 0.18s, border-color 0.18s; white-space: nowrap; position: relative; bottom: -2px; }
+.tab-btn:hover { color: rgba(255,255,255,0.75); }
+.tab-btn.active { color: #fff; border-bottom-color: #fbbf24; }
+.tab-btn .tab-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.6; flex-shrink: 0; }
+.tab-btn.tab-revenue.active .tab-dot { background: var(--dv); opacity: 1; }
+.tab-btn.tab-sales.active .tab-dot { background: #fbbf24; opacity: 1; }
+.tab-btn.tab-survey.active .tab-dot { background: #059669; opacity: 1; }
+.tab-btn.tab-people.active .tab-dot { background: #7c3aed; opacity: 1; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.page { max-width:1200px; margin:0 auto; padding:2.5rem 2rem 5rem; }
+
+.masthead { display:grid; grid-template-columns:1fr auto; align-items:end; gap:1rem; padding-bottom:1.5rem; margin-bottom:2rem; border-bottom:2px solid var(--ink); }
+.masthead-eyebrow { font-size:0.65rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:0.35rem; }
+.masthead h1 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; letter-spacing:-0.02em; line-height:1.15; }
+.masthead-meta { text-align:right; font-size:0.72rem; color:var(--muted); line-height:1.7; }
+.masthead-meta strong { display:block; font-family:'Playfair Display',serif; font-size:0.88rem; color:var(--ink); font-weight:700; margin-bottom:0.15rem; }
+
+.section-head { display:flex; align-items:center; gap:0.75rem; margin:2rem 0 1.25rem; }
+.section-badge { font-size:0.6rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#fff; padding:0.28rem 0.75rem; border-radius:4px; flex-shrink:0; }
+.sb-dv{background:var(--dv)} .sb-rs{background:var(--rs)} .sb-total{background:var(--ink)}
+.section-line { flex:1; height:1px; background:var(--border); }
+
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.mb{margin-bottom:1rem}
+
+@media(max-width:1000px){.g5{grid-template-columns:repeat(3,1fr)}.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}.g2,.g21{grid-template-columns:1fr}}
+@media(max-width:700px){.g5,.g3,.g2{grid-template-columns:1fr}}
+@media(max-width:560px){.g4,.g3{grid-template-columns:1fr 1fr}.page{padding:1.5rem 1rem 4rem}}
+
+.banner { background:var(--ink); color:#fff; border-radius:var(--radius); padding:1.5rem 2rem; display:grid; grid-template-columns:1fr auto; align-items:center; gap:1rem; margin-bottom:1rem; }
+.banner-label { font-size:0.6rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; opacity:0.5; margin-bottom:0.4rem; }
+.banner-num { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; line-height:1; }
+.banner-sub { font-size:0.72rem; opacity:0.45; margin-top:0.3rem; }
+.banner-right { text-align:right; }
+.banner-pct { font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; color:#fbbf24; }
+
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem 1.4rem; }
+.card-dv{border-top:3px solid var(--dv)} .card-rs{border-top:3px solid var(--rs)} .card-total{border-top:3px solid var(--ink)}
+
+.kpi-label { font-size:0.62rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:0.5rem; }
+.kpi-num { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:800; letter-spacing:-0.02em; line-height:1; margin-bottom:0.45rem; }
+.kpi-foot { font-size:0.72rem; color:var(--muted); display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; }
+.kpi-bar { height:3px; background:var(--border); border-radius:2px; margin-top:0.8rem; overflow:hidden; }
+.kpi-bar-fill { height:100%; border-radius:2px; }
+
+.chip { display:inline-block; padding:0.15rem 0.5rem; border-radius:4px; font-size:0.62rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; }
+.chip-dv{background:var(--dv-soft);color:var(--dv)} .chip-rs{background:var(--rs-soft);color:var(--rs)}
+.chip-ok{background:var(--ok-soft);color:var(--ok)} .chip-warn{background:var(--warn-soft);color:var(--warn)}
+.chip-crit{background:var(--crit-soft);color:var(--crit)}
+.chip-dark{background:var(--border2);color:var(--ink2)} .chip-stable{background:#dbeafe;color:#1e40af}
+
+.chart-header { display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+.chart-title { font-size:0.72rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; }
+.chart-sub { font-size:0.67rem; color:var(--muted); margin-top:0.15rem; }
+.chart-legend { display:flex; gap:0.75rem; font-size:0.65rem; color:var(--muted); align-items:center; flex-wrap:wrap; }
+.ldot { width:7px; height:7px; border-radius:50%; display:inline-block; margin-right:3px; }
+.chart-wrap { position:relative; }
+.h-220{height:220px} .h-200{height:200px} .h-180{height:180px} .h-160{height:160px} .h-140{height:140px}
+
+.divider { border:none; border-top:1px solid var(--border); margin:0.85rem 0; }
+
+.stat-row { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.7rem; }
+.stat-pill { display:flex; flex-direction:column; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.5rem 0.75rem; flex:1; min-width:72px; }
+.sp-label { font-size:0.58rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:0.15rem; }
+.sp-val { font-size:0.88rem; font-weight:700; }
+
+.rekap-wrap { border:2px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.rekap-wrap-dv{border-color:var(--dv)} .rekap-wrap-rs{border-color:var(--rs)}
+.rekap-title { padding:0.7rem 1rem; text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:#fff; }
+.rekap-title-dv{background:var(--dv)} .rekap-title-rs{background:var(--rs)}
+.rekap-table { width:100%; border-collapse:collapse; }
+.rekap-table th { text-align:left; font-size:0.6rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); background:var(--bg); padding:0.55rem 0.75rem; border-bottom:1px solid var(--border); }
+.rekap-table th:not(:first-child){text-align:right}
+.rekap-table td { padding:0.4rem 0.75rem; border-bottom:1px solid var(--border2); font-size:0.76rem; vertical-align:middle; }
+.rekap-table td:not(:first-child){text-align:right}
+.rekap-table tr:last-child td{border-bottom:none}
+.row-total-dv td{background:var(--dv)!important;color:#fff;font-weight:700}
+.row-total-rs td{background:var(--rs)!important;color:#fff;font-weight:700}
+
+.svc { display:flex; align-items:center; gap:0.7rem; padding:0.42rem 0; border-bottom:1px solid var(--border2); }
+.svc:last-child{border-bottom:none}
+.svc-name{flex:1;font-size:0.76rem}
+.svc-track{flex:0 0 60px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.svc-fill-dv{height:100%;background:var(--dv);border-radius:2px}
+.svc-fill-rs{height:100%;background:var(--rs);border-radius:2px}
+.svc-count{font-size:0.82rem;font-weight:700;min-width:20px;text-align:right}
+
+.health-card-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--dv);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.4rem;
+}
+.health-topbar {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; flex-wrap: wrap;
+}
+.health-topbar-left { flex: 1; }
+.health-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dv); }
+.health-sub { font-size: 0.67rem; color: var(--muted); margin-top: 0.2rem; }
+.health-controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.health-select {
+  font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 600; color: var(--ink);
+  background: var(--bg); border: 1.5px solid var(--dv); border-radius: 6px;
+  padding: 0.3rem 0.55rem; cursor: pointer; outline: none;
+}
+.health-refresh-btn {
+  font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--dv);
+  background: var(--dv-soft); border: 1px solid rgba(26,86,255,0.2); border-radius: 6px;
+  padding: 0.3rem 0.65rem; cursor: pointer; transition: background 0.15s;
+  display: flex; align-items: center; gap: 4px;
+}
+.health-refresh-btn:hover { background: rgba(26,86,255,0.18); }
+.health-refresh-btn.loading { opacity: 0.6; pointer-events: none; }
+.health-status-bar {
+  display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap;
+  margin-bottom: 0.85rem; padding: 0.55rem 0.75rem;
+  background: var(--bg); border-radius: 8px; border: 1px solid var(--border);
+}
+.hstat { font-size: 0.65rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 4px; }
+.hstat-label { font-size: 0.65rem; color: var(--muted); margin-right: 4px; }
+.health-source-tag { margin-left: auto; font-size: 0.6rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); animation: pulse 2s infinite; }
+.live-dot.offline { background: var(--muted); animation: none; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+.health-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.65rem;
+}
+
+.hcard {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.75rem 0.9rem; position: relative; overflow: hidden; transition: box-shadow 0.15s;
+}
+.hcard:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.hcard-accent { position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 10px 0 0 10px; }
+.hcard-name { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.35rem; padding-right: 50px; }
+.hcard-score-wrap { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.4rem; }
+.hcard-score { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 800; line-height: 1; }
+.hcard-score-label { font-size: 0.6rem; color: var(--muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.hcard-bar { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 0.4rem; overflow: hidden; }
+.hcard-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.hcard-badge { position: absolute; top: 0.7rem; right: 0.75rem; }
+.hcard-issue { font-size: 0.62rem; color: var(--muted); margin-top: 0.2rem; }
+.hcard-deduction { font-size: 0.62rem; margin-top: 0.15rem; }
+.health-loading { display: flex; align-items: center; justify-content: center; gap: 0.65rem; padding: 2.5rem; color: var(--muted); font-size: 0.78rem; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--dv); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.health-error { padding: 1.25rem; text-align: center; background: var(--warn-soft); border-radius: 8px; border: 1px solid rgba(217,119,6,0.2); font-size: 0.76rem; color: var(--warn); }
+.health-error strong { display: block; margin-bottom: 0.3rem; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+.ct{width:100%;border-collapse:collapse}
+.ct th { text-align:left; font-size:0.58rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); padding:0 0.65rem 0.5rem; border-bottom:1px solid var(--border); }
+.ct th:not(:first-child):not(:nth-child(2)){text-align:right}
+.ct td{padding:0.4rem 0.65rem;border-bottom:1px solid var(--border2);font-size:0.74rem;vertical-align:middle}
+.ct td:not(:first-child):not(:nth-child(2)){text-align:right}
+.ct tr:last-child td{border-bottom:none}
+
+.sector{display:flex;align-items:center;gap:0.7rem;padding:0.38rem 0;border-bottom:1px solid var(--border2)}
+.sector:last-child{border-bottom:none}
+.sector-name{font-size:0.74rem;font-weight:500;min-width:65px}
+.sector-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.sector-fill{height:100%;border-radius:2px;background:var(--rs)}
+.sector-num{font-size:0.74rem;font-weight:700;min-width:20px;text-align:right}
+
+.tp-row{display:flex;align-items:center;gap:0.75rem;padding:0.45rem 0;border-bottom:1px solid var(--border2)}
+.tp-row:last-child{border-bottom:none}
+.tp-rank{font-family:'Playfair Display',serif;font-size:1rem;font-weight:800;color:var(--muted);min-width:18px}
+.tp-name{flex:1;font-size:0.76rem}
+.tp-profit{font-size:0.82rem;font-weight:700;color:var(--ok);min-width:90px;text-align:right}
+
+.mbadge{display:inline-block;padding:0.14rem 0.42rem;border-radius:4px;font-size:0.62rem;font-weight:700}
+.m30{background:var(--dv-soft);color:var(--dv)} .m35{background:rgba(124,58,237,0.1);color:#7c3aed} .m40{background:rgba(219,39,119,0.1);color:#db2777} .m45{background:var(--warn-soft);color:var(--warn)} .m50{background:var(--ok-soft);color:var(--ok)} .m60{background:var(--rs-soft);color:var(--rs)}
+
+.note { background:var(--warn-soft); border-left:3px solid var(--warn); border-radius:6px; padding:0.65rem 0.9rem; font-size:0.73rem; color:var(--ink2); margin-top:0.75rem; }
+.note strong { color:var(--warn); display:block; margin-bottom:0.15rem; font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; }
+.info-row{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted)}
+.info-row strong{color:var(--ink)}
+.profil-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem}
+.profil-cell{background:var(--bg);border-radius:8px;padding:0.65rem 0.8rem}
+
+.sales-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.sales-card-header{padding:1rem 1.25rem .85rem;border-bottom:1px solid var(--border2)}
+.sales-rank{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;opacity:.12;line-height:1;position:absolute;top:.75rem;right:1rem}
+.sales-name-wrap{position:relative}
+.sales-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.2rem}
+.sales-body{padding:1rem 1.25rem}
+.sales-pct-bar{height:4px;background:var(--border);border-radius:2px;margin:.6rem 0 .8rem;overflow:hidden}
+.sales-pct-fill{height:100%;border-radius:2px}
+
+.svc-s{display:flex;align-items:center;gap:.65rem;padding:.35rem 0;border-bottom:1px solid var(--border2)}
+.svc-s:last-child{border-bottom:none}
+.svc-s .svc-name{flex:1;font-size:.74rem}
+.svc-s .svc-track-s{flex:0 0 55px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.svc-s .svc-fill-s{height:100%;border-radius:2px}
+.svc-s .svc-count{font-size:.78rem;font-weight:700;min-width:18px;text-align:right}
+
+.cl-row{display:flex;align-items:center;gap:.65rem;padding:.38rem 0;border-bottom:1px solid var(--border2)}
+.cl-row:last-child{border-bottom:none}
+.cl-rank{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:800;color:var(--muted);min-width:16px}
+.cl-name{flex:1;font-size:.74rem}
+.cl-rev{font-size:.76rem;font-weight:700;text-align:right;min-width:80px}
+
+.lb-row{display:flex;align-items:center;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--border2)}
+.lb-row:last-child{border-bottom:none}
+.lb-rank{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;opacity:.2;min-width:28px}
+.lb-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.9rem;font-weight:800;color:#fff;flex-shrink:0}
+.lb-info{flex:1}
+.lb-name{font-weight:700;font-size:.85rem;margin-bottom:.15rem}
+.lb-sub{font-size:.7rem;color:var(--muted)}
+.lb-bar-wrap{flex:0 0 120px}
+.lb-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:.2rem}
+.lb-bar-fill{height:100%;border-radius:3px}
+.lb-pct{font-size:.68rem;font-weight:700;text-align:right;color:var(--muted)}
+.lb-rev{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:800;min-width:90px;text-align:right}
+.badge{display:inline-block;padding:.13rem .4rem;border-radius:4px;font-size:.6rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+
+.lline{display:inline-block;width:14px;height:2px;background:#fbbf24;border-top:2px dashed #fbbf24;margin-right:3px;vertical-align:middle}
+.miss-badge{background:rgba(232,0,61,0.1);color:#e8003d}
+.hit-badge{background:rgba(5,150,105,0.1);color:#059669}
+.updated-badge { display:inline-flex; align-items:center; gap:4px; background:rgba(5,150,105,0.12); color:#059669; border:1px solid rgba(5,150,105,0.25); border-radius:4px; font-size:0.6rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:0.18rem 0.5rem; margin-left:6px; }
+
+.prog-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.prog-toolbar-left { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.prog-filter-btn { font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; border: 1.5px solid var(--border); background: var(--bg); color: var(--muted); border-radius: 6px; padding: 0.3rem 0.7rem; cursor: pointer; transition: all 0.15s; }
+.prog-filter-btn:hover { border-color: #7c3aed; color: #7c3aed; }
+.prog-filter-btn.active { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+.prog-add-btn { display: flex; align-items: center; gap: 5px; font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 0.45rem 1rem; cursor: pointer; transition: background 0.15s; }
+.prog-add-btn:hover { background: #6d28d9; }
+.prog-timeline { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.85rem; }
+.prog-month-col { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.prog-month-head { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0.9rem; background: #7c3aed; color: #fff; }
+.prog-month-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 800; }
+.prog-month-count { font-size: 0.62rem; font-weight: 700; background: rgba(255,255,255,0.2); border-radius: 10px; padding: 0.1rem 0.4rem; }
+.prog-month-body { padding: 0.5rem; min-height: 60px; }
+.prog-item { display: flex; align-items: flex-start; gap: 0.45rem; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 0.45rem 0.55rem; margin-bottom: 0.35rem; cursor: pointer; transition: box-shadow 0.12s, border-color 0.12s; position: relative; }
+.prog-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-color: #7c3aed44; }
+.prog-item-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.prog-item-info { flex: 1; min-width: 0; }
+.prog-item-name { font-size: 0.73rem; font-weight: 600; line-height: 1.3; word-break: break-word; }
+.prog-item-meta { font-size: 0.6rem; color: var(--muted); margin-top: 0.1rem; }
+.prog-item-actions { display: none; gap: 3px; }
+.prog-item:hover .prog-item-actions { display: flex; }
+.prog-action-btn { width: 20px; height: 20px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: background 0.12s; }
+.prog-edit-btn { background: var(--dv-soft); color: var(--dv); }
+.prog-edit-btn:hover { background: var(--dv); color: #fff; }
+.prog-del-btn { background: var(--rs-soft); color: var(--rs); }
+.prog-del-btn:hover { background: var(--rs); color: #fff; }
+.prog-add-mini { display: flex; align-items: center; gap: 4px; font-size: 0.62rem; font-weight: 600; color: #7c3aed44; padding: 0.3rem 0.5rem; border: 1.5px dashed #7c3aed33; border-radius: 6px; cursor: pointer; transition: all 0.12s; width: 100%; background: none; }
+.prog-add-mini:hover { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.05); }
+.cat-pill { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.prog-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+.prog-modal-overlay.open { display: flex; }
+.prog-modal { background: var(--surface); border-radius: 14px; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); overflow: hidden; }
+.prog-modal-head { padding: 1rem 1.25rem; background: #7c3aed; color: #fff; display: flex; align-items: center; justify-content: space-between; }
+.prog-modal-head h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 800; }
+.prog-modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+.prog-modal-body { padding: 1.25rem; }
+.prog-field { margin-bottom: 1rem; }
+.prog-field label { display: block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+.prog-field input, .prog-field select, .prog-field textarea { width: 100%; font-family: 'Outfit', sans-serif; font-size: 0.8rem; color: var(--ink); background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px; padding: 0.55rem 0.75rem; outline: none; transition: border-color 0.15s; }
+.prog-field input:focus, .prog-field select:focus, .prog-field textarea:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
+.prog-field textarea { resize: vertical; min-height: 70px; }
+.prog-modal-foot { display: flex; gap: 0.65rem; justify-content: flex-end; padding: 0.75rem 1.25rem 1.25rem; }
+.prog-btn-cancel { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink2); cursor: pointer; }
+.prog-btn-save { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; border: none; background: #7c3aed; color: #fff; cursor: pointer; transition: background 0.15s; }
+.prog-btn-save:hover { background: #6d28d9; }
+.prog-stats { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.prog-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.65rem 1rem; flex: 1; min-width: 100px; }
+.prog-stat-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+.prog-stat-val { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 800; line-height: 1; }
+.del-confirm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1001; align-items: center; justify-content: center; }
+.del-confirm.open { display: flex; }
+.del-confirm-box { background: #fff; border-radius: 12px; padding: 1.5rem; max-width: 340px; width: 100%; text-align: center; box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
+.del-confirm-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.del-confirm-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 800; margin-bottom: 0.35rem; }
+.del-confirm-sub { font-size: 0.76rem; color: var(--muted); margin-bottom: 1.25rem; }
+.del-confirm-actions { display: flex; gap: 0.65rem; justify-content: center; }
+.del-no { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 600; padding: 0.5rem 1.25rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink2); cursor: pointer; }
+.del-yes { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; border: none; background: var(--rs); color: #fff; cursor: pointer; }
+.empty-month { text-align: center; padding: 0.75rem; color: var(--muted); font-size: 0.68rem; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="tab-nav-wrap">
+  <nav class="tab-nav">
+    <div class="tab-brand">Digivla 2026</div>
+    <button class="tab-btn tab-revenue active" onclick="switchTab('revenue')">
+      <span class="tab-dot"></span>Revenue Overview
+    </button>
+    <button class="tab-btn tab-sales" onclick="switchTab('sales')">
+      <span class="tab-dot"></span>Sales Performance
+    </button>
+    <button class="tab-btn tab-survey" onclick="switchTab('survey')">
+      <span class="tab-dot"></span>Client Survey
+    </button>
+    <button class="tab-btn tab-people" onclick="switchTab('people')">
+      <span class="tab-dot"></span>People &amp; Culture
+    </button>
+    <button id="globalRefreshBtn" onclick="refreshAllData()" style="margin-left:auto;display:flex;align-items:center;gap:0.4rem;padding:0.45rem 0.9rem;font-family:'Outfit',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;cursor:pointer;transition:background 0.15s;white-space:nowrap">
+      <svg id="refreshIcon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+      <span id="refreshBtnLabel">Refresh Data</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ══════════════ TAB: REVENUE ══════════════ -->
+<div id="panel-revenue" class="tab-panel active">
+<div class="page">
+
+  <div class="masthead">
+    <div>
+      <div class="masthead-eyebrow">Performance Dashboard · Mei 2026</div>
+      <h1>Digivla &amp; Royston<br>Revenue Akrual 2026</h1>
+    </div>
+    <div class="masthead-meta">
+      <strong>Update: Mei 2026</strong>
+      Target Digivla Rp 32 M · Target Royston Rp 6 M<br>
+      <span class="realtime-badge" style="font-size:0.68rem;font-weight:600;letter-spacing:0.05em">○ Memuat data...</span>
+    </div>
+  </div>
+
+  <div class="banner">
+    <div>
+      <div class="banner-label">Total Revenue Akrual Full Year 2026 — Digivla + Royston</div>
+      <div class="banner-num" id="banner-total">Rp 13,96 Milyar</div>
+      <div class="banner-sub" id="banner-sub">Digivla Rp 11,16 M · Royston Rp 2,79 M · Target Gabungan Rp 38 Milyar</div>
+    </div>
+    <div class="banner-right">
+      <div class="banner-label">Capaian</div>
+      <div class="banner-pct" id="banner-pct">36,7%</div>
+      <div style="font-size:0.68rem;opacity:0.45;margin-top:0.15rem">dari target tahunan</div>
+    </div>
+  </div>
+
+  <div class="card card-total mb">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">Revenue Akrual Bulanan — Total Digivla + Royston</div>
+        <div class="chart-sub">Jan–Apr aktual · Mei–Des proyeksi dari kontrak aktif</div>
+      </div>
+      <div class="chart-legend">
+        <span><span class="ldot" style="background:var(--dv)"></span>Digivla</span>
+        <span><span class="ldot" style="background:var(--rs)"></span>Royston</span>
+      </div>
+    </div>
+    <div class="chart-wrap h-220"><canvas id="totalChart"></canvas></div>
+    <hr class="divider">
+    <div class="stat-row">
+      <div class="stat-pill"><span class="sp-label">Total Digivla</span><span class="sp-val" style="color:var(--dv)" id="stat-total-dv">11,16 M</span></div>
+      <div class="stat-pill"><span class="sp-label">Total Royston</span><span class="sp-val" style="color:var(--rs)">2,79 M</span></div>
+      <div class="stat-pill"><span class="sp-label">Gabungan</span><span class="sp-val" id="stat-total-gabungan">13,96 M</span></div>
+      <div class="stat-pill"><span class="sp-label">Capaian Target</span><span class="sp-val" style="color:var(--warn)" id="stat-capaian-total">36,7%</span></div>
+      <div class="stat-pill"><span class="sp-label" id="stat-puncak-label">Puncak (Feb)</span><span class="sp-val" style="color:var(--dv)" id="stat-puncak-val">1,43 M</span></div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-badge sb-dv">Digivla</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="g4 mb">
+    <div class="card card-dv">
+      <div class="kpi-label">Revenue Akrual 2026</div>
+      <div class="kpi-num" style="color:var(--dv)" id="kpi-dv-revenue">Rp 11,16 M</div>
+      <div class="kpi-foot"><span class="chip chip-dv" id="kpi-dv-pct-chip">34,9%</span> dari target Rp 32 M</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" id="kpi-dv-bar" style="width:34.9%;background:var(--dv)"></div></div>
+    </div>
+    <div class="card card-dv">
+      <div class="kpi-label">Total Kontrak 2026</div>
+      <div class="kpi-num" id="kpi-dv-kontrak">91 <span style="font-size:1rem;color:var(--muted);font-weight:400">kontrak</span></div>
+      <div class="kpi-foot"><span class="chip chip-dv" id="kpi-dv-aktif-chip">61 aktif</span> <span id="kpi-dv-aktif-label">puncak Mei</span></div>
+    </div>
+    <div class="card card-dv">
+      <div class="kpi-label">Klien Aktif <span id="kpi-dv-bulan-label">Mei</span> 2026</div>
+      <div class="kpi-num"><span id="kpi-dv-klien-num">61</span> <span style="font-size:1rem;color:var(--muted);font-weight:400">/ 150</span></div>
+      <div class="kpi-foot"><span class="chip chip-dv" id="kpi-dv-klien-pct">40,7%</span> dari target 150</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" id="kpi-dv-klien-bar" style="width:40.7%;background:var(--dv)"></div></div>
+    </div>
+    <div class="card card-dv">
+      <div class="kpi-label">Capaian Target 2026</div>
+      <div class="kpi-num" style="color:var(--dv)" id="kpi-dv-capaian">34,9%</div>
+      <div class="kpi-foot" style="color:var(--muted)" id="kpi-dv-capaian-foot">Rp 11,16 M dari target Rp 32 M</div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card card-dv">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title" style="color:var(--dv)">Revenue Akrual Bulanan — Digivla</div>
+          <div class="chart-sub">Jan–Apr aktual · Mei–Des proyeksi</div>
+        </div>
+        <div class="chart-legend">
+          <span><span class="ldot" style="background:var(--dv)"></span>Aktual</span>
+          <span><span class="ldot" style="background:rgba(26,86,255,0.3)"></span>Proyeksi</span>
+        </div>
+      </div>
+      <div class="chart-wrap h-220"><canvas id="dvChart"></canvas></div>
+      <hr class="divider">
+      <div class="stat-row">
+        <div class="stat-pill"><span class="sp-label" id="dv-stat-high-label">Tertinggi</span><span class="sp-val" style="color:var(--dv)" id="dv-stat-high">Feb 1,43 M</span></div>
+        <div class="stat-pill"><span class="sp-label" id="dv-stat-low-label">Terendah</span><span class="sp-val" style="color:var(--rs)" id="dv-stat-low">Des 467 Jt</span></div>
+        <div class="stat-pill"><span class="sp-label">Rata-rata</span><span class="sp-val" id="dv-stat-avg">930 Jt</span></div>
+        <div class="stat-pill"><span class="sp-label">Total 2026</span><span class="sp-val" style="color:var(--dv)" id="dv-stat-total">11,16 M</span></div>
+      </div>
+    </div>
+    <div class="rekap-wrap rekap-wrap-dv">
+      <div class="rekap-title rekap-title-dv">DIGIVLA — REKAP REVENUE NETT 2026 <span style="font-weight:400;opacity:0.7">· Update Mei 2026</span></div>
+      <table class="rekap-table">
+        <thead><tr><th>Bulan</th><th>Revenue Nett</th><th>Klien</th><th>Kumulatif</th></tr></thead>
+        <tbody id="rekap-tbody">
+          <tr><td><strong>Januari</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.375 Jt</td><td>56 klien</td><td style="color:var(--muted)">Rp 1.375 Jt</td></tr>
+          <tr><td><strong>Februari</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.426 Jt</td><td>59 klien</td><td style="color:var(--muted)">Rp 2.800 Jt</td></tr>
+          <tr><td><strong>Maret</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.394 Jt</td><td>58 klien</td><td style="color:var(--muted)">Rp 4.194 Jt</td></tr>
+          <tr><td><strong>April</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.071 Jt</td><td>59 klien</td><td style="color:var(--muted)">Rp 5.266 Jt</td></tr>
+          <tr><td><strong>Mei</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.085 Jt</td><td>61 klien</td><td style="color:var(--muted)">Rp 6.351 Jt</td></tr>
+          <tr><td><strong>Juni</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.015 Jt</td><td>55 klien</td><td style="color:var(--muted)">Rp 7.366 Jt</td></tr>
+          <tr><td><strong>Juli</strong></td><td style="color:var(--dv);font-weight:600">Rp 899 Jt</td><td>50 klien</td><td style="color:var(--muted)">Rp 8.266 Jt</td></tr>
+          <tr><td><strong>Agustus</strong></td><td style="color:var(--dv);font-weight:600">Rp 700 Jt</td><td>47 klien</td><td style="color:var(--muted)">Rp 8.965 Jt</td></tr>
+          <tr><td><strong>September</strong></td><td style="color:var(--dv);font-weight:600">Rp 680 Jt</td><td>46 klien</td><td style="color:var(--muted)">Rp 9.646 Jt</td></tr>
+          <tr><td><strong>Oktober</strong></td><td style="color:var(--dv);font-weight:600">Rp 580 Jt</td><td>42 klien</td><td style="color:var(--muted)">Rp 10.225 Jt</td></tr>
+          <tr><td><strong>November</strong></td><td style="color:var(--dv);font-weight:600">Rp 472 Jt</td><td>37 klien</td><td style="color:var(--muted)">Rp 10.698 Jt</td></tr>
+          <tr><td><strong>Desember</strong></td><td style="color:var(--dv);font-weight:600">Rp 467 Jt</td><td>36 klien</td><td style="color:var(--muted)">Rp 11.165 Jt</td></tr>
+          <tr class="row-total-dv"><td>TOTAL 2026</td><td id="rekap-total">Rp 11.165 Jt</td><td>91 kontrak</td><td></td></tr>
+        </tbody>
+      </table>
+      <div style="padding:0.5rem 0.75rem;font-size:0.6rem;color:var(--muted);background:var(--bg)">✦ Updated: +4 klien baru Apr, +8 klien baru Mei (Spora PLN, Hello Bestie, Kemenperin, Bank Indonesia, PPATK, Posthinks Suzuki, Pertamina NRE, Erajaya)</div>
+    </div>
+  </div>
+
+  <!-- ═══ HEALTH CHECK ═══ -->
+  <div class="g21 mb">
+    <div class="health-card-wrap">
+      <div class="health-topbar">
+        <div class="health-topbar-left">
+          <div class="health-title">Client Health Score — Digivla</div>
+          <div class="health-sub">Performance Scoring</div>
+        </div>
+        <div class="health-controls">
+          <select class="health-select" id="healthMonthSelect" onchange="loadHealthData()"></select>
+          <button class="health-refresh-btn" id="healthRefreshBtn" onclick="loadHealthData(true)">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+      <div class="health-status-bar" id="healthStatusBar">
+        <span class="hstat-label">Status:</span>
+        <span class="hstat chip chip-dv">Memuat data...</span>
+        <div class="health-source-tag">
+          <div class="live-dot offline" id="liveDot"></div>
+          <span id="lastUpdated">—</span>
+        </div>
+      </div>
+      <div id="healthContent">
+        <div class="health-loading">
+          <div class="spinner"></div>
+          Mengambil data dari Apps Script...
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="card card-dv">
+        <div class="chart-title" style="color:var(--dv);margin-bottom:0.75rem">Services by Clients — Digivla</div>
+        <div class="svc"><span class="svc-name">Formed Monitoring</span><div class="svc-track"><div class="svc-fill-dv" style="width:100%"></div></div><span class="svc-count">50</span></div>
+        <div class="svc"><span class="svc-name">Sosmed Monitoring</span><div class="svc-track"><div class="svc-fill-dv" style="width:86%"></div></div><span class="svc-count">43</span></div>
+        <div class="svc"><span class="svc-name">Sosmed Management</span><div class="svc-track"><div class="svc-fill-dv" style="width:26%"></div></div><span class="svc-count">13</span></div>
+        <div class="svc"><span class="svc-name">PReskripsi.AI</span><div class="svc-track"><div class="svc-fill-dv" style="width:16%"></div></div><span class="svc-count">8</span></div>
+        <div class="svc"><span class="svc-name">API</span><div class="svc-track"><div class="svc-fill-dv" style="width:4%"></div></div><span class="svc-count">2</span></div>
+        <div class="svc"><span class="svc-name">Command Centre</span><div class="svc-track"><div class="svc-fill-dv" style="width:2%"></div></div><span class="svc-count">1</span></div>
+        <hr class="divider">
+        <div class="info-row"><span>Total layanan aktif</span><strong>117 Services</strong></div>
+      </div>
+    </div>
+  </div>
+  <!-- ═══ END HEALTH CHECK ═══ -->
+
+  <div class="section-head">
+    <div class="section-badge sb-rs">Royston</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="g4 mb">
+    <div class="card card-rs">
+      <div class="kpi-label">Revenue Akrual 2026</div>
+      <div class="kpi-num" style="color:var(--rs)">Rp 2,79 M</div>
+      <div class="kpi-foot"><span class="chip chip-rs">46,6%</span> dari target Rp 6 M</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:46.6%;background:var(--rs)"></div></div>
+    </div>
+    <div class="card card-rs">
+      <div class="kpi-label">Total Kontrak 2026</div>
+      <div class="kpi-num">9 <span style="font-size:1rem;color:var(--muted);font-weight:400">kontrak</span></div>
+      <div class="kpi-foot"><span class="chip chip-rs">Puncak Apr</span> 9 klien bersamaan</div>
+    </div>
+    <div class="card card-rs">
+      <div class="kpi-label">Klien Aktif Apr 2026</div>
+      <div class="kpi-num">7 <span style="font-size:1rem;color:var(--muted);font-weight:400">/ 20</span></div>
+      <div class="kpi-foot"><span class="chip chip-rs">35%</span> dari target 20</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:35%;background:var(--rs)"></div></div>
+    </div>
+    <div class="card card-rs">
+      <div class="kpi-label">Revenue Tertinggi</div>
+      <div class="kpi-num" style="color:var(--rs)">Apr 343 Jt</div>
+      <div class="kpi-foot" style="color:var(--muted)">Terendah: Jul–Des 187 Jt</div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card card-rs">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title" style="color:var(--rs)">Revenue Akrual Bulanan — Royston</div>
+          <div class="chart-sub">Jan–Apr aktual · Mei–Des proyeksi</div>
+        </div>
+        <div class="chart-legend">
+          <span><span class="ldot" style="background:var(--rs)"></span>Aktual</span>
+          <span><span class="ldot" style="background:rgba(232,0,61,0.3)"></span>Proyeksi</span>
+        </div>
+      </div>
+      <div class="chart-wrap h-220"><canvas id="rsChart"></canvas></div>
+      <hr class="divider">
+      <div class="stat-row">
+        <div class="stat-pill"><span class="sp-label">Tertinggi</span><span class="sp-val" style="color:var(--rs)">Apr 343 Jt</span></div>
+        <div class="stat-pill"><span class="sp-label">Terendah</span><span class="sp-val" style="color:var(--muted)">Jul 187 Jt</span></div>
+        <div class="stat-pill"><span class="sp-label">Rata-rata</span><span class="sp-val">232,8 Jt</span></div>
+        <div class="stat-pill"><span class="sp-label">Total 2026</span><span class="sp-val" style="color:var(--rs)">2,79 M</span></div>
+      </div>
+    </div>
+    <div class="rekap-wrap rekap-wrap-rs">
+      <div class="rekap-title rekap-title-rs">ROYSTON — REKAP REVENUE AKRUAL 2026</div>
+      <table class="rekap-table">
+        <thead><tr><th>Bulan</th><th>Revenue Akrual</th><th>Klien</th><th>Kumulatif</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Januari</strong></td><td>239.500.000</td><td>6</td><td>239.500.000</td></tr>
+          <tr><td><strong>Februari</strong></td><td>286.167.000</td><td>7</td><td>525.667.000</td></tr>
+          <tr><td><strong>Maret</strong></td><td>286.167.000</td><td>7</td><td>811.834.000</td></tr>
+          <tr><td><strong>April</strong></td><td>342.945.000</td><td>9</td><td>1.154.779.000</td></tr>
+          <tr><td><strong>Mei</strong></td><td>284.278.000</td><td>7</td><td>1.439.057.000</td></tr>
+          <tr><td><strong>Juni</strong></td><td>234.278.000</td><td>5</td><td>1.673.335.000</td></tr>
+          <tr><td><strong>Juli</strong></td><td>186.778.000</td><td>4</td><td>1.860.113.000</td></tr>
+          <tr><td><strong>Agustus</strong></td><td>186.778.000</td><td>4</td><td>2.046.891.000</td></tr>
+          <tr><td><strong>September</strong></td><td>186.778.000</td><td>4</td><td>2.233.669.000</td></tr>
+          <tr><td><strong>Oktober</strong></td><td>186.778.000</td><td>4</td><td>2.420.447.000</td></tr>
+          <tr><td><strong>November</strong></td><td>186.778.000</td><td>4</td><td>2.607.225.000</td></tr>
+          <tr><td><strong>Desember</strong></td><td>186.778.000</td><td>4</td><td>2.794.003.000</td></tr>
+          <tr class="row-total-rs"><td>TOTAL 2026</td><td>2.794.003.000</td><td>9 kontrak</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card card-rs">
+      <div class="chart-title" style="color:var(--rs);margin-bottom:1rem">Detail Kontrak Aktif — Royston 2026</div>
+      <table class="ct">
+        <thead><tr><th>#</th><th>Client</th><th>Tipe</th><th>Periode</th><th>Nilai Kontrak</th><th>Rev Akrual/Bln</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>PT HM Sampoerna</strong></td><td><span class="chip chip-dark">Retainer</span></td><td>Jan 2026–Okt 2027</td><td style="color:var(--ok);font-weight:700">Rp 175.000.000<br><span style="font-size:0.65rem;color:var(--muted);font-weight:400">/bulan × 22 bln</span></td><td style="color:var(--ok)">175.000.000</td></tr>
+          <tr><td>2</td><td><strong>PNRE</strong></td><td><span class="chip chip-dark">Retainer</span></td><td>Nov 2025–Apr 2026</td><td>Rp 7.000.000<br><span style="font-size:0.65rem;color:var(--muted);font-weight:400">/bulan × 6 bln</span></td><td style="color:var(--ok)">7.000.000</td></tr>
+          <tr><td>3</td><td><strong>Kemenperin</strong></td><td><span class="chip chip-dark">Retainer</span></td><td>Jan–Des 2026</td><td>Rp 5.000.000<br><span style="font-size:0.65rem;color:var(--muted);font-weight:400">/bulan × 12 bln</span></td><td style="color:var(--ok)">5.000.000</td></tr>
+          <tr><td>4</td><td><strong>Kemenhan</strong></td><td><span class="chip chip-dark">Retainer</span></td><td>Jan–Des 2026</td><td>Rp 5.000.000<br><span style="font-size:0.65rem;color:var(--muted);font-weight:400">/bulan × 12 bln</span></td><td style="color:var(--ok)">5.000.000</td></tr>
+          <tr><td>5</td><td><strong>Kominfo (Kontrak 1)</strong></td><td><span class="chip chip-dark">Retainer</span></td><td>Jan–Mar 2026</td><td>Rp 47.500.000<br><span style="font-size:0.65rem;color:var(--muted);font-weight:400">/bulan × 3 bln</span></td><td style="color:var(--ok)">47.500.000</td></tr>
+          <tr><td>6</td><td><strong>Kominfo (Kontrak 2)</strong></td><td><span class="chip chip-dark">Retainer</span></td><td>Apr–Jun 2026</td><td>Rp 47.500.000<br><span style="font-size:0.65rem;color:var(--muted);font-weight:400">/bulan × 3 bln</span></td><td style="color:var(--ok)">47.500.000</td></tr>
+          <tr><td>7</td><td><strong>BDO Indonesia</strong></td><td><span class="chip chip-warn">One-off</span></td><td>Feb–Apr 2026</td><td>Rp 140.000.000</td><td style="color:var(--ok)">46.666.667</td></tr>
+          <tr><td>8</td><td><strong>Suzuki</strong></td><td><span class="chip chip-warn">One-off</span></td><td>Apr 2026</td><td>Rp 5.000.000</td><td style="color:var(--ok)">5.000.000</td></tr>
+          <tr><td>9</td><td><strong>SEA Group</strong></td><td><span class="chip chip-warn">One-off</span></td><td>Apr–Des 2026</td><td>Rp 16.000.000</td><td style="color:var(--ok)">1.777.778</td></tr>
+          <tr><td>10</td><td><strong>KAP Tanubrata</strong></td><td><span class="chip chip-warn">One-off</span></td><td>Apr–Mei 2026</td><td>Rp 100.000.000</td><td style="color:var(--ok)">50.000.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="card card-rs">
+        <div class="chart-title" style="color:var(--rs);margin-bottom:0.75rem">Komposisi Revenue Royston 2026 <span class="updated-badge">✓</span></div>
+        <div class="chart-wrap h-180"><canvas id="rsDonutChart"></canvas></div>
+      </div>
+      <div class="card card-rs">
+        <div class="chart-title" style="color:var(--rs);margin-bottom:0.75rem">Services by Clients — Royston</div>
+        <div class="svc"><span class="svc-name">Strategic Communication</span><div class="svc-track"><div class="svc-fill-rs" style="width:100%"></div></div><span class="svc-count" style="color:var(--rs)">7</span></div>
+        <div class="svc"><span class="svc-name">Public Affairs</span><div class="svc-track"><div class="svc-fill-rs" style="width:28%"></div></div><span class="svc-count" style="color:var(--rs)">2</span></div>
+        <div class="svc"><span class="svc-name">Training &amp; Advisory</span><div class="svc-track"><div class="svc-fill-rs" style="width:14%"></div></div><span class="svc-count" style="color:var(--rs)">1</span></div>
+        <hr class="divider">
+        <div class="info-row"><span>Total klien aktif Royston</span><strong>6 klien</strong></div>
+      </div>
+      <div class="card card-rs">
+        <div class="chart-title" style="color:var(--rs);margin-bottom:0.75rem">Klien Potensial per Sektor</div>
+        <div class="sector"><span class="sector-name">FMCG</span><div class="sector-track"><div class="sector-fill" style="width:100%"></div></div><span class="sector-num">15</span></div>
+        <div class="sector"><span class="sector-name">Tech</span><div class="sector-track"><div class="sector-fill" style="width:80%"></div></div><span class="sector-num">12</span></div>
+        <div class="sector"><span class="sector-name">Pharma</span><div class="sector-track"><div class="sector-fill" style="width:73%"></div></div><span class="sector-num">11</span></div>
+        <div class="sector"><span class="sector-name">Oil &amp; Gas</span><div class="sector-track"><div class="sector-fill" style="width:67%"></div></div><span class="sector-num">10</span></div>
+        <div class="sector"><span class="sector-name">Telco</span><div class="sector-track"><div class="sector-fill" style="width:67%"></div></div><span class="sector-num">10</span></div>
+        <div class="sector"><span class="sector-name">Hospital</span><div class="sector-track"><div class="sector-fill" style="width:67%"></div></div><span class="sector-num">10</span></div>
+        <div class="sector"><span class="sector-name">Palm Oil</span><div class="sector-track"><div class="sector-fill" style="width:40%"></div></div><span class="sector-num">6</span></div>
+        <hr class="divider">
+        <div style="font-size:0.7rem;color:var(--muted)">Total 94 perusahaan potensial · aktif 7 / 94</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════ TAB: SALES PERFORMANCE ══════════════ -->
+<div id="panel-sales" class="tab-panel">
+<div class="page">
+
+  <div class="masthead">
+    <div>
+      <div class="masthead-eyebrow">Sales Performance Dashboard · Digivla 2026</div>
+      <h1>Performa Tim Sales<br>Revenue Akrual Jan–Des 2026</h1>
+    </div>
+    <div class="masthead-meta">
+      <strong>Update: Mei 2026</strong>
+      Total Tim: 7 Sales · 91 Kontrak
+    </div>
+  </div>
+
+  <div class="banner">
+    <div>
+      <div class="banner-label">Total Revenue Akrual Digivla 2026 — Seluruh Sales</div>
+      <div class="banner-num">Rp 11,16 Milyar</div>
+      <div class="banner-sub">7 sales · 91 kontrak · target Rp 32 Milyar</div>
+    </div>
+    <div class="banner-right">
+      <div class="banner-label">Capaian</div>
+      <div class="banner-pct">34,9%</div>
+      <div style="font-size:.68rem;opacity:.45;margin-top:.15rem">dari target tahunan</div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card">
+      <div class="chart-title" style="margin-bottom:1rem">🏆 Sales Leaderboard — Revenue Akrual 2026</div>
+      <div id="leaderboard"></div>
+    </div>
+    <div class="card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Kontribusi Revenue per Sales</div>
+          <div class="chart-sub">% dari total Rp 11,16 M</div>
+        </div>
+      </div>
+      <div class="chart-wrap h-200"><canvas id="donutChart"></canvas></div>
+      <hr class="divider">
+      <div class="chart-wrap h-140"><canvas id="stackedChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card mb">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">Revenue Akrual Bulanan per Sales — Jan–Des 2026</div>
+        <div class="chart-sub">Stacked · Jan–Apr aktual · Mei–Des proyeksi</div>
+      </div>
+      <div class="chart-legend" id="trendLegend"></div>
+    </div>
+    <div class="chart-wrap h-220"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-badge" style="background:var(--ink)">Detail Per Sales</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="g2 mb" id="salesGrid"></div>
+
+</div>
+</div>
+
+
+<script>
+/* ── TAB SWITCH ── */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  document.querySelector('.tab-btn.tab-' + tab).classList.add('active');
+  if (tab === 'sales' && !window._salesChartsInited) {
+    window._salesChartsInited = true;
+    initSalesCharts();
+  }
+}
+
+function fJt(juta) {
+  if (juta === 0) return '0';
+  if (juta >= 1000) return (juta / 1000).toLocaleString('id-ID', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' M';
+  if (juta >= 100) return Math.round(juta) + ' Jt';
+  return juta.toLocaleString('id-ID', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' Jt';
+}
+function fRevM(miliar) {
+  if (miliar === 0) return '0';
+  return fJt(miliar * 1000);
+}
+
+function getStatusFromScore(score) {
+  if (score >= 91) return 'excellent';
+  if (score >= 76) return 'stable';
+  if (score >= 51) return 'at risk';
+  return 'critical';
+}
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvSN3oJIf4Syovtb9-HnC6cnnut8wgZDdauY05s8IbAB6-6_xEPlzzaEgCy7V3PbJbxw/exec';
+
+const MONTH_LABEL = {January:'Januari',February:'Februari',March:'Maret',April:'April',
+  May:'Mei',June:'Juni',July:'Juli',August:'Agustus',September:'September',
+  October:'Oktober',November:'November',December:'Desember'};
+
+function getStatusConfig(status) {
+  const s = (status||'').toLowerCase().trim();
+  if(s==='excellent') return {color:'#059669',label:'Excellent',chipClass:'chip-ok'};
+  if(s==='stable')    return {color:'#1e40af',label:'Stable',chipClass:'chip-stable'};
+  if(s==='at risk')   return {color:'#d97706',label:'At Risk',chipClass:'chip-warn'};
+  if(s==='critical')  return {color:'#dc2626',label:'Critical',chipClass:'chip-crit'};
+  return {color:'#6b7280',label:status||'—',chipClass:'chip-dark'};
+}
+function getScoreColor(n) {
+  if(isNaN(n)) return '#6b7280';
+  if(n>=91) return '#059669'; if(n>=76) return '#1e40af';
+  if(n>=51) return '#d97706'; return '#dc2626';
+}
+function buildIssues(row) {
+  const fields=[['Late Daily (-5)','Late Daily'],['Late Weekly (-7)','Late Weekly'],
+    ['Late Monthly (-8)','Late Monthly'],['Late Quarterly (-10)','Late Quarterly'],
+    ['Late Yearly (-15)','Late Yearly'],['SMI Data Lost (-10)','SMI Data Lost'],
+    ['FMI System Stuck (-10)','FMI System Stuck'],['Konsultan Issue (-10)','Konsultan Issue'],
+    ['Services Issue (-25)','Services Issue']];
+  return fields.filter(([k])=>parseInt(row[k])>0).map(([k,l])=>`${l} (−${parseInt(row[k])})`);
+}
+
+function populateDropdown(rows) {
+  const sel = document.getElementById('healthMonthSelect');
+  const seen = [], opts = [];
+  rows.forEach(r=>{ const b=r['Bulan']; if(b&&!seen.includes(b)){seen.push(b);opts.push(b);} });
+  sel.innerHTML = opts.map((m,i)=>
+    `<option value="${m}"${i===opts.length-1?' selected':''}>${MONTH_LABEL[m]||m} 2026</option>`
+  ).join('');
+}
+
+function renderHealthSection(rows, month) {
+  const content = document.getElementById('healthContent');
+  const statusBar = document.getElementById('healthStatusBar');
+  const filtered = rows.filter(r=>(r['Bulan']||'').toLowerCase()===month.toLowerCase());
+  if(!filtered.length) {
+    content.innerHTML=`<div class="health-error"><strong>Tidak ada data</strong>Bulan "${month}" kosong di spreadsheet.</div>`;
+    statusBar.innerHTML=`<span class="hstat-label">Status:</span><span class="hstat chip chip-warn">Kosong</span>`;
+    return;
+  }
+  const counts={excellent:0,stable:0,'at risk':0,critical:0};
+  filtered.forEach(r=>{
+    const score = parseInt(r['Final Score'] ?? r['Score'] ?? 0);
+    const s = getStatusFromScore(score);
+    if(counts[s] !== undefined) counts[s]++;
+  });
+  const ml = MONTH_LABEL[month]||month;
+  let sb=`<span class="hstat-label">${ml}:</span>`;
+  if(counts.excellent) sb+=`<span class="hstat chip chip-ok">${counts.excellent} Excellent</span>`;
+  if(counts.stable)    sb+=`<span class="hstat chip chip-stable">${counts.stable} Stable</span>`;
+  if(counts['at risk']) sb+=`<span class="hstat chip chip-warn">${counts['at risk']} At Risk</span>`;
+  if(counts.critical)  sb+=`<span class="hstat chip chip-crit">${counts.critical} Critical</span>`;
+  sb+=`<span class="hstat-label" style="margin-left:auto;font-size:0.6rem">${filtered.length} klien</span>`;
+  sb+=`<div class="health-source-tag"><div class="live-dot" id="liveDot"></div><span id="lastUpdated">Live · ${new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}</span></div>`;
+  statusBar.innerHTML=sb;
+  const sorted = [...filtered].sort((a,b)=>parseInt(b['Final Score']||0)-parseInt(a['Final Score']||0));
+  let html = `<div class="health-grid">`;
+  sorted.forEach(row=>{
+    const name=row['Client Name']||'—';
+    const score=parseInt(row['Final Score']??row['Score']??0);
+    const note=row['Note']||'';
+    const deduct=parseInt(row['Total Deduction']||0);
+    const issues=buildIssues(row);
+    const computedStatus = getStatusFromScore(score);
+    const cfg=getStatusConfig(computedStatus);
+    const sc=getScoreColor(score);
+    const bar=Math.max(0,Math.min(100,isNaN(score)?0:score));
+    html+=`<div class="hcard">
+      <div class="hcard-accent" style="background:${cfg.color}"></div>
+      <div class="hcard-badge"><span class="chip ${cfg.chipClass}">${cfg.label}</span></div>
+      <div class="hcard-name">${name}</div>
+      <div class="hcard-score-wrap">
+        <div class="hcard-score" style="color:${sc}">${isNaN(score)?'—':score}</div>
+        <div class="hcard-score-label">/ 100</div>
+      </div>
+      <div class="hcard-bar"><div class="hcard-bar-fill" style="width:${bar}%;background:${sc}"></div></div>
+      ${deduct>0?`<div class="hcard-deduction" style="color:${cfg.color};font-size:0.63rem;font-weight:600">−${deduct} poin</div>`:''}
+      ${issues.length?`<div class="hcard-issue">${issues.join(' · ')}</div>`:''}
+      ${note&&note!=='NaN'&&note!=='null'?`<div class="hcard-issue" style="margin-top:3px;color:#6b7280">${note}</div>`:''}
+    </div>`;
+  });
+  html+='</div>';
+  content.innerHTML=html;
+}
+
+let _allRows=null, _healthLoading=false;
+
+function loadHealthData(forceRefresh) {
+  if(_healthLoading) return;
+  const month=document.getElementById('healthMonthSelect').value||'April';
+  const btn=document.getElementById('healthRefreshBtn');
+  const content=document.getElementById('healthContent');
+  const statusBar=document.getElementById('healthStatusBar');
+  if(_allRows&&!forceRefresh) { renderHealthSection(_allRows,month); return; }
+  _healthLoading=true;
+  btn.classList.add('loading');
+  btn.innerHTML=`<div class="spinner" style="width:11px;height:11px;border-width:1.5px"></div> Loading`;
+  content.innerHTML=`<div class="health-loading"><div class="spinner"></div>Mengambil data...</div>`;
+  statusBar.innerHTML=`<span class="hstat-label">Status:</span><span class="hstat chip chip-dv">Memuat...</span>`;
+  const cbName='_hcb_'+Date.now();
+  const script=document.createElement('script');
+  const timer=setTimeout(()=>{
+    cleanup(); _healthLoading=false;
+    btn.classList.remove('loading');
+    btn.innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg> Refresh`;
+    content.innerHTML=`<div class="health-error"><strong>Timeout</strong>Apps Script tidak merespons dalam 15 detik. Klik Refresh untuk coba lagi.</div>`;
+    statusBar.innerHTML=`<span class="hstat-label">Status:</span><span class="hstat chip chip-warn">Timeout</span>`;
+  },15000);
+  function cleanup(){ clearTimeout(timer); delete window[cbName]; if(script.parentNode)script.parentNode.removeChild(script); }
+  window[cbName]=function(data){
+    cleanup(); _healthLoading=false;
+    btn.classList.remove('loading');
+    btn.innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg> Refresh`;
+    let rows=Array.isArray(data)?data:(data&&Array.isArray(data.data)?data.data:(data&&Array.isArray(data.rows)?data.rows:[]));
+    if(!rows.length){ content.innerHTML=`<div class="health-error"><strong>Data kosong</strong>Tidak ada row yang dikembalikan Apps Script.</div>`; return; }
+    _allRows=rows;
+    populateDropdown(rows);
+    renderHealthSection(rows, document.getElementById('healthMonthSelect').value||month);
+  };
+  script.onerror=function(){
+    cleanup(); _healthLoading=false;
+    btn.classList.remove('loading');
+    btn.innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg> Refresh`;
+    content.innerHTML=`<div class="health-error"><strong>Gagal load</strong>Script error — cek URL Apps Script masih valid dan setting deploy "Anyone".</div>`;
+    statusBar.innerHTML=`<span class="hstat-label">Status:</span><span class="hstat chip chip-warn">Error</span>`;
+  };
+  script.src=APPS_SCRIPT_URL+'?callback='+cbName;
+  document.head.appendChild(script);
+}
+
+const dataLabelsPlugin = {
+  id: 'dataLabels',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    const dlOpts = chart.config.options._dataLabels;
+    if (!dlOpts || !dlOpts.enabled) return;
+    chart.data.datasets.forEach((dataset, di) => {
+      if (dataset._showLabel === false) return;
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      meta.data.forEach((bar, index) => {
+        const value = dataset.data[index];
+        if (!value) return;
+        if (dlOpts.stackedTop) {
+          const stackId = dataset.stack;
+          let isTop = true;
+          chart.data.datasets.forEach((ds, dsi) => {
+            if (ds.stack !== stackId) return;
+            if (ds._showLabel === false) return;
+            if (dsi > di && ds.data[index] > 0) isTop = false;
+          });
+          if (!isTop) return;
+          let total = 0;
+          chart.data.datasets.forEach(ds => { if (ds.stack === stackId) total += ds.data[index] || 0; });
+          const labelText = dlOpts.formatter ? dlOpts.formatter(total, index, chart) : fJt(total);
+          ctx.save();
+          ctx.font = `600 ${dlOpts.fontSize || 9}px Outfit, sans-serif`;
+          ctx.fillStyle = dlOpts.color || '#374151';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(labelText, bar.x, bar.y - 4);
+          ctx.restore();
+          return;
+        }
+        const labelText = dlOpts.formatter ? dlOpts.formatter(value, index, chart) : fJt(value);
+        ctx.save();
+        ctx.font = `600 ${dlOpts.fontSize || 9}px Outfit, sans-serif`;
+        ctx.fillStyle = dlOpts.color || '#374151';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(labelText, bar.x, bar.y - 4);
+        ctx.restore();
+      });
+    });
+  }
+};
+
+const targetLinePlugin = {
+  id: 'targetLine',
+  afterDraw(chart) {
+    const targetVal = chart.config.options._targetValue;
+    if (targetVal === undefined) return;
+    const { ctx, chartArea, scales } = chart;
+    if (!chartArea || !scales.y) return;
+    const yPixel = scales.y.getPixelForValue(targetVal);
+    if (yPixel < chartArea.top || yPixel > chartArea.bottom) return;
+    ctx.save();
+    ctx.beginPath();
+    ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 1.8;
+    ctx.moveTo(chartArea.left, yPixel);
+    ctx.lineTo(chartArea.right, yPixel);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = 'bold 9px Outfit, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    const unit = chart.config.options._targetUnit || 'jt';
+    ctx.fillText(unit === 'M' ? `Target ${targetVal} M` : `Target ${fJt(targetVal)}`, chartArea.right - 2, yPixel - 2);
+    ctx.restore();
+  }
+};
+
+Chart.register(targetLinePlugin, dataLabelsPlugin);
+Chart.defaults.color = '#6b7280';
+Chart.defaults.borderColor = '#e5e7eb';
+Chart.defaults.font.family = "'Outfit', sans-serif";
+Chart.defaults.font.size = 10;
+
+const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+const FALLBACK = {
+  dvRev: [1.374261,1.425972,1.394061,1.071395,1.085323,1.015373,0.899117,0.699756,0.680256,0.579940,0.472324,0.466738],
+  dvCnt: [56,59,58,59,61,55,50,47,46,42,37,36],
+  rsJt:  [239.5,286.167,286.167,342.945,284.278,234.278,186.778,186.778,186.778,186.778,186.778,186.778],
+  rsCnt: [6,7,7,9,7,5,4,4,4,4,4,4]
+};
+
+let dvRev = FALLBACK.dvRev.slice();
+let dvCnt = FALLBACK.dvCnt.slice();
+let rsJt  = FALLBACK.rsJt.slice();
+let rsCnt = FALLBACK.rsCnt.slice();
+let rsRev = rsJt.map(v => v / 1000);
+
+let _chartTotal = null, _chartDv = null, _chartRs = null;
+let _salesCharts = [];
+
+const BULAN_IDX = {
+  'Januari':0,'Februari':1,'Maret':2,'April':3,'Mei':4,'Juni':5,
+  'Juli':6,'Agustus':7,'September':8,'Oktober':9,'November':10,'Desember':11
+};
+
+function setRealtimeBadge(ok) {
+  document.querySelectorAll('.realtime-badge').forEach(el => {
+    el.textContent = ok ? '● Live' : '○ Fallback';
+    el.style.color = ok ? '#059669' : '#d97706';
+  });
+}
+
+function showDebugPanel(msg) {
+  var panel = document.getElementById('_debugPanel');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = '_debugPanel';
+    panel.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:9999;background:#111827;color:#fbbf24;font-family:monospace;font-size:11px;padding:10px 14px;border-radius:8px;max-width:480px;word-break:break-all;box-shadow:0 4px 20px rgba(0,0,0,0.5);opacity:0.95';
+    document.body.appendChild(panel);
+  }
+  panel.textContent = '🔍 DEBUG: ' + msg;
+  panel.style.display = 'block';
+  clearTimeout(panel._timer);
+  panel._timer = setTimeout(function(){ panel.style.display = 'none'; }, 12000);
+}
+
+function updateRefreshBtn(loading) {
+  const btn   = document.getElementById('globalRefreshBtn');
+  const icon  = document.getElementById('refreshIcon');
+  const label = document.getElementById('refreshBtnLabel');
+  if (!btn) return;
+  if (loading) {
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    icon.style.animation = 'spin 0.8s linear infinite';
+    label.textContent = 'Loading...';
+  } else {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    icon.style.animation = '';
+    label.textContent = 'Refresh Data';
+  }
+}
+
+function refreshAllData() {
+  if (_dashLoading) { _dashLoading = false; }
+  _allRows = null;
+  updateRefreshBtn(true);
+  setTimeout(function() { loadDashboardData(true); }, 50);
+}
+let _dashLoading = false;
+
+function loadDashboardData(forceRefresh) {
+  if (_dashLoading) return;
+  _dashLoading = true;
+  const cbName = '_dcb_' + Date.now();
+  const script = document.createElement('script');
+  const timer = setTimeout(() => {
+    cleanup(); _dashLoading = false; updateRefreshBtn(false);
+    console.warn('Dashboard data timeout — using fallback');
+    setRealtimeBadge(false);
+  }, 18000);
+  function cleanup() {
+    clearTimeout(timer); delete window[cbName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+  }
+  window[cbName] = function(data) {
+    cleanup(); _dashLoading = false; updateRefreshBtn(false);
+    if (!data || !data.ok) { setRealtimeBadge(false); return; }
+    try {
+      applyActiveClientsData(data.activeClients);
+      applyRevenueData(data.revenueAkrual);
+      applyServicesData(data.services);
+      setRealtimeBadge(true);
+    } catch(e) { console.error('Error applying data:', e); setRealtimeBadge(false); }
+    if (data.healthCheck && data.healthCheck.length) {
+      _allRows = data.healthCheck;
+      populateDropdown(_allRows);
+      renderHealthSection(_allRows, document.getElementById('healthMonthSelect').value || 'April');
+    }
+  };
+  script.onerror = function() { cleanup(); _dashLoading = false; setRealtimeBadge(false); updateRefreshBtn(false); };
+  script.src = APPS_SCRIPT_URL + '?callback=' + cbName + '&t=' + Date.now();
+  document.head.appendChild(script);
+}
+
+function applyRevenueData(rev) {
+  if (!rev || !rev.months || !rev.months.length) return;
+  for (var i = 0; i < 12; i++) dvRev[i] = 0;
+  var monthsForUI = [];
+  rev.months.forEach(function(m) {
+    var namaBulan = String(m.bulan || '').trim();
+    var idx = BULAN_IDX[namaBulan];
+    if (idx === undefined) return;
+    var rev_rp = parseFloat(m.revenue) || 0;
+    dvRev[idx] = rev_rp / 1e9;
+    monthsForUI.push({ bulan: namaBulan, revenue: rev_rp });
+  });
+  if (_chartTotal) { var dsTotal = _chartTotal.data.datasets[0]; for (var i = 0; i < 12; i++) dsTotal.data[i] = dvRev[i]; _chartTotal.update('none'); }
+  if (_chartDv) { var dsDv = _chartDv.data.datasets[0]; for (var i = 0; i < 12; i++) dsDv.data[i] = dvRev[i]; _chartDv.update('none'); }
+  updateRekapTable(monthsForUI);
+  updateKPICards(monthsForUI);
+  ['Abdul','Chatrine','Lia','Desy','Ayu'].forEach(function(name) {
+    var sheetKey = name.toLowerCase();
+    var sd = SALES_DATA.find(function(s){ return s.name.toLowerCase() === name.toLowerCase(); });
+    if (!sd) return;
+    rev.months.forEach(function(m) {
+      var namaBulan = String(m.bulan || '').trim();
+      var idx = BULAN_IDX[namaBulan];
+      if (idx === undefined) return;
+      sd.rev_monthly[idx] = parseFloat(m[sheetKey]) || 0;
+    });
+    sd.rev_total = sd.rev_monthly.reduce(function(a,b){ return a+b; }, 0);
+  });
+  var teamTotal = SALES_DATA.reduce(function(a,s){ return a+s.rev_total; }, 0);
+  SALES_DATA.forEach(function(s){ s.pct = teamTotal > 0 ? +((s.rev_total/teamTotal)*100).toFixed(1) : 0; });
+  if (document.getElementById('leaderboard').children.length > 0) { refreshSalesUI(); }
+}
+
+function applyActiveClientsData(ac) {
+  if (!ac) return;
+  var klienAktif = ac['Klien Aktif'] || ac['klien aktif'] || ac['KLIEN AKTIF'];
+  if (klienAktif && klienAktif.length) {
+    klienAktif.forEach(function(item) {
+      var namaBulan = String(item.bulan || '').trim();
+      var val = parseInt(item.value) || 0;
+      var idx = BULAN_IDX[namaBulan];
+      if (idx !== undefined && val > 0) dvCnt[idx] = val;
+    });
+  }
+  ['Abdul','Chatrine','Lia','Desy','Ayu'].forEach(name => {
+    const row = ac[name] || ac[name.toLowerCase()];
+    if (!row || !row.length) return;
+    const sd = SALES_DATA.find(s => s.name.toLowerCase() === name.toLowerCase());
+    if (!sd) return;
+    const latest = row[row.length - 1];
+    if (latest) sd.clients = latest.value;
+  });
+}
+
+function applyServicesData(services) {
+  if (!services || !services.length) return;
+  SALES_DATA.forEach(s => { s.services = {}; });
+  services.forEach(function(row) {
+    var svc = row.service;
+    if (!svc) return;
+    ['Abdul','Chatrine','Lia','Desy','Ayu'].forEach(function(name) {
+      var sd = SALES_DATA.find(function(s){ return s.name.toLowerCase() === name.toLowerCase(); });
+      if (!sd) return;
+      var val = parseInt(row[name] || row[name.toUpperCase()] || row[name.toLowerCase()] || 0);
+      if (val > 0) sd.services[svc] = (sd.services[svc] || 0) + val;
+    });
+  });
+}
+
+function updateKPICards(months) {
+  if (!months || !months.length) return;
+  const TARGET_DV=32e9, TARGET_RS=6e9, TARGET_GAB=38e9, TARGET_KLIEN=150;
+  const BULAN_LABEL=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const BULAN_SHORT=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  const totalDv = months.reduce((a, m) => a + m.revenue, 0);
+  const totalRs = rsJt.reduce((a, v) => a + v, 0) * 1e6;
+  const totalGab = totalDv + totalRs;
+  const pctDv  = (totalDv / TARGET_DV * 100).toFixed(1);
+  const pctGab = (totalGab / TARGET_GAB * 100).toFixed(1);
+  const nonZero = months.filter(m => (m.revenue || 0) > 0);
+  const highest = nonZero.length ? nonZero.reduce((a, b) => (a.revenue||0) > (b.revenue||0) ? a : b) : null;
+  const lowest  = nonZero.length ? nonZero.reduce((a, b) => (a.revenue||0) < (b.revenue||0) ? a : b) : null;
+  const avgRev  = nonZero.length ? totalDv / nonZero.length : 0;
+  function getBulanShort(bulanName) {
+    if (!bulanName) return '—';
+    const idx = BULAN_LABEL.findIndex(b => b.toLowerCase() === String(bulanName).toLowerCase());
+    return idx >= 0 ? BULAN_SHORT[idx] : (String(bulanName).substring(0,3) || '—');
+  }
+  const latestKlienIdx = dvCnt.reduce((best, v, i) => v > 0 ? i : best, 0);
+  const latestKlien    = dvCnt[latestKlienIdx] || 0;
+  const latestBulan    = BULAN_SHORT[latestKlienIdx];
+  const pctKlien       = (latestKlien / TARGET_KLIEN * 100).toFixed(1);
+  const peakKlienVal   = Math.max(...dvCnt);
+  const peakKlienIdx   = dvCnt.indexOf(peakKlienVal);
+  const peakBulan      = BULAN_SHORT[peakKlienIdx];
+  function fM(v)  { return (v/1e9).toFixed(2).replace('.',',') + ' M'; }
+  function fJtK(v){ return Math.round(v/1e6) + ' Jt'; }
+  const el = id => document.getElementById(id);
+  if (el('banner-total')) el('banner-total').textContent = 'Rp ' + (totalGab/1e9).toFixed(2).replace('.',',') + ' Milyar';
+  if (el('banner-sub'))   el('banner-sub').textContent   = `Digivla Rp ${fM(totalDv)} · Royston Rp ${fM(totalRs)} · Target Gabungan Rp 38 Milyar`;
+  if (el('banner-pct'))   el('banner-pct').textContent   = pctGab + '%';
+  if (el('stat-total-dv'))       el('stat-total-dv').textContent       = fM(totalDv);
+  if (el('stat-total-gabungan')) el('stat-total-gabungan').textContent = fM(totalGab);
+  if (el('stat-capaian-total'))  el('stat-capaian-total').textContent  = pctGab + '%';
+  if (highest && el('stat-puncak-label')) el('stat-puncak-label').textContent = `Puncak (${getBulanShort(highest.bulan)})`;
+  if (highest && el('stat-puncak-val'))   el('stat-puncak-val').textContent   = fM(highest.revenue);
+  if (el('kpi-dv-revenue'))      el('kpi-dv-revenue').textContent      = 'Rp ' + fM(totalDv);
+  if (el('kpi-dv-pct-chip'))     el('kpi-dv-pct-chip').textContent     = pctDv + '%';
+  if (el('kpi-dv-bar'))          el('kpi-dv-bar').style.width           = Math.min(100, pctDv) + '%';
+  if (el('kpi-dv-aktif-chip'))   el('kpi-dv-aktif-chip').textContent   = peakKlienVal + ' aktif';
+  if (el('kpi-dv-aktif-label'))  el('kpi-dv-aktif-label').textContent  = 'puncak ' + peakBulan;
+  if (el('kpi-dv-bulan-label'))  el('kpi-dv-bulan-label').textContent  = latestBulan;
+  if (el('kpi-dv-klien-num'))    el('kpi-dv-klien-num').textContent    = latestKlien;
+  if (el('kpi-dv-klien-pct'))    el('kpi-dv-klien-pct').textContent    = pctKlien + '%';
+  if (el('kpi-dv-klien-bar'))    el('kpi-dv-klien-bar').style.width    = Math.min(100, pctKlien) + '%';
+  if (el('kpi-dv-capaian'))      el('kpi-dv-capaian').textContent      = pctDv + '%';
+  if (el('kpi-dv-capaian-foot')) el('kpi-dv-capaian-foot').textContent = `Rp ${fM(totalDv)} dari target Rp 32 M`;
+  if (highest) {
+    if (el('dv-stat-high-label')) el('dv-stat-high-label').textContent = 'Tertinggi';
+    if (el('dv-stat-high'))       el('dv-stat-high').textContent       = `${getBulanShort(highest.bulan)} ${fM(highest.revenue)}`;
+  }
+  if (lowest) {
+    if (el('dv-stat-low-label')) el('dv-stat-low-label').textContent = 'Terendah';
+    if (el('dv-stat-low'))       el('dv-stat-low').textContent       = `${getBulanShort(lowest.bulan)} ${fJtK(lowest.revenue)}`;
+  }
+  if (el('dv-stat-avg'))   el('dv-stat-avg').textContent   = fJtK(avgRev);
+  if (el('dv-stat-total')) el('dv-stat-total').textContent = fM(totalDv);
+}
+
+function updateRekapTable(months) {
+  const tableBody = document.getElementById('rekap-tbody');
+  if (!tableBody || !months || !months.length) return;
+  const BULAN_LABEL=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  function fRpFull(v) { if (!v || isNaN(v)) return '0'; return Math.round(v).toLocaleString('id-ID'); }
+  let html = '', cumulative = 0;
+  BULAN_LABEL.forEach((label, i) => {
+    const m = months.find(x => (x.bulan||'').toLowerCase() === label.toLowerCase());
+    const rev = m ? (m.revenue || 0) : 0;
+    cumulative += rev;
+    const klien = dvCnt[i] || '—';
+    html += `<tr><td><strong>${label}</strong></td><td>${fRpFull(rev)}</td><td>${klien} klien</td><td>${fRpFull(cumulative)}</td></tr>`;
+  });
+  tableBody.innerHTML = html;
+  const totalDv = months.reduce((a, m) => a + (m.revenue || 0), 0);
+  const elTotal = document.getElementById('rekap-total');
+  if (elTotal) elTotal.textContent = fRpFull(totalDv);
+}
+
+function refreshSalesUI() {
+  Chart.helpers.each(Chart.instances, function(instance) {
+    if (['donutChart', 'stackedChart', 'trendChart'].indexOf(instance.canvas.id) > -1 || instance.canvas.id.indexOf('schart_') === 0) {
+      instance.destroy();
+    }
+  });
+  initSalesCharts();
+}
+
+_chartTotal = new Chart(document.getElementById('totalChart'), {
+  type: 'bar',
+  data: {
+    labels: months,
+    datasets: [
+      { label:'Digivla', data:dvRev, backgroundColor:months.map((_,i)=>i<5?'rgba(26,86,255,0.85)':'rgba(26,86,255,0.35)'), borderRadius:0, borderSkipped:false, stack:'s', _showLabel:false },
+      { label:'Royston', data:rsRev, backgroundColor:months.map((_,i)=>i<4?'rgba(232,0,61,0.9)':'rgba(232,0,61,0.45)'), borderRadius:4, borderSkipped:false, stack:'s', _showLabel:true }
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false, layout:{padding:{top:22}},
+    _targetValue:3.2, _targetUnit:'M',
+    _dataLabels:{enabled:true,stackedTop:true,fontSize:9,color:'#374151',formatter:(t)=>fRevM(t)},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:12,callbacks:{title:c=>`${c[0].label} 2026`,label:c=>` ${c.dataset.label}: ${fRevM(c.parsed.y)}`,afterBody:c=>{const i=c[0].dataIndex;return['───────────────',`Total: ${fRevM(dvRev[i]+rsRev[i])}`];}}}},
+    scales:{x:{grid:{display:false},stacked:true,ticks:{autoSkip:false}},y:{stacked:true,min:0,max:3.5,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v.toFixed(1)} M`}}}
+  }
+});
+
+_chartDv = new Chart(document.getElementById('dvChart'), {
+  type:'bar',
+  data:{labels:months,datasets:[{label:'Revenue Digivla',data:dvRev,backgroundColor:months.map((_,i)=>i<5?'rgba(26,86,255,0.85)':'rgba(26,86,255,0.3)'),borderRadius:4,borderSkipped:false,_showLabel:true}]},
+  options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},_targetValue:2.7,_targetUnit:'M',_dataLabels:{enabled:true,fontSize:9,color:'#374151',formatter:v=>fRevM(v)},plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>` ${fRevM(c.parsed.y)}`,afterLabel:c=>`${dvCnt[c.dataIndex]} klien aktif`}}},scales:{x:{grid:{display:false},ticks:{autoSkip:false}},y:{min:0,max:3.0,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v.toFixed(1)} M`}}}}
+});
+
+_chartRs = new Chart(document.getElementById('rsChart'), {
+  type:'bar',
+  data:{labels:months,datasets:[{label:'Revenue Royston',data:rsJt,backgroundColor:months.map((_,i)=>i<4?'rgba(232,0,61,0.85)':'rgba(232,0,61,0.35)'),borderRadius:4,borderSkipped:false,_showLabel:true}]},
+  options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},_targetValue:500,_dataLabels:{enabled:true,fontSize:9,color:'#374151',formatter:v=>fJt(v)},plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>` ${fJt(c.parsed.y)}`,afterLabel:c=>`${rsCnt[c.dataIndex]} klien aktif`}}},scales:{x:{grid:{display:false},ticks:{autoSkip:false}},y:{min:0,max:560,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v} Jt`}}}}
+});
+
+new Chart(document.getElementById('rsDonutChart'), {
+  type:'doughnut',
+  data:{
+    labels:['HM Sampoerna (175jt/bln×22)','PNRE (7jt/bln×4)','Kemenperin (5jt/bln×12)','Kemenhan (5jt/bln×12)','Kominfo (47,5jt/bln×6)','BDO Indonesia','Suzuki','SEA Group','KAP Tanubrata'],
+    datasets:[{data:[3850000000,28000000,60000000,60000000,285000000,140000000,5000000,16000000,100000000],backgroundColor:['rgba(26,86,255,0.8)','rgba(236,72,153,0.8)','rgba(124,58,237,0.8)','rgba(20,83,45,0.8)','rgba(217,119,6,0.8)','rgba(232,0,61,0.85)','rgba(5,150,105,0.8)','rgba(8,145,178,0.8)','rgba(17,24,39,0.7)'],borderWidth:2,borderColor:'#fff'}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:{size:9},padding:6,boxWidth:8}},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>{const total=c.dataset.data.reduce((a,b)=>a+b,0);return ` ${fJt(c.parsed/1e6)} (${((c.parsed/total)*100).toFixed(1)}%)`;}}}}},
+});
+
+const SALES_DATA = [
+  {name:"Chatrine",target_monthly:300,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
+  {name:"Abdul",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
+  {name:"Desy",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
+  {name:"Lia",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
+  {name:"Ayu",target_monthly:200,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
+  {name:"Wenda",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
+  {name:"Jody",target_monthly:200,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]}
+];
+
+const COLORS=['#1a56ff','#7c3aed','#e8003d','#d97706','#0891b2','#059669'];
+const MONTHS_S=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const TOTAL_S=SALES_DATA.reduce((a,s)=>a+s.rev_total,0);
+function fRp(v,short=false){if(short){return'Rp '+fJt(v/1e6);}return'Rp '+Math.round(v).toLocaleString('id-ID');}
+function calcHitMonths(s){let h=0;for(let i=0;i<4;i++){if((s.rev_monthly[i]/1e6)>=s.target_monthly)h++;}return h;}
+
+function initSalesCharts(){
+  document.getElementById('leaderboard').innerHTML=SALES_DATA.map((s,i)=>`
+    <div class="lb-row">
+      <div class="lb-rank">${i+1}</div>
+      <div class="lb-avatar" style="background:${COLORS[i]}">${s.name[0]}</div>
+      <div class="lb-info"><div class="lb-name">${s.name}</div><div class="lb-sub">${s.contracts} kontrak · ${s.clients} klien · target ${s.target_monthly} Jt/bln</div></div>
+      <div class="lb-bar-wrap"><div class="lb-bar"><div class="lb-bar-fill" style="width:${SALES_DATA[0].rev_total>0?s.pct/SALES_DATA[0].pct*100:0}%;background:${COLORS[i]}"></div></div><div class="lb-pct">${s.pct}% dari total</div></div>
+      <div class="lb-rev" style="color:${COLORS[i]}">${fRp(s.rev_total,true)}</div>
+    </div>`).join('');
+
+  new Chart(document.getElementById('donutChart'),{type:'doughnut',data:{labels:SALES_DATA.map(s=>s.name),datasets:[{data:SALES_DATA.map(s=>s.rev_total),backgroundColor:COLORS.map(c=>c+'cc'),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:{size:10},padding:8,boxWidth:10}},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>{const pct=((c.parsed/TOTAL_S)*100).toFixed(1);return ` ${fRp(c.parsed,true)} (${pct}%)`;}}}}},});
+
+  const allSvcs=[...new Set(SALES_DATA.flatMap(s=>Object.keys(s.services)))];
+  const svcColors=['#1a56ff','#7c3aed','#e8003d','#d97706','#059669','#0891b2'];
+  new Chart(document.getElementById('stackedChart'),{type:'bar',data:{labels:SALES_DATA.map(s=>s.name),datasets:allSvcs.map((svc,i)=>({label:svc,data:SALES_DATA.map(s=>s.services[svc]||0),backgroundColor:svcColors[i]+'cc',borderRadius:i===allSvcs.length-1?4:0,borderSkipped:false,stack:'s'}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:9},padding:6,boxWidth:8}},tooltip:{backgroundColor:'#111827',padding:8,mode:'index'}},scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,grid:{color:'rgba(0,0,0,0.04)'},ticks:{stepSize:1},title:{display:true,text:'Jumlah Kontrak',font:{size:9}}}}}});
+
+  document.getElementById('trendLegend').innerHTML=SALES_DATA.map((s,i)=>`<span><span class="ldot" style="background:${COLORS[i]}"></span>${s.name}</span>`).join('')+`<span><span class="lline"></span>Target</span>`;
+  const totalTargetPerMonth=SALES_DATA.reduce((a,s)=>a+s.target_monthly,0);
+  new Chart(document.getElementById('trendChart'),{type:'bar',data:{labels:MONTHS_S,datasets:[...SALES_DATA.map((s,i)=>({label:s.name,data:s.rev_monthly.map(v=>v/1e6),backgroundColor:MONTHS_S.map((_,mi)=>mi<4?COLORS[i]+'dd':COLORS[i]+'55'),borderRadius:i===SALES_DATA.length-1?4:0,borderSkipped:false,stack:'s',type:'bar',_showLabel:i===SALES_DATA.length-1})),{label:'Total Target',data:MONTHS_S.map(()=>totalTargetPerMonth),type:'line',borderColor:'#fbbf24',borderWidth:2,borderDash:[6,4],pointRadius:0,pointHoverRadius:4,pointBackgroundColor:'#fbbf24',fill:false,tension:0,stack:undefined,order:0,_showLabel:false}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},_dataLabels:{enabled:true,stackedTop:true,fontSize:9,color:'#374151',formatter:(total)=>fJt(total)},plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:10,mode:'index',callbacks:{title:c=>`${c[0].label} 2026`,label:c=>{if(c.dataset.type==='line')return ` Target: ${fJt(c.parsed.y)}`;return ` ${c.dataset.label}: ${fJt(c.parsed.y)}`;},afterBody:c=>{const bar=c.filter(x=>x.dataset.type!=='line');const total=bar.reduce((a,x)=>a+x.parsed.y,0);return['──────────────',`Total: ${fJt(total)}`,`Target Tim: ${fJt(totalTargetPerMonth)}`];}}}},scales:{x:{grid:{display:false},stacked:true,ticks:{autoSkip:false}},y:{stacked:true,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v} Jt`}}}}});
+
+  const maxSvc=Math.max(...SALES_DATA.map(s=>s.services&&Object.values(s.services).length>0?Math.max(...Object.values(s.services)):0),1);
+  document.getElementById('salesGrid').innerHTML=SALES_DATA.map((s,i)=>{
+    const svcRows=Object.entries(s.services).map(([label,count])=>`<div class="svc-s"><span class="svc-name">${label}</span><div class="svc-track-s"><div class="svc-fill-s" style="width:${count/maxSvc*100}%;background:${COLORS[i]}"></div></div><span class="svc-count">${count}</span></div>`).join('');
+    const clientRows=s.top_clients.map((c,ci)=>`<div class="cl-row"><div class="cl-rank">${ci+1}</div><div class="cl-name">${c.client}${c.services.slice(0,2).map(sv=>`<span class="badge" style="background:${COLORS[i]}22;color:${COLORS[i]};margin-left:3px">${sv.split(' ')[0]}</span>`).join('')}</div><div class="cl-rev" style="color:${COLORS[i]}">${fRp(c.rev,true)}</div></div>`).join('');
+    const pctOfTarget=(s.rev_total/32e9*100).toFixed(1);
+    const monthlyAvg=s.rev_total/12;
+    const hitMonths=calcHitMonths(s);
+    const targetJt=s.target_monthly;
+    const hitBadge=s.rev_total>0?`<span class="badge" style="background:${hitMonths>=3?'rgba(5,150,105,0.12)':'rgba(232,0,61,0.1)'};color:${hitMonths>=3?'#059669':'#e8003d'}">${hitMonths}/4 bln hit target</span>`:`<span class="badge" style="background:rgba(107,114,128,0.1);color:#6b7280">Belum ada revenue</span>`;
+    return `<div class="sales-card" style="border-top:3px solid ${COLORS[i]}"><div class="sales-card-header"><div class="sales-name-wrap"><div class="sales-rank">${i+1}</div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="lb-avatar" style="background:${COLORS[i]};width:32px;height:32px;font-size:.8rem">${s.name[0]}</div><div><div class="sales-name" style="color:${COLORS[i]}">${s.name}</div><div style="font-size:.68rem;color:var(--muted)">${s.contracts} kontrak · ${s.clients} klien</div></div></div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;color:${COLORS[i]};line-height:1;margin-bottom:.3rem">${fRp(s.rev_total,true)}</div><div style="font-size:.68rem;color:var(--muted);margin-bottom:.35rem">${s.pct}% dari total tim · ${pctOfTarget}% dari target Digivla</div><div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem"><span class="badge" style="background:${COLORS[i]}15;color:${COLORS[i]}">Target ${targetJt} Jt/bln</span>${hitBadge}</div><div class="sales-pct-bar"><div class="sales-pct-fill" style="width:${s.pct}%;background:${COLORS[i]}"></div></div></div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Avg/Bulan</div><div style="font-weight:700;font-size:.85rem;color:${COLORS[i]}">${fRp(monthlyAvg,true)}</div></div><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Kontrak</div><div style="font-weight:700;font-size:.85rem">${s.contracts}</div></div></div></div><div class="sales-body"><div style="margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Revenue Bulanan vs Target</span><span style="display:flex;align-items:center;gap:3px;font-size:.65rem;color:#fbbf24;font-weight:600"><span style="display:inline-block;width:12px;border-top:2px dashed #fbbf24"></span> Target ${targetJt} Jt</span></div><div style="margin-bottom:.75rem"><div class="chart-wrap h-140"><canvas id="schart_${i}"></canvas></div></div>${svcRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Layanan yang Dijual</div>${svcRows}<hr class="divider">`:''}${clientRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Top Klien by Revenue</div>${clientRows}`:`<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem">Belum ada kontrak · target <strong>${targetJt} Jt/bln</strong></div>`}</div></div>`;
+  }).join('');
+
+  _salesCharts = [];
+  SALES_DATA.forEach((s,i)=>{
+    const targetJt=s.target_monthly;
+    const allValsJt=s.rev_monthly.map(v=>v/1e6);
+    const yMax=Math.max(...allValsJt,targetJt)*1.35||targetJt*2;
+    const c = new Chart(document.getElementById(`schart_${i}`),{type:'bar',data:{labels:MONTHS_S,datasets:[{data:allValsJt,backgroundColor:MONTHS_S.map((m,mi)=>{const val=allValsJt[mi];if(mi>=4)return COLORS[i]+'40';return val>=targetJt?COLORS[i]+'cc':'rgba(232,0,61,0.7)';}),borderRadius:3,borderSkipped:false,_showLabel:true}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},_targetValue:targetJt,_dataLabels:{enabled:true,fontSize:8,color:'#374151',formatter:v=>v===0?'':fJt(v)},plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:8,callbacks:{label:c=>{const val=c.parsed.y;const diff=val-targetJt;const status=val>=targetJt?`▲ +${fJt(diff)}`:`▼ ${fJt(Math.abs(diff))}`;return[`${fJt(val)}`,`Target: ${targetJt} Jt (${status})`];}}}},scales:{x:{grid:{display:false},ticks:{autoSkip:false,font:{size:8}}},y:{min:0,max:yMax,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v}Jt`,font:{size:8}}}}}});
+    _salesCharts.push(c);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initSalesCharts();
+  loadDashboardData();
+});
+</script>
+
+<!-- ══════════════ TAB: CLIENT SURVEY ══════════════ -->
+<div id="panel-survey" class="tab-panel">
+<div class="page">
+
+  <div class="masthead">
+    <div>
+      <div class="masthead-eyebrow">Client Experience Survey · Digivla Mei 2026</div>
+      <h1>Evaluasi Pengalaman<br>Klien 2026</h1>
+    </div>
+    <div class="masthead-meta">
+      <strong>Survey: 7 Mei 2026</strong>
+      13 Responden · 11 Selesai · 2 Tidak Selesai
+    </div>
+  </div>
+
+  <div class="banner" style="margin-bottom:1rem">
+    <div>
+      <div class="banner-label">Rata-rata NPS Score — Kemungkinan Merekomendasikan Digivla</div>
+      <div class="banner-num">8,1 <span style="font-size:1rem;opacity:0.5">/10</span></div>
+      <div class="banner-sub">11 responden selesai · 2 tidak selesai (Imaji Kali Aksi, PPATK) · tertinggi Pertamina Power &amp; Ditjen Imigrasi 10</div>
+    </div>
+    <div class="banner-right">
+      <div class="banner-label">Avg Perpanjang Kontrak</div>
+      <div class="banner-pct" style="color:#34d399">4,1</div>
+      <div style="font-size:0.68rem;opacity:0.45;margin-top:0.15rem">dari skala 1–5</div>
+    </div>
+  </div>
+
+  <div class="g4 mb">
+    <div class="card" style="border-top:3px solid var(--dv)">
+      <div class="kpi-label">Akurasi Monitoring</div>
+      <div class="kpi-num" style="color:var(--dv)">4,2 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Menangkap topik/keyword relevan</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:84%;background:var(--dv)"></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--dv)">
+      <div class="kpi-label">Manfaat Data &amp; Laporan</div>
+      <div class="kpi-num" style="color:var(--dv)">4,4 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Mendukung kebutuhan bisnis</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:88%;background:var(--dv)"></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--dv)">
+      <div class="kpi-label">Kejelasan Laporan</div>
+      <div class="kpi-num" style="color:var(--dv)">4,1 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Mudah dipahami</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:82%;background:var(--dv)"></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--ok)">
+      <div class="kpi-label">Responsivitas Sales</div>
+      <div class="kpi-num" style="color:var(--ok)">4,5 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Merespon kebutuhan klien</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:90%;background:var(--ok)"></div></div>
+    </div>
+  </div>
+  <div class="g4 mb">
+    <div class="card" style="border-top:3px solid var(--ok)">
+      <div class="kpi-label">Kecepatan Analis</div>
+      <div class="kpi-num" style="color:var(--ok)">4,4 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Memenuhi request</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:88%;background:var(--ok)"></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--ok)">
+      <div class="kpi-label">Efektivitas AM</div>
+      <div class="kpi-num" style="color:var(--ok)">4,5 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Account manager</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:90%;background:var(--ok)"></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--warn)">
+      <div class="kpi-label">Penyelesaian Teknis</div>
+      <div class="kpi-num" style="color:var(--ok)">4,0 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Kendala teknis</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:80%;background:var(--ok)"></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--warn)">
+      <div class="kpi-label">Value vs Harga</div>
+      <div class="kpi-num" style="color:var(--ok)">4,0 <span style="font-size:1rem;color:var(--muted);font-weight:400">/5</span></div>
+      <div class="kpi-foot">Kesesuaian harga &amp; value</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:80%;background:var(--ok)"></div></div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Skor Per Dimensi — Rata-rata Semua Klien</div>
+          <div class="chart-sub">Skala 1–5 · 11 responden</div>
+        </div>
+      </div>
+      <div class="chart-wrap" style="height:280px"><canvas id="radarChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="chart-title" style="margin-bottom:1rem">⚠️ Risiko Churn per Klien</div>
+      <table class="health-table">
+        <thead><tr><th>Klien</th><th>NPS</th><th>Perpanjang</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Imaji Kali Aksi</td><td style="color:var(--muted)">–</td><td style="color:var(--muted)">–</td><td><span class="chip chip-rs">Tidak Selesai</span></td></tr>
+          <tr><td>PPATK</td><td style="color:var(--muted)">–</td><td style="color:var(--muted)">–</td><td><span class="chip chip-rs">Tidak Selesai</span></td></tr>
+          <tr><td>Santos Jaya Abadi</td><td><strong>7</strong></td><td><strong>3</strong></td><td><span class="chip chip-rs">High Risk</span></td></tr>
+          <tr><td>Ideoworks</td><td><strong>7</strong></td><td><strong>3</strong></td><td><span class="chip chip-rs">High Risk</span></td></tr>
+          <tr><td>Posthinks</td><td><strong>6</strong></td><td><strong>4</strong></td><td><span class="chip chip-warn">Medium Risk</span></td></tr>
+          <tr><td>Kemenperin</td><td><strong>7</strong></td><td><strong>4</strong></td><td><span class="chip chip-warn">Medium Risk</span></td></tr>
+          <tr><td>Astra Infra</td><td><strong>8</strong></td><td><strong>4</strong></td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
+          <tr><td>BPKH</td><td><strong>8</strong></td><td><strong>4</strong></td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
+          <tr><td>KAI Commuter</td><td><strong>8</strong></td><td><strong>4</strong></td><td><span class="chip chip-ok">Aman</span></td></tr>
+          <tr><td>KCI</td><td><strong>9</strong></td><td><strong>4</strong></td><td><span class="chip chip-ok">Aman</span></td></tr>
+          <tr><td>Kemenhan</td><td><strong>9</strong></td><td><strong>5</strong></td><td><span class="chip chip-ok">Aman</span></td></tr>
+          <tr><td>Ditjen Imigrasi</td><td><strong>10</strong></td><td><strong>5</strong></td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
+          <tr><td>Pertamina Power</td><td><strong>10</strong></td><td><strong>5</strong></td><td><span class="chip chip-ok">Aman</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card">
+      <div class="chart-title" style="margin-bottom:1rem">🔴 Pain Points Utama</div>
+      <div style="display:flex;flex-direction:column;gap:0.5rem">
+        <div style="background:var(--rs-soft);border-left:3px solid var(--rs);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--rs);margin-bottom:0.3rem">Data Loss &amp; Crawling Error <span style="background:var(--rs-soft);color:var(--rs);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">2 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">Santos Jaya Abadi, Posthinks — data hilang, butuh effort lebih dari user</div></div>
+        <div style="background:var(--rs-soft);border-left:3px solid var(--rs);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--rs);margin-bottom:0.3rem">Dashboard Tidak User-Friendly <span style="background:var(--rs-soft);color:var(--rs);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">3 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">KAI Commuter, BPKH, Ideoworks — perlu penyempurnaan UI/UX dashboard</div></div>
+        <div style="background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--warn);margin-bottom:0.3rem">Sentiment AI Kurang Akurat <span style="background:var(--warn-soft);color:var(--warn);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">2 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">Astra Infra, Posthinks — judgement AI untuk sentimen perlu validasi</div></div>
+        <div style="background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--warn);margin-bottom:0.3rem">Keyword Tidak Bisa Dikonfigurasi Mandiri <span style="background:var(--warn-soft);color:var(--warn);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">1 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">Ideoworks — harus lewat backend, tidak bisa self-service</div></div>
+        <div style="background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--warn);margin-bottom:0.3rem">Filter Per Jam &amp; Bulk Download Berita <span style="background:var(--warn-soft);color:var(--warn);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">1 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">KCI — filter waktu per jam dan bulk download berita + link</div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div class="card">
+        <div class="chart-title" style="margin-bottom:1rem">💡 Feature Requests</div>
+        <div class="svc"><span class="svc-name">Penyempurnaan Dashboard UI/UX</span><div class="svc-track"><div class="svc-fill-dv" style="width:100%"></div></div><span class="svc-count">3</span></div>
+        <div class="svc"><span class="svc-name">Monitoring Threads</span><div class="svc-track"><div class="svc-fill-dv" style="width:33%"></div></div><span class="svc-count">1</span></div>
+        <div class="svc"><span class="svc-name">Konfigurasi Keyword Mandiri</span><div class="svc-track"><div class="svc-fill-dv" style="width:33%"></div></div><span class="svc-count">1</span></div>
+        <div class="svc"><span class="svc-name">Digital Health Scoring + Mobile</span><div class="svc-track"><div class="svc-fill-dv" style="width:33%"></div></div><span class="svc-count">1</span></div>
+        <div class="svc"><span class="svc-name">Insight Per Konten Sosmed</span><div class="svc-track"><div class="svc-fill-dv" style="width:33%"></div></div><span class="svc-count">1</span></div>
+        <div class="svc"><span class="svc-name">Multi-user Dashboard Bersamaan</span><div class="svc-track"><div class="svc-fill-dv" style="width:33%"></div></div><span class="svc-count">1</span></div>
+        <div class="svc"><span class="svc-name">Fitur AI Lebih Humanize</span><div class="svc-track"><div class="svc-fill-dv" style="width:33%"></div></div><span class="svc-count">1</span></div>
+      </div>
+      <div class="card">
+        <div class="chart-title" style="margin-bottom:0.75rem">🏆 Tim Paling Membantu</div>
+        <div class="chart-wrap" style="height:160px"><canvas id="teamChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-badge" style="background:var(--ok)">Detail Per Responden</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card mb">
+    <table class="ct" style="font-size:0.72rem">
+      <thead>
+        <tr>
+          <th>Klien</th><th>PIC</th>
+          <th style="text-align:center">Akurasi</th><th style="text-align:center">Manfaat</th>
+          <th style="text-align:center">Laporan</th><th style="text-align:center">Sales</th>
+          <th style="text-align:center">Analis</th><th style="text-align:center">AM</th>
+          <th style="text-align:center">Teknis</th><th style="text-align:center">NPS</th>
+          <th style="text-align:center">Perpanjang</th><th>Lanjut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Pertamina Power</strong></td><td style="color:var(--muted)">Well Vira D.</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center"><strong style="color:var(--ok)">10</strong></td><td style="text-align:center">5</td><td><span class="chip chip-ok">Ya</span></td></tr>
+        <tr><td><strong>Kemenhan</strong></td><td style="color:var(--muted)">Bondy M.</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center"><strong style="color:var(--ok)">9</strong></td><td style="text-align:center">5</td><td><span class="chip chip-ok">Ya</span></td></tr>
+        <tr><td><strong>KCI</strong></td><td style="color:var(--muted)">Faishal</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center"><strong style="color:var(--ok)">9</strong></td><td style="text-align:center">4</td><td><span class="chip chip-ok">Ya</span></td></tr>
+        <tr><td><strong>KAI Commuter</strong></td><td style="color:var(--muted)">Nanda S.</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center"><strong style="color:var(--ok)">8</strong></td><td style="text-align:center">4</td><td><span class="chip chip-ok">Ya</span></td></tr>
+        <tr><td><strong>Astra Infra</strong></td><td style="color:var(--muted)">Michelle G.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">4</td><td style="text-align:center"><strong style="color:var(--warn)">8</strong></td><td style="text-align:center">4</td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
+        <tr><td><strong>BPKH</strong></td><td style="color:var(--muted)">Ricki P.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center"><strong style="color:var(--warn)">8</strong></td><td style="text-align:center">4</td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
+        <tr><td><strong>Kemenperin</strong></td><td style="color:var(--muted)">Iman M.</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--warn)">7</strong></td><td style="text-align:center">4</td><td><span class="chip chip-ok">Ya</span></td></tr>
+        <tr><td><strong>Santos Jaya Abadi</strong></td><td style="color:var(--muted)">Septia A.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--rs)">7</strong></td><td style="text-align:center">3</td><td><span class="chip chip-warn">Pertimbangan</span></td></tr>
+        <tr><td><strong>Ideoworks</strong></td><td style="color:var(--muted)">Dipa N.</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--rs)">7</strong></td><td style="text-align:center">3</td><td><span class="chip chip-warn">Pertimbangan</span></td></tr>
+        <tr><td><strong>Posthinks</strong></td><td style="color:var(--muted)">Shania S.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--rs)">6</strong></td><td style="text-align:center">4</td><td><span class="chip chip-ok">Ya</span></td></tr>
+        <tr><td><strong>Ditjen Imigrasi</strong></td><td style="color:var(--muted)">Adi P.</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center"><strong style="color:var(--ok)">10</strong></td><td style="text-align:center">5</td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
+        <tr style="opacity:0.5"><td><strong>Imaji Kali Aksi</strong></td><td style="color:var(--muted)">Fitang B.</td><td colspan="9" style="text-align:center;color:var(--muted)">— Survei tidak diselesaikan —</td><td><span class="chip chip-rs">Tidak Selesai</span></td></tr>
+        <tr style="opacity:0.5"><td><strong>PPATK</strong></td><td style="color:var(--muted)">Dhiyah</td><td colspan="9" style="text-align:center;color:var(--muted)">— Survei tidak diselesaikan —</td><td><span class="chip chip-rs">Tidak Selesai</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  new Chart(document.getElementById('radarChart'), {
+    type: 'radar',
+    data: {
+      labels: ['Akurasi\nMonitoring','Manfaat\nLaporan','Kejelasan\nLaporan','Responsivitas\nSales','Kecepatan\nAnalis','Efektivitas\nAM','Penyelesaian\nTeknis'],
+      datasets: [{label:'Rata-rata',data:[4.2,4.4,4.1,4.5,4.4,4.5,4.0],backgroundColor:'rgba(26,86,255,0.15)',borderColor:'rgba(26,86,255,0.8)',borderWidth:2,pointBackgroundColor:'rgba(26,86,255,0.8)',pointRadius:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:5,ticks:{stepSize:1,font:{size:9}},pointLabels:{font:{size:9}},grid:{color:'rgba(0,0,0,0.06)'}}},plugins:{legend:{display:false}}}
+  });
+  new Chart(document.getElementById('teamChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Analis','AM','Sales','IT'],
+      datasets:[{data:[7,2,2,0],backgroundColor:['rgba(26,86,255,0.8)','rgba(124,58,237,0.8)','rgba(217,119,6,0.8)','rgba(8,145,178,0.8)'],borderRadius:4,borderSkipped:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{min:0,max:8,ticks:{stepSize:2},grid:{color:'rgba(0,0,0,0.04)'}}}}
+  });
+});
+</script>
+
+<!-- ══════════════ TAB: PEOPLE & CULTURE ══════════════ -->
+<div id="panel-people" class="tab-panel">
+<div class="page">
+
+  <div class="masthead">
+    <div>
+      <div class="masthead-eyebrow">People &amp; Culture · Digivla 2025</div>
+      <h1>Engagement Score<br>&amp; Program L&amp;C 2025</h1>
+    </div>
+    <div class="masthead-meta">
+      <strong>Data: 2025</strong>
+      76 Karyawan · Product Commerce
+    </div>
+  </div>
+
+  <div class="banner" style="margin-bottom:1rem">
+    <div>
+      <div class="banner-label">Overall Engagement Distribution — Product Commerce</div>
+      <div class="banner-num">76 <span style="font-size:1rem;opacity:0.5">karyawan</span></div>
+      <div class="banner-sub">12 Highly Engaged · 41 Moderately Engaged · 23 Passive · 0 Actively Disengaged</div>
+    </div>
+    <div class="banner-right">
+      <div class="banner-label">Highly Engaged</div>
+      <div class="banner-pct" style="color:#fbbf24">15,8%</div>
+      <div style="font-size:0.68rem;opacity:0.45;margin-top:0.15rem">dari total karyawan</div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card">
+      <div class="chart-header"><div><div class="chart-title">Engagement Distribution</div><div class="chart-sub">76 karyawan Product Commerce</div></div></div>
+      <div class="chart-wrap h-200"><canvas id="engDonut"></canvas></div>
+      <hr class="divider">
+      <div class="stat-row">
+        <div class="stat-pill"><span class="sp-label">Highly Engaged</span><span class="sp-val" style="color:var(--ok)">12</span></div>
+        <div class="stat-pill"><span class="sp-label">Moderately</span><span class="sp-val" style="color:var(--dv)">41</span></div>
+        <div class="stat-pill"><span class="sp-label">Passive</span><span class="sp-val" style="color:var(--warn)">23</span></div>
+        <div class="stat-pill"><span class="sp-label">Disengaged</span><span class="sp-val" style="color:var(--muted)">0</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="chart-header"><div><div class="chart-title">Score per Construct</div><div class="chart-sub">Skala 1–4 · rata-rata semua karyawan</div></div></div>
+      <div class="chart-wrap h-200"><canvas id="constructRadar"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card mb">
+    <div class="chart-header">
+      <div><div class="chart-title">Engagement Score per Divisi/Departemen</div><div class="chart-sub">Skala 1–4 · merah = di bawah rata-rata (3,14)</div></div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.65rem;color:var(--muted)">
+        <span style="display:inline-block;width:12px;height:3px;background:var(--ok);border-radius:2px"></span>Di atas rata-rata
+        <span style="display:inline-block;width:12px;height:3px;background:var(--rs);border-radius:2px;margin-left:6px"></span>Di bawah rata-rata
+      </div>
+    </div>
+    <div class="chart-wrap h-220"><canvas id="divisiBar"></canvas></div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card">
+      <div class="chart-title" style="margin-bottom:0.85rem">Score per Construct <span style="font-size:0.65rem;font-weight:400;color:var(--muted)">(skala 1–4)</span></div>
+      <div style="display:flex;flex-direction:column;gap:0.45rem">
+        <div style="display:flex;align-items:center;gap:0.6rem"><span style="font-size:0.7rem;flex:1;color:var(--ink2)">BU/Division Leadership</span><div style="flex:0 0 80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:81%;height:100%;background:var(--ok);border-radius:3px"></div></div><span style="font-size:0.78rem;font-weight:700;min-width:28px;text-align:right">3,24</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem"><span style="font-size:0.7rem;flex:1;color:var(--ink2)">Supervision</span><div style="flex:0 0 80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:79%;height:100%;background:var(--ok);border-radius:3px"></div></div><span style="font-size:0.78rem;font-weight:700;min-width:28px;text-align:right">3,15</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem"><span style="font-size:0.7rem;flex:1;color:var(--ink2)">Empowerment/Autonomy</span><div style="flex:0 0 80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:79%;height:100%;background:var(--muted);border-radius:3px"></div></div><span style="font-size:0.78rem;font-weight:700;min-width:28px;text-align:right">3,14</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem"><span style="font-size:0.7rem;flex:1;color:var(--ink2)">Performance Management</span><div style="flex:0 0 80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:var(--muted);border-radius:3px"></div></div><span style="font-size:0.78rem;font-weight:700;min-width:28px;text-align:right">3,13</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem"><span style="font-size:0.7rem;flex:1;color:var(--ink2)">Rewards &amp; Recognition</span><div style="flex:0 0 80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:var(--muted);border-radius:3px"></div></div><span style="font-size:0.78rem;font-weight:700;min-width:28px;text-align:right">3,12</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem"><span style="font-size:0.7rem;flex:1;color:var(--ink2)">Turnover Intentions</span><div style="flex:0 0 80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:var(--warn);border-radius:3px"></div></div><span style="font-size:0.78rem;font-weight:700;min-width:28px;text-align:right">3,11</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem"><span style="font-size:0.7rem;flex:1;color:var(--ink2)">Collaboration</span><div style="flex:0 0 80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:var(--muted);border-radius:3px"></div></div><span style="font-size:0.78rem;font-weight:700;min-width:28px;text-align:right">3,10</span></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div class="card">
+        <div class="chart-title" style="margin-bottom:0.85rem">Program L&amp;C 2025 — Ringkasan</div>
+        <div class="svc"><span class="svc-name">Lunch and Learn</span><div class="svc-track"><div class="svc-fill-dv" style="width:100%"></div></div><span class="svc-count">4</span></div>
+        <div class="svc"><span class="svc-name">Culture Event (Snacking, 17-an, dll)</span><div class="svc-track"><div class="svc-fill-dv" style="width:75%"></div></div><span class="svc-count">3</span></div>
+        <div class="svc"><span class="svc-name">Analyst Training</span><div class="svc-track"><div class="svc-fill-dv" style="width:50%"></div></div><span class="svc-count">2</span></div>
+        <div class="svc"><span class="svc-name">Townhall</span><div class="svc-track"><div class="svc-fill-dv" style="width:50%"></div></div><span class="svc-count">2</span></div>
+        <div class="svc"><span class="svc-name">Individual Training (BNSP)</span><div class="svc-track"><div class="svc-fill-dv" style="width:50%"></div></div><span class="svc-count">2</span></div>
+        <div class="svc"><span class="svc-name">Sports (Badminton, Soccer)</span><div class="svc-track"><div class="svc-fill-dv" style="width:50%"></div></div><span class="svc-count">2</span></div>
+        <div class="svc"><span class="svc-name">Roleplay Session</span><div class="svc-track"><div class="svc-fill-dv" style="width:25%"></div></div><span class="svc-count">1</span></div>
+        <hr class="divider">
+        <div class="info-row"><span>Total program 2025</span><strong>20 program</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-badge" style="background:#7c3aed">Timeline Program 2025</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card mb">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Feb</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Snacking Day (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Analyst Training Vol.1</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Mar</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Townhall Early Year &amp; Bukber (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Alignment Sales &amp; SA</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Apr</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Peresmian Kantor RCP &amp; CKT (All)</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Jun</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Individual Training BNSP (Estu, Wita)</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Jul</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L: Dhito, Production, GA</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Roleplay Session (All Sales &amp; Analyst)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L Royston (Brand &amp; Marketing)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Townhall Half-year (All)</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Agu</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">17 Agustus-an (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Analyst Training Vol.2</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Sep</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">L&amp;L: Analyst, Taufan, Iqbal</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Okt</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L: Alka, Faris, Analyst</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Fun Dining Analyst Team</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Des</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Individual Training PM (Arri - Royston)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Individual Training (Ella - Royston)</div></div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-badge" style="background:#059669">Timeline Program 2026</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="card mb" style="border-top:3px solid #059669">
+    <div id="prog2026Stats" class="prog-stats"></div>
+    <div class="prog-toolbar">
+      <div class="prog-toolbar-left">
+        <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Filter:</span>
+        <button class="prog-filter-btn active" data-cat="all" onclick="filterPrograms('all',this)">Semua</button>
+        <button class="prog-filter-btn" data-cat="Training" onclick="filterPrograms('Training',this)">Training</button>
+        <button class="prog-filter-btn" data-cat="Culture" onclick="filterPrograms('Culture',this)">Culture</button>
+        <button class="prog-filter-btn" data-cat="Townhall" onclick="filterPrograms('Townhall',this)">Townhall</button>
+        <button class="prog-filter-btn" data-cat="Sports" onclick="filterPrograms('Sports',this)">Sports</button>
+        <button class="prog-filter-btn" data-cat="L&L" onclick="filterPrograms('L&L',this)">L&amp;L</button>
+        <button class="prog-filter-btn" data-cat="Lainnya" onclick="filterPrograms('Lainnya',this)">Lainnya</button>
+      </div>
+      <button class="prog-add-btn" onclick="openAddModal()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        Tambah Program
+      </button>
+    </div>
+    <div class="prog-timeline" id="prog2026Timeline"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- MODAL & DELETE CONFIRM -->
+<div class="prog-modal-overlay" id="progModal">
+  <div class="prog-modal">
+    <div class="prog-modal-head">
+      <h3 id="modalTitle">Tambah Program Baru</h3>
+      <button class="prog-modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="prog-modal-body">
+      <input type="hidden" id="editingId">
+      <div class="prog-field"><label>Nama Program</label><input type="text" id="inputName" placeholder="cth: Townhall Q2, L&L Analyst..."></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+        <div class="prog-field"><label>Bulan</label><select id="inputMonth"><option value="Jan">Januari</option><option value="Feb">Februari</option><option value="Mar">Maret</option><option value="Apr">April</option><option value="Mei">Mei</option><option value="Jun">Juni</option><option value="Jul">Juli</option><option value="Agu">Agustus</option><option value="Sep">September</option><option value="Okt">Oktober</option><option value="Nov">November</option><option value="Des">Desember</option></select></div>
+        <div class="prog-field"><label>Kategori</label><select id="inputCat"><option value="Training">Training</option><option value="Culture">Culture</option><option value="Townhall">Townhall</option><option value="Sports">Sports</option><option value="L&L">L&L (Lunch &amp; Learn)</option><option value="Lainnya">Lainnya</option></select></div>
+      </div>
+      <div class="prog-field"><label>Target Peserta</label><input type="text" id="inputTarget" placeholder="cth: All, Analyst, Sales, Brand & Marketing..."></div>
+      <div class="prog-field"><label>Catatan (opsional)</label><textarea id="inputNote" placeholder="Detail tambahan..."></textarea></div>
+    </div>
+    <div class="prog-modal-foot">
+      <button class="prog-btn-cancel" onclick="closeModal()">Batal</button>
+      <button class="prog-btn-save" onclick="saveProgram()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="del-confirm" id="delConfirm">
+  <div class="del-confirm-box">
+    <div class="del-confirm-icon">🗑️</div>
+    <div class="del-confirm-title">Hapus Program?</div>
+    <div class="del-confirm-sub" id="delConfirmSub">Program ini akan dihapus permanen.</div>
+    <div class="del-confirm-actions">
+      <button class="del-no" onclick="closeDelConfirm()">Batal</button>
+      <button class="del-yes" onclick="confirmDelete()">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  new Chart(document.getElementById('engDonut'), {
+    type:'doughnut',
+    data:{labels:['Highly Engaged','Moderately Engaged','Passive','Actively Disengaged'],datasets:[{data:[12,41,23,0],backgroundColor:['rgba(5,150,105,0.85)','rgba(26,86,255,0.75)','rgba(217,119,6,0.75)','rgba(232,0,61,0.75)'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:{size:10},padding:10,boxWidth:10}},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>` ${c.label}: ${c.parsed} orang (${((c.parsed/76)*100).toFixed(1)}%)`}}}}
+  });
+  new Chart(document.getElementById('constructRadar'), {
+    type:'radar',
+    data:{labels:['Turnover\nIntentions','BU/Division\nLeadership','Supervision','Collaboration','Rewards &\nRecognition','Empowerment','Performance\nMgmt'],datasets:[{label:'Score',data:[3.11,3.24,3.15,3.10,3.12,3.14,3.13],backgroundColor:'rgba(124,58,237,0.15)',borderColor:'rgba(124,58,237,0.8)',borderWidth:2,pointBackgroundColor:'rgba(124,58,237,0.8)',pointRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:1,max:4,ticks:{stepSize:1,font:{size:9}},pointLabels:{font:{size:9}},grid:{color:'rgba(0,0,0,0.06)'}}},plugins:{legend:{display:false}}}
+  });
+  const divisiData=[{name:'Finance',score:3.56},{name:'Human Capital',score:3.38},{name:'IT',score:3.38},{name:'Group Services',score:3.37},{name:'BU/Div Leadership',score:3.24},{name:'Supervision',score:3.15},{name:'Business & Solution',score:3.14},{name:'Empowerment',score:3.14},{name:'Perf. Mgmt',score:3.13},{name:'Rewards & Recog.',score:3.12},{name:'Prod & Proj Mgmt',score:3.11},{name:'Production',score:3.11},{name:'Turnover Intent.',score:3.11},{name:'Analyst',score:3.10},{name:'General Affairs',score:3.10},{name:'Op. Acceleration',score:3.10},{name:'Collaboration',score:3.10},{name:'Business Dev.',score:3.06},{name:'Sales & Marketing',score:2.98},{name:'Brand & Marketing',score:2.76}].sort((a,b)=>b.score-a.score);
+  new Chart(document.getElementById('divisiBar'),{type:'bar',data:{labels:divisiData.map(d=>d.name),datasets:[{data:divisiData.map(d=>d.score),backgroundColor:divisiData.map(d=>d.score>=3.14?'rgba(5,150,105,0.75)':'rgba(232,0,61,0.75)'),borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>` Score: ${c.parsed.y.toFixed(2)} / 4`,afterLabel:c=>c.parsed.y>=3.14?`▲ +${(c.parsed.y-3.14).toFixed(2)} dari rata-rata`:`▼ ${(c.parsed.y-3.14).toFixed(2)} dari rata-rata`}}},scales:{x:{grid:{display:false},ticks:{font:{size:8},maxRotation:45}},y:{min:1,max:4,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>v.toFixed(1)}}}}});
+  initPrograms();
+});
+
+const MONTH_ORDER=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const MONTH_FULL={Jan:'Januari',Feb:'Februari',Mar:'Maret',Apr:'April',Mei:'Mei',Jun:'Juni',Jul:'Juli',Agu:'Agustus',Sep:'September',Okt:'Oktober',Nov:'November',Des:'Desember'};
+const CAT_CONFIG={'Training':{color:'#1a56ff',bg:'rgba(26,86,255,0.1)'},'Culture':{color:'#059669',bg:'rgba(5,150,105,0.1)'},'Townhall':{color:'#7c3aed',bg:'rgba(124,58,237,0.1)'},'Sports':{color:'#d97706',bg:'rgba(217,119,6,0.1)'},'L&L':{color:'#db2777',bg:'rgba(219,39,119,0.1)'},'Lainnya':{color:'#6b7280',bg:'rgba(107,114,128,0.1)'}};
+
+let programs2026 = [
+  {id:1,month:'Jan',name:'Townhall Kick-off 2026',cat:'Townhall',target:'All',note:'Target awal tahun, setting OKR'},
+  {id:2,month:'Feb',name:'Analyst Training Vol.3',cat:'Training',target:'Analyst',note:''},
+  {id:3,month:'Mar',name:'L&L: Sales Strategy',cat:'L&L',target:'Sales',note:''},
+  {id:4,month:'Mar',name:'Fun Day — Brand & Marketing',cat:'Culture',target:'Brand & Marketing',note:'Intervensi khusus divisi skor rendah'},
+  {id:5,month:'Apr',name:'Sports Day (Badminton)',cat:'Sports',target:'All',note:''},
+  {id:6,month:'Mei',name:'L&L: Product Update',cat:'L&L',target:'All',note:''},
+];
+let nextId = 7;
+let activeFilter = 'all';
+let pendingDeleteId = null;
+
+function saveToBrowser(){try{localStorage.setItem('prog2026',JSON.stringify({items:programs2026,nextId}));}catch(e){}}
+function loadFromBrowser(){try{const d=JSON.parse(localStorage.getItem('prog2026') || 'null');
+    if (d && d.items) { programs2026 = d.items; nextId = d.nextId || (Math.max(...d.items.map(p=>p.id)) + 1); }
+  } catch(e) {}
+}
+
+function initPrograms() {
+  loadFromBrowser();
+  renderTimeline();
+  renderStats();
+}
+
+function renderStats() {
+  const total = programs2026.length;
+  const cats = {};
+  programs2026.forEach(p => { cats[p.cat] = (cats[p.cat]||0)+1; });
+  const topCat = Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];
+  const months = new Set(programs2026.map(p=>p.month));
+  document.getElementById('prog2026Stats').innerHTML = `
+    <div class="prog-stat"><div class="prog-stat-label">Total Program</div><div class="prog-stat-val" style="color:#059669">${total}</div></div>
+    <div class="prog-stat"><div class="prog-stat-label">Bulan Aktif</div><div class="prog-stat-val" style="color:#7c3aed">${months.size} / 12</div></div>
+    <div class="prog-stat"><div class="prog-stat-label">Kategori Terbanyak</div><div class="prog-stat-val" style="color:${topCat ? CAT_CONFIG[topCat[0]]?.color||'#374151' : '#374151'};font-size:0.9rem">${topCat ? topCat[0] : '—'}</div></div>
+    <div class="prog-stat"><div class="prog-stat-label">Avg/Bulan</div><div class="prog-stat-val" style="color:#d97706">${months.size > 0 ? (total/months.size).toFixed(1) : '0'}</div></div>
+  `;
+}
+
+function renderTimeline() {
+  const filtered = activeFilter === 'all' ? programs2026 : programs2026.filter(p => p.cat === activeFilter);
+  const byMonth = {};
+  MONTH_ORDER.forEach(m => { byMonth[m] = []; });
+  filtered.forEach(p => { if(byMonth[p.month]) byMonth[p.month].push(p); });
+
+  const activeMths = MONTH_ORDER.filter(m => byMonth[m].length > 0 || activeFilter === 'all');
+
+  let html = '';
+  activeMths.forEach(m => {
+    const items = byMonth[m];
+    html += `<div class="prog-month-col">
+      <div class="prog-month-head">
+        <span class="prog-month-name">${MONTH_FULL[m]||m}</span>
+        <span class="prog-month-count">${items.length}</span>
+      </div>
+      <div class="prog-month-body">`;
+
+    if(items.length === 0) {
+      html += `<div class="empty-month">Belum ada program</div>`;
+    } else {
+      items.forEach(p => {
+        const cfg = CAT_CONFIG[p.cat] || CAT_CONFIG['Lainnya'];
+        html += `<div class="prog-item" onclick="openEditModal(${p.id})">
+          <div class="prog-item-dot" style="background:${cfg.color}"></div>
+          <div class="prog-item-info">
+            <div class="prog-item-name">${escHtml(p.name)}</div>
+            <div class="prog-item-meta">
+              <span class="cat-pill" style="background:${cfg.bg};color:${cfg.color}">${p.cat}</span>
+              ${p.target ? `<span style="color:var(--muted)"> · ${escHtml(p.target)}</span>` : ''}
+            </div>
+            ${p.note ? `<div style="font-size:0.6rem;color:var(--muted);margin-top:2px;font-style:italic">${escHtml(p.note)}</div>` : ''}
+          </div>
+          <div class="prog-item-actions" onclick="event.stopPropagation()">
+            <button class="prog-action-btn prog-edit-btn" onclick="openEditModal(${p.id})" title="Edit">✏️</button>
+            <button class="prog-action-btn prog-del-btn" onclick="openDelConfirm(${p.id})" title="Hapus">🗑</button>
+          </div>
+        </div>`;
+      });
+    }
+
+    html += `<button class="prog-add-mini" onclick="openAddModalForMonth('${m}')">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      Tambah di ${MONTH_FULL[m]||m}
+    </button>`;
+    html += `</div></div>`;
+  });
+
+  document.getElementById('prog2026Timeline').innerHTML = html;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function filterPrograms(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.prog-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTimeline();
+}
+
+function openAddModal() {
+  document.getElementById('editingId').value = '';
+  document.getElementById('modalTitle').textContent = 'Tambah Program Baru';
+  document.getElementById('inputName').value = '';
+  document.getElementById('inputMonth').value = 'Jan';
+  document.getElementById('inputCat').value = 'Training';
+  document.getElementById('inputTarget').value = '';
+  document.getElementById('inputNote').value = '';
+  document.getElementById('progModal').classList.add('open');
+  setTimeout(() => document.getElementById('inputName').focus(), 100);
+}
+
+function openAddModalForMonth(month) {
+  openAddModal();
+  document.getElementById('inputMonth').value = month;
+}
+
+function openEditModal(id) {
+  const p = programs2026.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('editingId').value = id;
+  document.getElementById('modalTitle').textContent = 'Edit Program';
+  document.getElementById('inputName').value = p.name;
+  document.getElementById('inputMonth').value = p.month;
+  document.getElementById('inputCat').value = p.cat;
+  document.getElementById('inputTarget').value = p.target || '';
+  document.getElementById('inputNote').value = p.note || '';
+  document.getElementById('progModal').classList.add('open');
+  setTimeout(() => document.getElementById('inputName').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('progModal').classList.remove('open');
+}
+
+function saveProgram() {
+  const name = document.getElementById('inputName').value.trim();
+  if (!name) { document.getElementById('inputName').style.borderColor='var(--rs)'; return; }
+  document.getElementById('inputName').style.borderColor='';
+
+  const editId = parseInt(document.getElementById('editingId').value);
+  const prog = {
+    id: editId || nextId++,
+    name,
+    month: document.getElementById('inputMonth').value,
+    cat: document.getElementById('inputCat').value,
+    target: document.getElementById('inputTarget').value.trim(),
+    note: document.getElementById('inputNote').value.trim(),
+  };
+
+  if (editId) {
+    const idx = programs2026.findIndex(p => p.id === editId);
+    if (idx !== -1) programs2026[idx] = prog;
+  } else {
+    programs2026.push(prog);
+  }
+
+  saveToBrowser();
+  closeModal();
+  renderTimeline();
+  renderStats();
+}
+
+function openDelConfirm(id) {
+  const p = programs2026.find(x => x.id === id);
+  if (!p) return;
+  pendingDeleteId = id;
+  document.getElementById('delConfirmSub').textContent = `"${p.name}" akan dihapus permanen.`;
+  document.getElementById('delConfirm').classList.add('open');
+}
+
+function closeDelConfirm() {
+  pendingDeleteId = null;
+  document.getElementById('delConfirm').classList.remove('open');
+}
+
+function confirmDelete() {
+  if (pendingDeleteId === null) return;
+  programs2026 = programs2026.filter(p => p.id !== pendingDeleteId);
+  pendingDeleteId = null;
+  saveToBrowser();
+  closeDelConfirm();
+  renderTimeline();
+  renderStats();
+}
+
+// Close modal on overlay click
+document.getElementById('progModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('delConfirm').addEventListener('click', function(e) {
+  if (e.target === this) closeDelConfirm();
+});
+
+// Keyboard ESC to close
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeModal(); closeDelConfirm(); }
+});
+</script>
+</body>
+</html>
