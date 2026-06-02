@@ -789,7 +789,7 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
   document.querySelector('.tab-btn.tab-' + tab).classList.add('active');
-  if (tab === 'sales' && !window._salesChartsInited) {
+  if (tab === 'sales') {
     window._salesChartsInited = true;
     initSalesCharts();
   }
@@ -1199,6 +1199,14 @@ function applyRevenueData(rev) {
     if (_chartDv)    { _chartDv.data.datasets[0].data    = dvRev.slice(); _chartDv.update('none'); }
     updateRekapTable(rev.months);
     updateKPICards(rev.months);
+
+    // Update Sales tab banner
+  var salesBannerNum = document.querySelector('#panel-sales .banner-num');
+  var salesBannerPct = document.querySelector('#panel-sales .banner-pct');
+  var salesBannerSub = document.querySelector('#panel-sales .banner-sub');
+  if (salesBannerNum) salesBannerNum.textContent = 'Rp ' + fM(totalDv);
+  if (salesBannerPct) salesBannerPct.textContent = pctDv + '%';
+  if (salesBannerSub) salesBannerSub.textContent = SALES_DATA.length + ' sales · 91 kontrak · target Rp 32 Milyar';
   }
  
   // Map nama sales ke key JSON (Apps Script return lowercase)
@@ -1262,7 +1270,7 @@ function applyActiveClientsData(ac) {
   // Key di sheet: "Abdul", "Chatrine", "Lia", "Desy", "AYU"
   SALES_DATA.forEach(function(s) {
     // Coba beberapa variasi nama key
-    var variants = [s.name, s.name.toUpperCase(), s.name.toLowerCase()];
+    var variants = [s.name, s.name.toUpperCase(), s.name.toLowerCase(), 'AYU'];
     var row = null;
     for (var v = 0; v < variants.length; v++) {
       if (ac[variants[v]]) { row = ac[variants[v]]; break; }
@@ -1486,9 +1494,8 @@ function initSalesCharts(){
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  maskRevenueUI();       // sembunyikan angka dulu
-  initSalesCharts();
-  loadDashboardData();   // fetch realtime → applyRevenueData() akan update semua
+  maskRevenueUI();
+  loadDashboardData();   // fetch dulu, baru init sales charts
 });
 </script>
 
