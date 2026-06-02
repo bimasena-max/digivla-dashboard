@@ -1044,6 +1044,55 @@ let dvCnt = FALLBACK.dvCnt.slice();
 let rsJt  = FALLBACK.rsJt.slice();
 let rsCnt = FALLBACK.rsCnt.slice();
 let rsRev = rsJt.map(v => v / 1000);
+ 
+// Flag: apakah data realtime sudah datang
+let _realtimeReady = false;
+ 
+// Fungsi untuk mask angka revenue dengan skeleton loading
+function maskRevenueUI() {
+  const SKELETON = '<span style="display:inline-block;background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:4px;color:transparent;min-width:80px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+  const SKELETON_SMALL = '<span style="display:inline-block;background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:4px;color:transparent;min-width:48px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+ 
+  // Inject shimmer keyframes jika belum ada
+  if (!document.getElementById('_shimmerStyle')) {
+    var style = document.createElement('style');
+    style.id = '_shimmerStyle';
+    style.textContent = '@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}';
+    document.head.appendChild(style);
+  }
+ 
+  const mask = (id, small) => {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = small ? SKELETON_SMALL : SKELETON;
+  };
+ 
+  // Banner
+  mask('banner-total');
+  mask('banner-pct');
+  mask('banner-sub');
+ 
+  // Stats row
+  mask('stat-total-dv', true);
+  mask('stat-total-gabungan', true);
+  mask('stat-capaian-total', true);
+  mask('stat-puncak-val', true);
+ 
+  // KPI cards Digivla
+  mask('kpi-dv-revenue');
+  mask('kpi-dv-pct-chip', true);
+  mask('kpi-dv-capaian', true);
+  mask('kpi-dv-capaian-foot');
+  mask('kpi-dv-aktif-chip', true);
+  mask('kpi-dv-klien-num', true);
+  mask('kpi-dv-klien-pct', true);
+ 
+  // Chart stats
+  mask('dv-stat-high', true);
+  mask('dv-stat-low', true);
+  mask('dv-stat-avg', true);
+  mask('dv-stat-total', true);
+  mask('rekap-total', true);
+}
 
 let _chartTotal = null, _chartDv = null, _chartRs = null;
 let _salesCharts = [];
@@ -1136,40 +1185,9 @@ function loadDashboardData(forceRefresh) {
 
 function applyRevenueData(rev) {
   if (!rev) return;
-
-  // Normalisasi totalPerSales
-  var tp = rev.totalPerSales || {};
-  var normalized = {};
-  Object.keys(tp).forEach(function(k) {
-    var clean = k.trim().charAt(0).toUpperCase() + k.trim().slice(1).toLowerCase();
-    normalized[clean] = parseFloat(tp[k]) || 0;
-  });
-  var grandTotalDv = Object.values(normalized).reduce(function(a,b){ return a+b; }, 0);
-
-  // ── Kalau TIDAK ada data bulanan ──
-  if (!rev.months || !rev.months.length) {
-    if (grandTotalDv <= 0) return;
-    var totalRs = rsJt.reduce(function(a,v){ return a+v; }, 0) * 1e6;
-    var totalGab = grandTotalDv + totalRs;
-    var pctDv  = (grandTotalDv / 32e9 * 100).toFixed(1);
-    var pctGab = (totalGab / 38e9 * 100).toFixed(1);
-    function fM(v){ return (v/1e9).toFixed(2).replace('.',',') + ' M'; }
-    var el = function(id){ return document.getElementById(id); };
-    if (el('banner-total')) el('banner-total').textContent = 'Rp ' + (totalGab/1e9).toFixed(2).replace('.',',') + ' Milyar';
-    if (el('banner-sub'))   el('banner-sub').textContent   = 'Digivla Rp ' + fM(grandTotalDv) + ' · Royston Rp ' + fM(totalRs) + ' · Target Gabungan Rp 38 Milyar';
-    if (el('banner-pct'))   el('banner-pct').textContent   = pctGab + '%';
-    if (el('stat-total-dv'))       el('stat-total-dv').textContent       = fM(grandTotalDv);
-    if (el('stat-total-gabungan')) el('stat-total-gabungan').textContent = fM(totalGab);
-    if (el('stat-capaian-total'))  el('stat-capaian-total').textContent  = pctGab + '%';
-    if (el('kpi-dv-revenue'))      el('kpi-dv-revenue').textContent      = 'Rp ' + fM(grandTotalDv);
-    if (el('kpi-dv-pct-chip'))     el('kpi-dv-pct-chip').textContent     = pctDv + '%';
-    if (el('kpi-dv-bar'))          el('kpi-dv-bar').style.width          = Math.min(100, pctDv) + '%';
-    if (el('kpi-dv-capaian'))      el('kpi-dv-capaian').textContent      = pctDv + '%';
-    if (el('kpi-dv-capaian-foot')) el('kpi-dv-capaian-foot').textContent = 'Rp ' + fM(grandTotalDv) + ' dari target Rp 32 M';
-    if (el('dv-stat-total'))       el('dv-stat-total').textContent       = fM(grandTotalDv);
-  }
-
-  // ── Kalau ADA data bulanan ──
+  _realtimeReady = true;
+ 
+  // Update chart & rekap dari data bulanan
   if (rev.months && rev.months.length) {
     for (var i = 0; i < 12; i++) dvRev[i] = 0;
     rev.months.forEach(function(m) {
@@ -1182,45 +1200,45 @@ function applyRevenueData(rev) {
     updateRekapTable(rev.months);
     updateKPICards(rev.months);
   }
-
-  // ── Update revenue per sales dari breakdown bulanan ──
-  var hasAny = false;
+ 
+  // Map nama sales ke key JSON (Apps Script return lowercase)
+  var SALES_KEY_MAP = {
+    'Abdul':    'abdul',
+    'Chatrine': 'chatrine',
+    'Lia':      'lia',
+    'Desy':     'desy',
+    'Ayu':      'ayu',
+    'Wenda':    'wenda',
+    'Jody':     'jody'
+  };
+ 
+  // Apply revenue per sales dari breakdown bulanan
   if (rev.months && rev.months.length) {
-    var salesKeys = ['abdul','chatrine','lia','desy','ayu'];
     SALES_DATA.forEach(function(s) {
-      var key = s.name.toLowerCase();
-      if (salesKeys.indexOf(key) === -1) return;
+      var key = SALES_KEY_MAP[s.name] || s.name.toLowerCase();
       var monthly = new Array(12).fill(0);
       rev.months.forEach(function(m) {
         var idx = BULAN_IDX[m.bulan];
         if (idx === undefined) return;
-        monthly[idx] = parseFloat(m[key]) || 0;
+        var val = parseFloat(m[key]) || 0;
+        monthly[idx] = val;
       });
-      var total = monthly.reduce(function(a,b){ return a+b; }, 0);
-      if (total > 0) { s.rev_monthly = monthly; s.rev_total = total; hasAny = true; }
-    });
-  }
-
-  // Fallback ke totalPerSales kalau breakdown bulanan kosong
-  if (!hasAny) {
-    SALES_DATA.forEach(function(s) {
-      var total = normalized[s.name] || 0;
+      var total = monthly.reduce(function(a, b) { return a + b; }, 0);
       if (total > 0) {
-        s.rev_total = total;
-        s.rev_monthly = s.rev_monthly.map(function(){ return total / 12; });
-        hasAny = true;
+        s.rev_monthly = monthly;
+        s.rev_total   = total;
       }
     });
   }
-
-  if (!hasAny) return;
-
-  var teamTotal = SALES_DATA.reduce(function(a,s){ return a + s.rev_total; }, 0);
-  SALES_DATA.forEach(function(s){
+ 
+  // Hitung pct & sort
+  var teamTotal = SALES_DATA.reduce(function(a, s) { return a + s.rev_total; }, 0);
+  SALES_DATA.forEach(function(s) {
     s.pct = teamTotal > 0 ? +((s.rev_total / teamTotal) * 100).toFixed(1) : 0;
   });
-  SALES_DATA.sort(function(a,b){ return b.rev_total - a.rev_total; });
-
+  SALES_DATA.sort(function(a, b) { return b.rev_total - a.rev_total; });
+ 
+  // Refresh UI sales tab jika sudah render
   if (document.getElementById('leaderboard') &&
       document.getElementById('leaderboard').children.length > 0) {
     refreshSalesUI();
@@ -1468,8 +1486,9 @@ function initSalesCharts(){
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  maskRevenueUI();       // sembunyikan angka dulu
   initSalesCharts();
-  loadDashboardData();
+  loadDashboardData();   // fetch realtime → applyRevenueData() akan update semua
 });
 </script>
 
