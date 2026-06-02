@@ -1353,10 +1353,11 @@ function updateKPICards(months) {
   var sBannerNum = document.querySelector('#panel-sales .banner-num');
   var sBannerPct = document.querySelector('#panel-sales .banner-pct');
   var sBannerSub = document.querySelector('#panel-sales .banner-sub');
-  if (sBannerNum) sBannerNum.textContent = 'Rp ' + fM(totalDv);
-  if (sBannerPct) sBannerPct.textContent = pctDv + '%';
+  if (sBannerNum) sBannerNum.textContent = 'Rp ' + (totalDv/1e9).toFixed(2).replace('.',',') + ' M';
+  if (sBannerPct) sBannerPct.textContent = (totalDv/32e9*100).toFixed(1) + '%';
   if (sBannerSub) sBannerSub.textContent = '7 sales · 91 kontrak · target Rp 32 Milyar';
 }
+
 
 function updateRekapTable(months) {
   const tableBody = document.getElementById('rekap-tbody');
@@ -1378,9 +1379,16 @@ function updateRekapTable(months) {
 }
 
 function refreshSalesUI() {
-  Object.values(Chart.instances).forEach(function(instance) {
-    try { instance.destroy(); } catch(e) {}
+  ['donutChart','stackedChart','trendChart'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && el._chartInstance) { try { el._chartInstance.destroy(); } catch(e){} }
+    var existing = Chart.getChart(id);
+    if (existing) { try { existing.destroy(); } catch(e){} }
   });
+  for (var i = 0; i < 7; i++) {
+    var el = document.getElementById('schart_' + i);
+    if (el) { var c = Chart.getChart(el); if (c) { try { c.destroy(); } catch(e){} } }
+  }
   initSalesCharts();
 }
 _chartTotal = new Chart(document.getElementById('totalChart'), {
