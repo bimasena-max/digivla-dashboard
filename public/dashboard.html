@@ -1137,7 +1137,39 @@ function loadDashboardData(forceRefresh) {
 function applyRevenueData(rev) {
   if (!rev) return;
 
-  // ── A. Update chart revenue total (kalau ada data bulanan) ──
+  // Normalisasi totalPerSales
+  var tp = rev.totalPerSales || {};
+  var normalized = {};
+  Object.keys(tp).forEach(function(k) {
+    var clean = k.trim().charAt(0).toUpperCase() + k.trim().slice(1).toLowerCase();
+    normalized[clean] = parseFloat(tp[k]) || 0;
+  });
+  var grandTotalDv = Object.values(normalized).reduce(function(a,b){ return a+b; }, 0);
+
+  // ── Kalau TIDAK ada data bulanan ──
+  if (!rev.months || !rev.months.length) {
+    if (grandTotalDv <= 0) return;
+    var totalRs = rsJt.reduce(function(a,v){ return a+v; }, 0) * 1e6;
+    var totalGab = grandTotalDv + totalRs;
+    var pctDv  = (grandTotalDv / 32e9 * 100).toFixed(1);
+    var pctGab = (totalGab / 38e9 * 100).toFixed(1);
+    function fM(v){ return (v/1e9).toFixed(2).replace('.',',') + ' M'; }
+    var el = function(id){ return document.getElementById(id); };
+    if (el('banner-total')) el('banner-total').textContent = 'Rp ' + (totalGab/1e9).toFixed(2).replace('.',',') + ' Milyar';
+    if (el('banner-sub'))   el('banner-sub').textContent   = 'Digivla Rp ' + fM(grandTotalDv) + ' · Royston Rp ' + fM(totalRs) + ' · Target Gabungan Rp 38 Milyar';
+    if (el('banner-pct'))   el('banner-pct').textContent   = pctGab + '%';
+    if (el('stat-total-dv'))       el('stat-total-dv').textContent       = fM(grandTotalDv);
+    if (el('stat-total-gabungan')) el('stat-total-gabungan').textContent = fM(totalGab);
+    if (el('stat-capaian-total'))  el('stat-capaian-total').textContent  = pctGab + '%';
+    if (el('kpi-dv-revenue'))      el('kpi-dv-revenue').textContent      = 'Rp ' + fM(grandTotalDv);
+    if (el('kpi-dv-pct-chip'))     el('kpi-dv-pct-chip').textContent     = pctDv + '%';
+    if (el('kpi-dv-bar'))          el('kpi-dv-bar').style.width          = Math.min(100, pctDv) + '%';
+    if (el('kpi-dv-capaian'))      el('kpi-dv-capaian').textContent      = pctDv + '%';
+    if (el('kpi-dv-capaian-foot')) el('kpi-dv-capaian-foot').textContent = 'Rp ' + fM(grandTotalDv) + ' dari target Rp 32 M';
+    if (el('dv-stat-total'))       el('dv-stat-total').textContent       = fM(grandTotalDv);
+  }
+
+  // ── Kalau ADA data bulanan ──
   if (rev.months && rev.months.length) {
     for (var i = 0; i < 12; i++) dvRev[i] = 0;
     rev.months.forEach(function(m) {
@@ -1151,31 +1183,8 @@ function applyRevenueData(rev) {
     updateKPICards(rev.months);
   }
 
-  // ── B. Update revenue per sales dari totalPerSales ──
-  var tp = rev.totalPerSales || {};
-
-  // Normalisasi key (case-insensitive + 'AYU' → 'Ayu')
-  var normalized = {};
-  Object.keys(tp).forEach(function(k) {
-    var clean = k.trim();
-    // Capitalize first letter, lowercase rest
-    clean = clean.charAt(0).toUpperCase() + clean.slice(1).toLowerCase();
-    normalized[clean] = parseFloat(tp[k]) || 0;
-  });
-
-  var hasAnyRevenue = false;
-  SALES_DATA.forEach(function(s) {
-    var total = normalized[s.name] || 0;
-    if (total > 0) {
-      s.rev_total = total;
-      hasAnyRevenue = true;
-      // Distribusi rata per bulan (fallback visual — akan dioverride kalau ada data bulanan)
-      var avg = total / 12;
-      s.rev_monthly = s.rev_monthly.map(function() { return avg; });
-    }
-  });
-
-  // ── C. Kalau ada breakdown bulanan per sales, pakai itu ──
+  // ── Update revenue per sales dari breakdown bulanan ──
+  var hasAny = false;
   if (rev.months && rev.months.length) {
     var salesKeys = ['abdul','chatrine','lia','desy','ayu'];
     SALES_DATA.forEach(function(s) {
@@ -1187,27 +1196,31 @@ function applyRevenueData(rev) {
         if (idx === undefined) return;
         monthly[idx] = parseFloat(m[key]) || 0;
       });
-      var total = monthly.reduce(function(a, b) { return a + b; }, 0);
+      var total = monthly.reduce(function(a,b){ return a+b; }, 0);
+      if (total > 0) { s.rev_monthly = monthly; s.rev_total = total; hasAny = true; }
+    });
+  }
+
+  // Fallback ke totalPerSales kalau breakdown bulanan kosong
+  if (!hasAny) {
+    SALES_DATA.forEach(function(s) {
+      var total = normalized[s.name] || 0;
       if (total > 0) {
-        s.rev_monthly = monthly;
-        s.rev_total   = total;
-        hasAnyRevenue = true;
+        s.rev_total = total;
+        s.rev_monthly = s.rev_monthly.map(function(){ return total / 12; });
+        hasAny = true;
       }
     });
   }
 
-  if (!hasAnyRevenue) return;
+  if (!hasAny) return;
 
-  // ── D. Hitung ulang persentase & refresh UI ──
-  var teamTotal = SALES_DATA.reduce(function(a, s) { return a + s.rev_total; }, 0);
-  SALES_DATA.forEach(function(s) {
+  var teamTotal = SALES_DATA.reduce(function(a,s){ return a + s.rev_total; }, 0);
+  SALES_DATA.forEach(function(s){
     s.pct = teamTotal > 0 ? +((s.rev_total / teamTotal) * 100).toFixed(1) : 0;
   });
+  SALES_DATA.sort(function(a,b){ return b.rev_total - a.rev_total; });
 
-  // Sort leaderboard by revenue
-  SALES_DATA.sort(function(a, b) { return b.rev_total - a.rev_total; });
-
-  // Refresh sales tab kalau sudah dirender
   if (document.getElementById('leaderboard') &&
       document.getElementById('leaderboard').children.length > 0) {
     refreshSalesUI();
