@@ -48,11 +48,6 @@
   // ── 3. ANTI-SCRAPING ──
   document.addEventListener('contextmenu',function(e){e.preventDefault();});
   document.addEventListener('selectstart',function(e){e.preventDefault();});
-  document.addEventListener('keydown',function(e){
-    var k=e.key?e.key.toLowerCase():'';
-    if((e.ctrlKey||e.metaKey)&&['u','s','a','p'].includes(k)){e.preventDefault();return false;}
-    if(e.key==='F12'){e.preventDefault();return false;}
-  });
   setInterval(function(){
     if(window.outerWidth-window.innerWidth>160||window.outerHeight-window.innerHeight>160){
       console.clear();
