@@ -1199,14 +1199,6 @@ function applyRevenueData(rev) {
     if (_chartDv)    { _chartDv.data.datasets[0].data    = dvRev.slice(); _chartDv.update('none'); }
     updateRekapTable(rev.months);
     updateKPICards(rev.months);
-
-    // Update Sales tab banner
-  var salesBannerNum = document.querySelector('#panel-sales .banner-num');
-  var salesBannerPct = document.querySelector('#panel-sales .banner-pct');
-  var salesBannerSub = document.querySelector('#panel-sales .banner-sub');
-  if (salesBannerNum) salesBannerNum.textContent = 'Rp ' + fM(totalDv);
-  if (salesBannerPct) salesBannerPct.textContent = pctDv + '%';
-  if (salesBannerSub) salesBannerSub.textContent = SALES_DATA.length + ' sales · 91 kontrak · target Rp 32 Milyar';
   }
  
   // Map nama sales ke key JSON (Apps Script return lowercase)
