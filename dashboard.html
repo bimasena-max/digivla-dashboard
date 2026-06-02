@@ -48,14 +48,6 @@
   // ── 3. ANTI-SCRAPING ──
   document.addEventListener('contextmenu',function(e){e.preventDefault();});
   document.addEventListener('selectstart',function(e){e.preventDefault();});
-  setInterval(function(){
-    if(window.outerWidth-window.innerWidth>160||window.outerHeight-window.innerHeight>160){
-      console.clear();
-      console.log('%c⛔ Restricted','color:#e8003d;font-size:20px;font-weight:bold');
-      console.log('%cDashboard ini bersifat rahasia. Unauthorized access dilarang.','color:#6b7280;font-size:11px');
-    }
-  },1500);
-
   // ── 4. WATERMARK ──
   document.addEventListener('DOMContentLoaded',function(){
     var wm=document.createElement('div');
