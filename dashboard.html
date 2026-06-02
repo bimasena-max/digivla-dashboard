@@ -771,6 +771,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 <script>
 /* ── TAB SWITCH ── */
+/* ── TAB SWITCH ── */
 function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -778,10 +779,9 @@ function switchTab(tab) {
   document.querySelector('.tab-btn.tab-' + tab).classList.add('active');
   if (tab === 'sales') {
     window._salesChartsInited = true;
-    initSalesCharts();
+    refreshSalesUI(); // <--- CALL THE REFRESH FUNCTION INSTEAD
   }
 }
-
 function fJt(juta) {
   if (juta === 0) return '0';
   if (juta >= 1000) return (juta / 1000).toLocaleString('id-ID', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' M';
