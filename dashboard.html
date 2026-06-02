@@ -1228,11 +1228,9 @@ function applyRevenueData(rev) {
   // Refresh UI sales tab jika sudah render
  // Selalu refresh sales UI setelah data datang
   // Force refresh sales charts dengan data baru
-  window._salesChartsInited = false;
   setTimeout(function() {
-    window._salesChartsInited = true;
-    initSalesCharts();
-  }, 100);
+    refreshSalesUI();
+  }, 200);
   // Kalau tidak aktif, akan dirender waktu user klik tab Sales
 }
 
@@ -1371,14 +1369,11 @@ function updateRekapTable(months) {
 }
 
 function refreshSalesUI() {
-  Chart.helpers.each(Chart.instances, function(instance) {
-    if (['donutChart', 'stackedChart', 'trendChart'].indexOf(instance.canvas.id) > -1 || instance.canvas.id.indexOf('schart_') === 0) {
-      instance.destroy();
-    }
+  Object.values(Chart.instances).forEach(function(instance) {
+    try { instance.destroy(); } catch(e) {}
   });
   initSalesCharts();
 }
-
 _chartTotal = new Chart(document.getElementById('totalChart'), {
   type: 'bar',
   data: {
