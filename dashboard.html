@@ -1248,12 +1248,12 @@ function applyRevenueData(rev) {
  
   // Refresh UI sales tab jika sudah render
  // Selalu refresh sales UI setelah data datang
+  // Force refresh sales charts dengan data baru
   window._salesChartsInited = false;
-  if (document.querySelector('#panel-sales.active')) {
-    // Sales tab sedang aktif, langsung render
+  setTimeout(function() {
     window._salesChartsInited = true;
     initSalesCharts();
-  }
+  }, 100);
   // Kalau tidak aktif, akan dirender waktu user klik tab Sales
 }
 
