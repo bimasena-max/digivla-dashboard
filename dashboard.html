@@ -1249,8 +1249,13 @@ function applyActiveClientsData(ac) {
 
   // Update klien per sales dari Active Clients Tracker
   // Key di sheet: "Abdul", "Chatrine", "Lia", "Desy", "AYU"
+  // Update klien per sales dari Active Clients Tracker
+  // Key di sheet: "Abdul", "Chatrine", "Lia", "Desy", "AYU"
+  var BULAN_NAMA = ['Januari','Februari','Maret','April','Mei','Juni',
+    'Juli','Agustus','September','Oktober','November','Desember'];
+  var CURRENT_MONTH = BULAN_NAMA[new Date().getMonth()];
+
   SALES_DATA.forEach(function(s) {
-    // Coba beberapa variasi nama key
     var variants = [s.name, s.name.toUpperCase(), s.name.toLowerCase(), 'AYU'];
     var row = null;
     for (var v = 0; v < variants.length; v++) {
@@ -1258,20 +1263,13 @@ function applyActiveClientsData(ac) {
     }
     if (!row || !row.length) return;
 
-    // Ambil bulan terbaru yang ada datanya
-    // Ambil bulan terbaru yang ada datanya
-    var latestVal = 0;
-    row.forEach(function(item) {
-      var val = parseInt(item.value) || 0;
-      if (val > 0) latestVal = val;
+    var currentRow = row.find(function(item) {
+      return String(item.bulan||'').trim() === CURRENT_MONTH;
     });
-    if (latestVal > 0) s.clients = latestVal;
-
-    // Hitung total kontrak = jumlah bulan dengan klien > 0 (pendekatan)
-    var activeMonths = row.filter(function(item) {
-      return (parseInt(item.value) || 0) > 0;
-    }).length;
-    if (activeMonths > 0 && s.contracts === 0) s.contracts = activeMonths;
+    if (currentRow) {
+      var val = parseInt(currentRow.value) || 0;
+      if (val > 0) s.clients = val;
+    }
   });
 }
 
