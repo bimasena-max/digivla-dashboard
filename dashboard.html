@@ -1161,17 +1161,18 @@ function loadDashboardData(forceRefresh) {
     if (!data || !data.ok) { setRealtimeBadge(false); return; }
     try {
       applyActiveClientsData(data.activeClients);
-      applyRevenueData(data.revenueAkrual);
       applyServicesData(data.services);
+      // existingClients dulu sebelum applyRevenueData supaya client_list sudah terisi saat salesGrid di-render
+      if (data.existingClients && (data.existingClients.list || Array.isArray(data.existingClients))) {
+        applyExistingClientsData(data.existingClients);
+      }
+      applyRevenueData(data.revenueAkrual);
       setRealtimeBadge(true);
     } catch(e) { console.error('Error applying data:', e); setRealtimeBadge(false); }
     if (data.healthCheck && data.healthCheck.length) {
       _allRows = data.healthCheck;
       populateDropdown(_allRows);
       renderHealthSection(_allRows, document.getElementById('healthMonthSelect').value || 'April');
-    }
-    if (data.existingClients && data.existingClients.length) {
-      applyExistingClientsData(data.existingClients);
     }
   };
   script.onerror = function() { cleanup(); _dashLoading = false; setRealtimeBadge(false); updateRefreshBtn(false); };
