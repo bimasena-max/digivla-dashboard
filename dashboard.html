@@ -528,7 +528,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
           <tr><td><strong>Oktober</strong></td><td style="color:var(--dv);font-weight:600">Rp 580 Jt</td><td>42 klien</td><td style="color:var(--muted)">Rp 10.225 Jt</td></tr>
           <tr><td><strong>November</strong></td><td style="color:var(--dv);font-weight:600">Rp 472 Jt</td><td>37 klien</td><td style="color:var(--muted)">Rp 10.698 Jt</td></tr>
           <tr><td><strong>Desember</strong></td><td style="color:var(--dv);font-weight:600">Rp 467 Jt</td><td>36 klien</td><td style="color:var(--muted)">Rp 11.165 Jt</td></tr>
-          <tr class="row-total-dv"><td>TOTAL 2026</td><td id="rekap-total">Rp 11.165 Jt</td><td>91 kontrak</td><td></td></tr>
+          <tr class="row-total-dv"><td>TOTAL 2026</td><td id="rekap-total">Rp 11.165 Jt</td><td id="rekap-kontrak">91 kontrak</td><td></td></tr>
         </tbody>
       </table>
       <div style="padding:0.5rem 0.75rem;font-size:0.6rem;color:var(--muted);background:var(--bg)"></div>
@@ -577,7 +577,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
         <div class="svc"><span class="svc-name">API</span><div class="svc-track"><div class="svc-fill-dv" style="width:4%"></div></div><span class="svc-count">2</span></div>
         <div class="svc"><span class="svc-name">Command Centre</span><div class="svc-track"><div class="svc-fill-dv" style="width:2%"></div></div><span class="svc-count">1</span></div>
         <hr class="divider">
-        <div class="info-row"><span>Total layanan aktif</span><strong>117 Services</strong></div>
+        <div class="info-row"><span>Total layanan aktif</span><strong id="info-total-layanan">117 Services</strong></div>
       </div>
     </div>
   </div>
@@ -727,7 +727,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
     <div>
       <div class="banner-label">Total Revenue Akrual Digivla 2026 — Seluruh Sales</div>
       <div class="banner-num">Rp 11,16 Milyar</div>
-      <div class="banner-sub">7 sales · 91 kontrak · target Rp 32 Milyar</div>
+      <div class="banner-sub" id="sales-banner-sub">7 sales · 91 kontrak · target Rp 32 Milyar</div>
     </div>
     <div class="banner-right">
       <div class="banner-label">Capaian</div>
@@ -1192,6 +1192,18 @@ function applyExistingClientsData(clients) {
       .sort(function(a, b) { return b.nett_monthly - a.nett_monthly });
     s.client_list = salesClients;
   });
+
+  // Hitung total kontrak aktif & update semua elemen terkait
+  var totalKontrak = clients.filter(function(c) { return c.active; }).length;
+
+  var elKpiKontrak = document.getElementById('kpi-dv-kontrak');
+  if (elKpiKontrak) elKpiKontrak.innerHTML = totalKontrak + ' <span style="font-size:1rem;color:var(--muted);font-weight:400">kontrak</span>';
+
+  var elRekapKontrak = document.getElementById('rekap-kontrak');
+  if (elRekapKontrak) elRekapKontrak.textContent = totalKontrak + ' kontrak';
+
+  var elSalesBanner = document.getElementById('sales-banner-sub');
+  if (elSalesBanner) elSalesBanner.textContent = '7 sales · ' + totalKontrak + ' kontrak · target Rp 32 Milyar';
 }
 
 function applyRevenueData(rev) {
@@ -1310,6 +1322,16 @@ function applyServicesData(services) {
       if (val > 0) sd.services[svc] = (sd.services[svc] || 0) + val;
     });
   });
+
+  // Hitung total semua services & update elemen
+  var totalSvc = 0;
+  services.forEach(function(row) {
+    ['Abdul','Chatrine','Lia','Desy','Ayu'].forEach(function(name) {
+      totalSvc += parseInt(row[name] || row[name.toUpperCase()] || row[name.toLowerCase()] || 0);
+    });
+  });
+  var elSvc = document.getElementById('info-total-layanan');
+  if (elSvc) elSvc.textContent = totalSvc + ' Services';
 }
 
 function updateKPICards(months) {
@@ -1378,7 +1400,11 @@ function updateKPICards(months) {
   var sBannerSub = document.querySelector('#panel-sales .banner-sub');
   if (sBannerNum) sBannerNum.textContent = 'Rp ' + (totalDv/1e9).toFixed(2).replace('.',',') + ' M';
   if (sBannerPct) sBannerPct.textContent = (totalDv/32e9*100).toFixed(1) + '%';
-  if (sBannerSub) sBannerSub.textContent = '7 sales · 91 kontrak · target Rp 32 Milyar';
+  if (sBannerSub) {
+    var totalKontrakEl = document.getElementById('kpi-dv-kontrak');
+    var kontrakNum = totalKontrakEl ? totalKontrakEl.textContent.replace(/[^0-9]/g,'') : '91';
+    sBannerSub.textContent = '7 sales · ' + kontrakNum + ' kontrak · target Rp 32 Milyar';
+  }
 }
 
 
