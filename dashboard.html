@@ -1280,7 +1280,7 @@ function applyActiveClientsData(ac) {
   var CURRENT_MONTH = BULAN_NAMA[new Date().getMonth()];
 
   SALES_DATA.forEach(function(s) {
-    var variants = [s.name, s.name.toUpperCase(), s.name.toLowerCase(), 'AYU'];
+    var variants = [s.name, s.name.toUpperCase(), s.name.toLowerCase(), 'AYU', 'Wenda', 'WENDA', 'wenda'];
     var row = null;
     for (var v = 0; v < variants.length; v++) {
       if (ac[variants[v]]) { row = ac[variants[v]]; break; }
