@@ -377,6 +377,12 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .del-no { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 600; padding: 0.5rem 1.25rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink2); cursor: pointer; }
 .del-yes { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; border: none; background: var(--rs); color: #fff; cursor: pointer; }
 .empty-month { text-align: center; padding: 0.75rem; color: var(--muted); font-size: 0.68rem; font-style: italic; }
+
+.cl-pagination{display:flex;align-items:center;justify-content:space-between;padding:.5rem 0 .2rem;margin-top:.4rem;border-top:1px solid var(--border2)}
+.cl-page-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:6px;padding:.25rem .6rem;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .15s;color:var(--ink2)}
+.cl-page-btn:hover:not(:disabled){border-color:#7c3aed;color:#7c3aed}
+.cl-page-btn:disabled{opacity:.3;cursor:default}
+.cl-page-info{font-size:.65rem;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1213,7 +1219,7 @@ function applyRevenueData(rev) {
     'Lia':      'lia',
     'Desy':     'desy',
     'Ayu':      'ayu',
-    'Wenda':    'wenda',
+    'Whenda':   'whenda',
     'Jody':     'jody'
   };
  
@@ -1453,7 +1459,7 @@ const SALES_DATA = [
   {name:"Desy",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
   {name:"Lia",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
   {name:"Ayu",target_monthly:200,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
-  {name:"Wenda",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
+  {name:"Whenda",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
   {name:"Jody",target_monthly:200,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]}
 ];
 
@@ -1486,30 +1492,51 @@ function initSalesCharts(){
   const maxSvc=Math.max(...SALES_DATA.map(s=>s.services&&Object.values(s.services).length>0?Math.max(...Object.values(s.services)):0),1);
   document.getElementById('salesGrid').innerHTML=SALES_DATA.map((s,i)=>{
     const svcRows=Object.entries(s.services).map(([label,count])=>`<div class="svc-s"><span class="svc-name">${label}</span><div class="svc-track-s"><div class="svc-fill-s" style="width:${count/maxSvc*100}%;background:${COLORS[i]}"></div></div><span class="svc-count">${count}</span></div>`).join('');
-    const clientRows = (s.client_list || []).slice(0, 8).map((c, ci) => {
-      const layananTags = [
-        c.layanan.formed      ? 'Formed' : '',
-        c.layanan.sosmed_mon  ? 'Sosmed Mon' : '',
-        c.layanan.sosmed_mgmt ? 'Sosmed Mgmt' : '',
-        c.layanan.preskripsi  ? 'Preskripsi' : '',
-        c.layanan.api         ? 'API' : '',
-      ].filter(Boolean).slice(0, 2);
-      return `<div class="cl-row">
-        <div class="cl-rank">${ci+1}</div>
-        <div class="cl-name">
-          ${c.name}
-          <span style="font-size:.6rem;color:var(--muted);margin-left:3px">${c.industry}</span>
-          ${layananTags.map(t => `<span class="badge" style="background:${COLORS[i]}22;color:${COLORS[i]};margin-left:3px">${t}</span>`).join('')}
-        </div>
-        <div class="cl-rev" style="color:${COLORS[i]}">${fRp(c.nett_monthly, true)}/bln</div>
-      </div>`;
-    }).join('');
+
+  // Init client list pagination for each sales
+  SALES_DATA.forEach(function(s, i) { if (s.client_list && s.client_list.length) renderClientPage(i, 0); });
+    const PAGE_SIZE = 8;
+    const allClients = s.client_list || [];
+    function renderClientPage(salesIdx, page) {
+      const s2 = SALES_DATA[salesIdx];
+      const clients = s2.client_list || [];
+      const totalPages = Math.ceil(clients.length / PAGE_SIZE);
+      const start = page * PAGE_SIZE;
+      const rows = clients.slice(start, start + PAGE_SIZE).map((c, ci) => {
+        const layananTags = [
+          c.layanan.formed      ? 'Formed' : '',
+          c.layanan.sosmed_mon  ? 'Sosmed Mon' : '',
+          c.layanan.sosmed_mgmt ? 'Sosmed Mgmt' : '',
+          c.layanan.preskripsi  ? 'Preskripsi' : '',
+          c.layanan.api         ? 'API' : '',
+        ].filter(Boolean).slice(0, 2);
+        return `<div class="cl-row">
+          <div class="cl-rank">${start + ci + 1}</div>
+          <div class="cl-name">
+            ${c.name}
+            <span style="font-size:.6rem;color:var(--muted);margin-left:3px">${c.industry}</span>
+            ${layananTags.map(t => `<span class="badge" style="background:${COLORS[salesIdx]}22;color:${COLORS[salesIdx]};margin-left:3px">${t}</span>`).join('')}
+          </div>
+          <div class="cl-rev" style="color:${COLORS[salesIdx]}">${fRp(c.nett_monthly, true)}/bln</div>
+        </div>`;
+      }).join('');
+      const pagination = totalPages > 1 ? `
+        <div class="cl-pagination">
+          <button class="cl-page-btn" onclick="changeClientPage(${salesIdx},${page-1})" ${page===0?'disabled':''}>&#8592; Prev</button>
+          <span class="cl-page-info">${start+1}–${Math.min(start+PAGE_SIZE, clients.length)} dari ${clients.length} klien</span>
+          <button class="cl-page-btn" onclick="changeClientPage(${salesIdx},${page+1})" ${page>=totalPages-1?'disabled':''}>Next &#8594;</button>
+        </div>` : '';
+      const container = document.getElementById('cl-list-' + salesIdx);
+      if (container) container.innerHTML = rows + pagination;
+    }
+    window.changeClientPage = function(salesIdx, page) { renderClientPage(salesIdx, page); };
+    const clientRows = '';
     const pctOfTarget=(s.rev_total/32e9*100).toFixed(1);
     const monthlyAvg=s.rev_total/12;
     const hitMonths=calcHitMonths(s);
     const targetJt=s.target_monthly;
     const hitBadge=s.rev_total>0?`<span class="badge" style="background:${hitMonths>=3?'rgba(5,150,105,0.12)':'rgba(232,0,61,0.1)'};color:${hitMonths>=3?'#059669':'#e8003d'}">${hitMonths}/4 bln hit target</span>`:`<span class="badge" style="background:rgba(107,114,128,0.1);color:#6b7280">Belum ada revenue</span>`;
-    return `<div class="sales-card" style="border-top:3px solid ${COLORS[i]}"><div class="sales-card-header"><div class="sales-name-wrap"><div class="sales-rank">${i+1}</div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="lb-avatar" style="background:${COLORS[i]};width:32px;height:32px;font-size:.8rem">${s.name[0]}</div><div><div class="sales-name" style="color:${COLORS[i]}">${s.name}</div><div style="font-size:.68rem;color:var(--muted)">Target ${s.target_monthly} Jt/bln</div></div></div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;color:${COLORS[i]};line-height:1;margin-bottom:.3rem">${fRp(s.rev_total,true)}</div><div style="font-size:.68rem;color:var(--muted);margin-bottom:.35rem">${s.pct}% dari total tim · ${pctOfTarget}% dari target Digivla</div><div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem"><span class="badge" style="background:${COLORS[i]}15;color:${COLORS[i]}">Target ${targetJt} Jt/bln</span>${hitBadge}</div><div class="sales-pct-bar"><div class="sales-pct-fill" style="width:${s.pct}%;background:${COLORS[i]}"></div></div></div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Avg/Bulan</div><div style="font-weight:700;font-size:.85rem;color:${COLORS[i]}">${fRp(monthlyAvg,true)}</div></div><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Klien Aktif</div><div style="font-weight:700;font-size:.85rem">${s.clients}</div></div></div></div><div class="sales-body"><div style="margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Revenue Bulanan vs Target</span><span style="display:flex;align-items:center;gap:3px;font-size:.65rem;color:#fbbf24;font-weight:600"><span style="display:inline-block;width:12px;border-top:2px dashed #fbbf24"></span> Target ${targetJt} Jt</span></div><div style="margin-bottom:.75rem"><div class="chart-wrap h-140"><canvas id="schart_${i}"></canvas></div></div>${svcRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Layanan yang Dijual</div>${svcRows}<hr class="divider">`:''}${(s.client_list && s.client_list.length)?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Klien Aktif (${s.client_list.length})</div>${clientRows}`:`<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem">target <strong>${targetJt} Jt/bln</strong></div>`}</div></div>`;
+    return `<div class="sales-card" style="border-top:3px solid ${COLORS[i]}"><div class="sales-card-header"><div class="sales-name-wrap"><div class="sales-rank">${i+1}</div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="lb-avatar" style="background:${COLORS[i]};width:32px;height:32px;font-size:.8rem">${s.name[0]}</div><div><div class="sales-name" style="color:${COLORS[i]}">${s.name}</div><div style="font-size:.68rem;color:var(--muted)">Target ${s.target_monthly} Jt/bln</div></div></div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;color:${COLORS[i]};line-height:1;margin-bottom:.3rem">${fRp(s.rev_total,true)}</div><div style="font-size:.68rem;color:var(--muted);margin-bottom:.35rem">${s.pct}% dari total tim · ${pctOfTarget}% dari target Digivla</div><div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem"><span class="badge" style="background:${COLORS[i]}15;color:${COLORS[i]}">Target ${targetJt} Jt/bln</span>${hitBadge}</div><div class="sales-pct-bar"><div class="sales-pct-fill" style="width:${s.pct}%;background:${COLORS[i]}"></div></div></div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Avg/Bulan</div><div style="font-weight:700;font-size:.85rem;color:${COLORS[i]}">${fRp(monthlyAvg,true)}</div></div><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Klien Aktif</div><div style="font-weight:700;font-size:.85rem">${s.clients}</div></div></div></div><div class="sales-body"><div style="margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Revenue Bulanan vs Target</span><span style="display:flex;align-items:center;gap:3px;font-size:.65rem;color:#fbbf24;font-weight:600"><span style="display:inline-block;width:12px;border-top:2px dashed #fbbf24"></span> Target ${targetJt} Jt</span></div><div style="margin-bottom:.75rem"><div class="chart-wrap h-140"><canvas id="schart_${i}"></canvas></div></div>${svcRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Layanan yang Dijual</div>${svcRows}<hr class="divider">`:''}${(s.client_list && s.client_list.length)?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Klien Aktif (${s.client_list.length})</div><div id="cl-list-${i}"></div>`:`<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem">target <strong>${targetJt} Jt/bln</strong></div>`}</div></div>`;
   }).join('');
 
   _salesCharts = [];
