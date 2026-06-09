@@ -1469,6 +1469,45 @@ const TOTAL_S=SALES_DATA.reduce((a,s)=>a+s.rev_total,0);
 function fRp(v,short=false){if(short){return'Rp '+fJt(v/1e6);}return'Rp '+Math.round(v).toLocaleString('id-ID');}
 function calcHitMonths(s){let h=0;for(let i=0;i<4;i++){if((s.rev_monthly[i]/1e6)>=s.target_monthly)h++;}return h;}
 
+
+const PAGE_SIZE = 8;
+
+function renderClientPage(salesIdx, page) {
+  const s = SALES_DATA[salesIdx];
+  const clients = s.client_list || [];
+  const totalPages = Math.ceil(clients.length / PAGE_SIZE);
+  const start = page * PAGE_SIZE;
+  const color = COLORS[salesIdx];
+  const rows = clients.slice(start, start + PAGE_SIZE).map((c, ci) => {
+    const layananTags = [
+      c.layanan.formed      ? 'Formed' : '',
+      c.layanan.sosmed_mon  ? 'Sosmed Mon' : '',
+      c.layanan.sosmed_mgmt ? 'Sosmed Mgmt' : '',
+      c.layanan.preskripsi  ? 'Preskripsi' : '',
+      c.layanan.api         ? 'API' : '',
+    ].filter(Boolean).slice(0, 2);
+    return `<div class="cl-row">
+      <div class="cl-rank">${start + ci + 1}</div>
+      <div class="cl-name">
+        ${c.name}
+        <span style="font-size:.6rem;color:var(--muted);margin-left:3px">${c.industry}</span>
+        ${layananTags.map(t => `<span class="badge" style="background:${color}22;color:${color};margin-left:3px">${t}</span>`).join('')}
+      </div>
+      <div class="cl-rev" style="color:${color}">${fRp(c.nett_monthly, true)}/bln</div>
+    </div>`;
+  }).join('');
+  const pagination = totalPages > 1 ? `
+    <div class="cl-pagination">
+      <button class="cl-page-btn" onclick="changeClientPage(${salesIdx},${page-1})" ${page===0?'disabled':''}>&#8592; Prev</button>
+      <span class="cl-page-info">${start+1}–${Math.min(start+PAGE_SIZE,clients.length)} dari ${clients.length} klien</span>
+      <button class="cl-page-btn" onclick="changeClientPage(${salesIdx},${page+1})" ${page>=totalPages-1?'disabled':''}>Next &#8594;</button>
+    </div>` : '';
+  const container = document.getElementById('cl-list-' + salesIdx);
+  if (container) container.innerHTML = rows + pagination;
+}
+
+function changeClientPage(salesIdx, page) { renderClientPage(salesIdx, page); }
+
 function initSalesCharts(){
   document.getElementById('leaderboard').innerHTML=SALES_DATA.map((s,i)=>`
     <div class="lb-row">
@@ -1495,41 +1534,6 @@ function initSalesCharts(){
 
   // Init client list pagination for each sales
   SALES_DATA.forEach(function(s, i) { if (s.client_list && s.client_list.length) renderClientPage(i, 0); });
-    const PAGE_SIZE = 8;
-    const allClients = s.client_list || [];
-    function renderClientPage(salesIdx, page) {
-      const s2 = SALES_DATA[salesIdx];
-      const clients = s2.client_list || [];
-      const totalPages = Math.ceil(clients.length / PAGE_SIZE);
-      const start = page * PAGE_SIZE;
-      const rows = clients.slice(start, start + PAGE_SIZE).map((c, ci) => {
-        const layananTags = [
-          c.layanan.formed      ? 'Formed' : '',
-          c.layanan.sosmed_mon  ? 'Sosmed Mon' : '',
-          c.layanan.sosmed_mgmt ? 'Sosmed Mgmt' : '',
-          c.layanan.preskripsi  ? 'Preskripsi' : '',
-          c.layanan.api         ? 'API' : '',
-        ].filter(Boolean).slice(0, 2);
-        return `<div class="cl-row">
-          <div class="cl-rank">${start + ci + 1}</div>
-          <div class="cl-name">
-            ${c.name}
-            <span style="font-size:.6rem;color:var(--muted);margin-left:3px">${c.industry}</span>
-            ${layananTags.map(t => `<span class="badge" style="background:${COLORS[salesIdx]}22;color:${COLORS[salesIdx]};margin-left:3px">${t}</span>`).join('')}
-          </div>
-          <div class="cl-rev" style="color:${COLORS[salesIdx]}">${fRp(c.nett_monthly, true)}/bln</div>
-        </div>`;
-      }).join('');
-      const pagination = totalPages > 1 ? `
-        <div class="cl-pagination">
-          <button class="cl-page-btn" onclick="changeClientPage(${salesIdx},${page-1})" ${page===0?'disabled':''}>&#8592; Prev</button>
-          <span class="cl-page-info">${start+1}–${Math.min(start+PAGE_SIZE, clients.length)} dari ${clients.length} klien</span>
-          <button class="cl-page-btn" onclick="changeClientPage(${salesIdx},${page+1})" ${page>=totalPages-1?'disabled':''}>Next &#8594;</button>
-        </div>` : '';
-      const container = document.getElementById('cl-list-' + salesIdx);
-      if (container) container.innerHTML = rows + pagination;
-    }
-    window.changeClientPage = function(salesIdx, page) { renderClientPage(salesIdx, page); };
     const clientRows = '';
     const pctOfTarget=(s.rev_total/32e9*100).toFixed(1);
     const monthlyAvg=s.rev_total/12;
