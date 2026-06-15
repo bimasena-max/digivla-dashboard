@@ -1172,7 +1172,8 @@ function loadDashboardData(forceRefresh) {
     if (data.healthCheck && data.healthCheck.length) {
       _allRows = data.healthCheck;
       populateDropdown(_allRows);
-      renderHealthSection(_allRows, document.getElementById('healthMonthSelect').value || 'April');
+      var selectedMonth = document.getElementById('healthMonthSelect').value || 'Juni';
+      renderHealthSection(_allRows, selectedMonth);
     }
   };
   script.onerror = function() { cleanup(); _dashLoading = false; setRealtimeBadge(false); updateRefreshBtn(false); };
@@ -1287,8 +1288,6 @@ function applyActiveClientsData(ac) {
     });
   }
 
-  // Update klien per sales dari Active Clients Tracker
-  // Key di sheet: "Abdul", "Chatrine", "Lia", "Desy", "AYU"
   // Update klien per sales dari Active Clients Tracker
   // Key di sheet: "Abdul", "Chatrine", "Lia", "Desy", "AYU"
   var BULAN_NAMA = ['Januari','Februari','Maret','April','Mei','Juni',
