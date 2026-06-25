@@ -93,6 +93,69 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .tab-btn.tab-sales.active .tab-dot { background: #fbbf24; opacity: 1; }
 .tab-btn.tab-survey.active .tab-dot { background: #059669; opacity: 1; }
 .tab-btn.tab-people.active .tab-dot { background: #7c3aed; opacity: 1; }
+.tab-btn.tab-pipeline.active .tab-dot { background: #059669; opacity: 1; }
+
+/* ── PIPELINE TAB STYLES ── */
+.pipe-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+@media(max-width:900px){ .pipe-kpi-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:560px){ .pipe-kpi-grid { grid-template-columns: 1fr 1fr; } }
+
+.pipe-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.3rem; position: relative; overflow: hidden; }
+.pipe-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.pipe-kpi.c50::before  { background: #d97706; }
+.pipe-kpi.c80::before  { background: #1a56ff; }
+.pipe-kpi.c100::before { background: #059669; }
+.pipe-kpi.ctotal::before { background: var(--ink); }
+.pipe-kpi-label { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+.pipe-kpi-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+.pipe-kpi-val.c50  { color: #d97706; }
+.pipe-kpi-val.c80  { color: #1a56ff; }
+.pipe-kpi-val.c100 { color: #059669; }
+.pipe-kpi-sub { font-size: .68rem; color: var(--muted); margin-top: .35rem; }
+
+.pipe-filter-bar { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.pipe-filter-btn { font-family: 'Outfit', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: .35rem .9rem; border-radius: 6px; border: 1.5px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all .15s; }
+.pipe-filter-btn.active { color: #fff; border-color: transparent; }
+.pipe-filter-btn.f-all.active   { background: var(--ink); }
+.pipe-filter-btn.f-50.active    { background: #d97706; }
+.pipe-filter-btn.f-80.active    { background: #1a56ff; }
+.pipe-filter-btn.f-100.active   { background: #059669; }
+
+.pipe-sales-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media(max-width:800px){ .pipe-sales-grid { grid-template-columns: 1fr; } }
+
+.pipe-sales-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.pipe-sales-header { display: flex; align-items: center; gap: .75rem; padding: .9rem 1.1rem; border-bottom: 1px solid var(--border); }
+.pipe-sales-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 800; font-size: .9rem; color: #fff; flex-shrink: 0; }
+.pipe-sales-name { font-weight: 700; font-size: .88rem; }
+.pipe-sales-total { font-size: .68rem; color: var(--muted); }
+.pipe-sales-tcv { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 800; margin-left: auto; }
+
+.pipe-deal-list { padding: .6rem .5rem; }
+.pipe-deal-row { display: flex; align-items: center; gap: .5rem; padding: .38rem .6rem; border-radius: 7px; transition: background .1s; }
+.pipe-deal-row:hover { background: var(--bg); }
+.pipe-conf-badge { font-size: .55rem; font-weight: 800; letter-spacing: .06em; padding: .18rem .45rem; border-radius: 4px; flex-shrink: 0; min-width: 36px; text-align: center; }
+.pipe-conf-badge.b50  { background: rgba(217,119,6,.12);  color: #d97706; }
+.pipe-conf-badge.b80  { background: rgba(26,86,255,.12);  color: #1a56ff; }
+.pipe-conf-badge.b100 { background: rgba(5,150,105,.12);  color: #059669; }
+.pipe-deal-client { flex: 1; font-size: .75rem; font-weight: 500; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pipe-deal-mcv { font-size: .72rem; font-weight: 700; flex-shrink: 0; }
+.pipe-deal-empty { text-align: center; padding: 1.5rem; color: var(--muted); font-size: .75rem; }
+
+.pipe-chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.4rem; margin-bottom: 1rem; }
+
+.pipe-loading { display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; gap: .75rem; color: var(--muted); font-size: .82rem; }
+.pipe-spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: #059669; border-radius: 50%; animation: pipe-spin .7s linear infinite; }
+@keyframes pipe-spin { to { transform: rotate(360deg); } }
+
+.pipe-error { background: var(--crit-soft); border: 1px solid var(--crit); border-radius: var(--radius); padding: 1.25rem 1.5rem; color: var(--crit); font-size: .8rem; margin-bottom: 1rem; }
+
+.pipe-cb-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .75rem; margin-bottom: 1rem; }
+@media(max-width:1000px){ .pipe-cb-grid { grid-template-columns: repeat(4,1fr); } }
+@media(max-width:600px){ .pipe-cb-grid { grid-template-columns: repeat(2,1fr); } }
+.pipe-cb-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .85rem 1rem; text-align: center; }
+.pipe-cb-name { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+.pipe-cb-val { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 800; }
 
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
@@ -401,6 +464,9 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
     </button>
     <button class="tab-btn tab-people" onclick="switchTab('people')">
       <span class="tab-dot"></span>People &amp; Culture
+    </button>
+    <button class="tab-btn tab-pipeline" onclick="switchTab('pipeline')">
+      <span class="tab-dot"></span>Pipeline Tracker
     </button>
     <button id="globalRefreshBtn" onclick="refreshAllData()" style="margin-left:auto;display:flex;align-items:center;gap:0.4rem;padding:0.45rem 0.9rem;font-family:'Outfit',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;cursor:pointer;transition:background 0.15s;white-space:nowrap">
       <svg id="refreshIcon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
@@ -787,6 +853,9 @@ function switchTab(tab) {
     window._salesChartsInited = true;
     refreshSalesUI(); // <--- CALL THE REFRESH FUNCTION INSTEAD
   }
+  if (tab === 'pipeline') {
+    initPipelineTab();
+  }
 }
 function fJt(juta) {
   if (juta === 0) return '0';
@@ -1168,7 +1237,7 @@ function loadDashboardData(forceRefresh) {
       }
       applyRevenueData(data.revenueAkrual);
       setRealtimeBadge(true);
-    } catch(e) { console.error('Error applying data:', e); setRealtimeBadge(false); }
+    } catch(e) { console.error('Error applying data:', e); showDebugPanel('JS Error: ' + e.message + ' @ ' + e.stack); setRealtimeBadge(false); }
     if (data.healthCheck && data.healthCheck.length) {
       _allRows = data.healthCheck;
       populateDropdown(_allRows);
@@ -2170,6 +2239,576 @@ document.getElementById('delConfirm').addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeModal(); closeDelConfirm(); }
 });
+</script>
+
+<!-- ══════════════ TAB: PIPELINE TRACKER ══════════════ -->
+<div id="panel-pipeline" class="tab-panel">
+<div class="page">
+
+  <div class="masthead">
+    <div>
+      <div class="masthead-eyebrow">Pipeline Tracker · Monthly Projection Breakdown 2026</div>
+      <h1>Sales Pipeline<br>&amp; Projection 2026</h1>
+    </div>
+    <div class="masthead-meta">
+      <strong>Realtime dari Google Sheets</strong>
+      <span id="pipe-last-update">Belum dimuat</span><br>
+      <span id="pipe-realtime-badge" style="display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;margin-top:.2rem">
+        <span id="pipe-badge-dot" style="width:7px;height:7px;border-radius:50%;background:#6b7280;display:inline-block"></span>
+        <span id="pipe-badge-label">—</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="pipe-kpi-grid" id="pipeKpiGrid">
+    <div class="pipe-kpi c50">
+      <div class="pipe-kpi-label">🟡 Pipeline 50%</div>
+      <div class="pipe-kpi-val c50" id="pipeKpi50">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpi50Sub">— deals</div>
+    </div>
+    <div class="pipe-kpi c80">
+      <div class="pipe-kpi-label">🔵 Pipeline 80%</div>
+      <div class="pipe-kpi-val c80" id="pipeKpi80">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpi80Sub">— deals</div>
+    </div>
+    <div class="pipe-kpi c100">
+      <div class="pipe-kpi-label">🟢 Pipeline 100%</div>
+      <div class="pipe-kpi-val c100" id="pipeKpi100">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpi100Sub">— deals</div>
+    </div>
+    <div class="pipe-kpi ctotal">
+      <div class="pipe-kpi-label">📊 Total Pipeline TCV</div>
+      <div class="pipe-kpi-val" id="pipeKpiTotal">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpiTotalSub">— deals total</div>
+    </div>
+  </div>
+
+  <!-- CHART: PIPELINE PER SALES -->
+  <div class="section-head">
+    <span class="section-badge" style="background:#059669">Pipeline</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Total TCV Pipeline per Sales</span>
+    <span class="section-line"></span>
+  </div>
+  <div class="pipe-chart-wrap mb">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">TCV Pipeline per Sales — All Confidence</div>
+        <div class="chart-sub">50% + 80% + 100% dijumlahkan per sales</div>
+      </div>
+      <div class="chart-legend" id="pipeLegend"></div>
+    </div>
+    <div class="chart-wrap h-220"><canvas id="pipeBarChart"></canvas></div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="section-head" style="margin-top:1.5rem">
+    <span class="section-badge" style="background:#059669">Deals</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Deal List per Sales</span>
+    <span class="section-line"></span>
+  </div>
+  <div class="pipe-filter-bar">
+    <span style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Filter:</span>
+    <button class="pipe-filter-btn f-all active" onclick="setPipeFilter('all')">Semua</button>
+    <button class="pipe-filter-btn f-50"  onclick="setPipeFilter('50%')">50%</button>
+    <button class="pipe-filter-btn f-80"  onclick="setPipeFilter('80%')">80%</button>
+    <button class="pipe-filter-btn f-100" onclick="setPipeFilter('100%')">100%</button>
+    <span id="pipeFilterCount" style="font-size:.68rem;color:var(--muted);margin-left:.25rem"></span>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div id="pipeLoading" class="pipe-loading">
+    <div class="pipe-spinner"></div>
+    Memuat data dari Google Sheets...
+  </div>
+  <div id="pipeError" class="pipe-error" style="display:none"></div>
+
+  <!-- SALES GRID -->
+  <div class="pipe-sales-grid" id="pipeSalesGrid" style="display:none"></div>
+
+  <!-- CONTRACT BASE SECTION -->
+  <div class="section-head" style="margin-top:2rem">
+    <span class="section-badge" style="background:var(--ink)">Contract Base</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Contract Based per Sales (Baris 336–345)</span>
+    <span class="section-line"></span>
+  </div>
+  <div class="pipe-cb-grid" id="pipeCbGrid">
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Abdul</div><div class="pipe-cb-val" id="cbAbdul">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Chatrine</div><div class="pipe-cb-val" id="cbChatrine">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Desy</div><div class="pipe-cb-val" id="cbDesy">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Lia</div><div class="pipe-cb-val" id="cbLia">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Whenda</div><div class="pipe-cb-val" id="cbWhenda">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Jodi</div><div class="pipe-cb-val" id="cbJodi">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Grace</div><div class="pipe-cb-val" id="cbGrace">—</div></div>
+  </div>
+  <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem">* Contract Base ditarik dari sheet CB masing-masing via formula. Nilai muncul jika spreadsheet memiliki cached value.</p>
+
+  <!-- CONFIDENCE LOG SECTION -->
+  <div class="section-head" style="margin-top:2rem">
+    <span class="section-badge" style="background:#7c3aed">Confidence Log</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Deal Progression Tracker</span>
+    <span class="section-line"></span>
+  </div>
+  <div id="confLogEmpty" style="display:none;text-align:center;padding:2rem;color:var(--muted);font-size:.8rem">
+    Belum ada log perubahan confidence. Log akan muncul otomatis saat ada deal yang naik dari 50% → 80% → 100%.
+  </div>
+  <div id="confLogWrap" style="display:none">
+    <!-- Filter bar -->
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem">
+      <span style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Filter Sales:</span>
+      <button class="pipe-filter-btn f-all active" id="clFilterAll" onclick="setConfLogFilter('all')">Semua</button>
+      <button class="pipe-filter-btn" id="clFilterAbdul"    onclick="setConfLogFilter('Abdul')">Abdul</button>
+      <button class="pipe-filter-btn" id="clFilterChatrine" onclick="setConfLogFilter('Chatrine')">Chatrine</button>
+      <button class="pipe-filter-btn" id="clFilterDesy"     onclick="setConfLogFilter('Desy')">Desy</button>
+      <button class="pipe-filter-btn" id="clFilterLia"      onclick="setConfLogFilter('Lia')">Lia</button>
+      <button class="pipe-filter-btn" id="clFilterWhenda"   onclick="setConfLogFilter('Whenda')">Whenda</button>
+      <button class="pipe-filter-btn" id="clFilterJodi"     onclick="setConfLogFilter('Jodi')">Jodi</button>
+      <button class="pipe-filter-btn" id="clFilterGrace"    onclick="setConfLogFilter('Grace')">Grace</button>
+    </div>
+    <!-- Timeline cards -->
+    <div id="confLogCards" style="display:flex;flex-direction:column;gap:.75rem"></div>
+  </div>
+
+</div><!-- /page -->
+</div><!-- /panel-pipeline -->
+
+<script>
+/* ══════════ PIPELINE TRACKER LOGIC ══════════ */
+
+const PIPE_SHEET_ID = '1EKyb-UcKAjGLQiCh--y8GLWnt1M1irXN5iMf8-mfigM';
+const PIPE_SHEET_NAME = 'Monthly%20Projection%20Breakdown';
+
+const PIPE_COLORS = {
+  Abdul:    '#1a56ff',
+  Chatrine: '#7c3aed',
+  Desy:     '#e8003d',
+  Lia:      '#d97706',
+  Whenda:   '#0891b2',
+  Jodi:     '#059669',
+  Grace:    '#6b7280',
+  Nadia:    '#f59e0b',
+};
+const PIPE_SALES_ORDER = ['Abdul','Chatrine','Desy','Lia','Whenda','Jodi','Grace'];
+
+let _pipeData = null;
+let _pipeFilter = 'all';
+let _pipeChart = null;
+let _pipeInited = false;
+
+function fPipeVal(juta) {
+  if (!juta || juta === 0) return '—';
+  if (juta >= 1000) return 'Rp ' + (juta/1000).toLocaleString('id-ID',{minimumFractionDigits:3,maximumFractionDigits:3}) + ' M';
+  return 'Rp ' + juta.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1}) + ' Jt';
+}
+// Format exact Rupiah from raw value (no juta conversion)
+function fPipeRp(val) {
+  if (!val || val === 0) return '—';
+  return 'Rp ' + Math.round(val).toLocaleString('id-ID');
+}
+
+function buildPipeState(entries) {
+  // Group by sales
+  const bySales = {};
+  PIPE_SALES_ORDER.forEach(s => { bySales[s] = { deals: [], tcv50:0, tcv80:0, tcv100:0, totalTcv:0, count:0 }; });
+
+  entries.forEach(e => {
+    if (!e.sales || !bySales[e.sales]) return;
+    bySales[e.sales].deals.push(e);
+    bySales[e.sales].count++;
+    const tcv = e.tcv || 0;
+    if (e.conf === '50%')  bySales[e.sales].tcv50  += tcv;
+    if (e.conf === '80%')  bySales[e.sales].tcv80  += tcv;
+    if (e.conf === '100%') bySales[e.sales].tcv100 += tcv;
+    bySales[e.sales].totalTcv += tcv;
+  });
+
+  // Global KPIs
+  let kpi50=0,kpi80=0,kpi100=0,cnt50=0,cnt80=0,cnt100=0;
+  entries.forEach(e => {
+    const tcv = e.tcv || 0;
+    if (e.conf === '50%')  { kpi50  += tcv; cnt50++; }
+    if (e.conf === '80%')  { kpi80  += tcv; cnt80++; }
+    if (e.conf === '100%') { kpi100 += tcv; cnt100++; }
+  });
+
+  return { bySales, kpi50, kpi80, kpi100, cnt50, cnt80, cnt100 };
+}
+
+function renderPipeKPIs(state) {
+  const toJt = v => v / 1e6;
+  document.getElementById('pipeKpi50').textContent    = fPipeRp(state.kpi50);
+  document.getElementById('pipeKpi50Sub').textContent  = state.cnt50 + ' deals';
+  document.getElementById('pipeKpi80').textContent    = fPipeRp(state.kpi80);
+  document.getElementById('pipeKpi80Sub').textContent  = state.cnt80 + ' deals';
+  document.getElementById('pipeKpi100').textContent   = fPipeRp(state.kpi100);
+  document.getElementById('pipeKpi100Sub').textContent = state.cnt100 + ' deals';
+  const total = state.kpi50 + state.kpi80 + state.kpi100;
+  document.getElementById('pipeKpiTotal').textContent     = fPipeRp(total);
+  document.getElementById('pipeKpiTotalSub').textContent  = (state.cnt50+state.cnt80+state.cnt100) + ' deals total';
+}
+
+function renderPipeChart(state) {
+  const labels = PIPE_SALES_ORDER;
+  const d50  = labels.map(s => (state.bySales[s]?.tcv50  || 0) / 1e6);
+  const d80  = labels.map(s => (state.bySales[s]?.tcv80  || 0) / 1e6);
+  const d100 = labels.map(s => (state.bySales[s]?.tcv100 || 0) / 1e6);
+
+  const legend = document.getElementById('pipeLegend');
+  legend.innerHTML = `
+    <span><span class="ldot" style="background:#d97706"></span>50%</span>
+    <span><span class="ldot" style="background:#1a56ff"></span>80%</span>
+    <span><span class="ldot" style="background:#059669"></span>100%</span>`;
+
+  if (_pipeChart) { _pipeChart.destroy(); _pipeChart = null; }
+  const ctx = document.getElementById('pipeBarChart');
+  if (!ctx) return;
+  _pipeChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: '50%',  data: d50,  backgroundColor: '#d97706cc', borderRadius: 0, borderSkipped: false, stack:'s' },
+        { label: '80%',  data: d80,  backgroundColor: '#1a56ffcc', borderRadius: 0, borderSkipped: false, stack:'s' },
+        { label: '100%', data: d100, backgroundColor: '#059669cc', borderRadius: 4, borderSkipped: false, stack:'s' },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 20 } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#111827', padding: 10, mode: 'index',
+          callbacks: {
+            title: c => c[0].label,
+            label: c => ` ${c.dataset.label}: ${fPipeVal(c.parsed.y)}`,
+            afterBody: c => {
+              const total = c.reduce((a,x) => a + x.parsed.y, 0);
+              return ['──────────────', `Total TCV: ${fPipeVal(total)}`];
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, stacked: true },
+        y: { stacked: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => fPipeVal(v) } }
+      }
+    }
+  });
+}
+
+function renderPipeSalesGrid(state, filter) {
+  const grid = document.getElementById('pipeSalesGrid');
+  grid.innerHTML = PIPE_SALES_ORDER.map(name => {
+    const s = state.bySales[name];
+    const color = PIPE_COLORS[name] || '#6b7280';
+    const deals = filter === 'all' ? s.deals : s.deals.filter(d => d.conf === filter);
+
+    const dealRows = deals.length === 0
+      ? `<div class="pipe-deal-empty">Tidak ada deal${filter !== 'all' ? ' untuk confidence ' + filter : ''}</div>`
+      : deals.map(d => `
+          <div class="pipe-deal-row">
+            <span class="pipe-conf-badge ${d.confClass}">${d.conf}</span>
+            <span class="pipe-deal-client" title="${d.client}">${d.client}</span>
+            <span class="pipe-deal-vals" style="text-align:right;flex-shrink:0">
+              <span style="display:block;font-size:.68rem;font-weight:700;color:${color}">${fPipeRp(d.tcv)}</span>
+              <span style="display:block;font-size:.6rem;color:var(--muted)">${fPipeRp(d.mcv)}/bln</span>
+            </span>
+          </div>`).join('');
+
+    const totalTcv = filter === 'all'
+      ? s.totalTcv
+      : deals.reduce((a,d) => a + (d.tcv||0), 0);
+
+    return `
+      <div class="pipe-sales-card">
+        <div class="pipe-sales-header">
+          <div class="pipe-sales-avatar" style="background:${color}">${name[0]}</div>
+          <div>
+            <div class="pipe-sales-name">${name}</div>
+            <div class="pipe-sales-total">${deals.length} deals${filter !== 'all' ? ' ('+filter+')' : ''}</div>
+          </div>
+          <div class="pipe-sales-tcv" style="color:${color}">${fPipeVal(totalTcv/1e6)}</div>
+        </div>
+        <div class="pipe-deal-list">${dealRows}</div>
+      </div>`;
+  }).join('');
+  grid.style.display = 'grid';
+}
+
+function updatePipeFilterCount(state, filter) {
+  const total = PIPE_SALES_ORDER.reduce((a,s) => {
+    const deals = filter === 'all' ? state.bySales[s].deals : state.bySales[s].deals.filter(d => d.conf === filter);
+    return a + deals.length;
+  }, 0);
+  document.getElementById('pipeFilterCount').textContent = total + ' deals ditampilkan';
+}
+
+function setPipeFilter(f) {
+  _pipeFilter = f;
+  document.querySelectorAll('.pipe-filter-btn').forEach(b => b.classList.remove('active'));
+  const map = {'all':'f-all','50%':'f-50','80%':'f-80','100%':'f-100'};
+  const btn = document.querySelector('.pipe-filter-btn.' + map[f]);
+  if (btn) btn.classList.add('active');
+  if (_pipeData) {
+    renderPipeSalesGrid(_pipeData, f);
+    updatePipeFilterCount(_pipeData, f);
+  }
+}
+
+function setPipeRealtimeBadge(ok) {
+  const dot   = document.getElementById('pipe-badge-dot');
+  const label = document.getElementById('pipe-badge-label');
+  if (!dot || !label) return;
+  if (ok) {
+    dot.style.background   = '#059669';
+    label.textContent      = 'Realtime · Google Sheets';
+    label.style.color      = '#059669';
+  } else {
+    dot.style.background   = '#e8003d';
+    label.textContent      = 'Gagal memuat';
+    label.style.color      = '#e8003d';
+  }
+  const ts = document.getElementById('pipe-last-update');
+  if (ts) ts.textContent = 'Update: ' + new Date().toLocaleTimeString('id-ID');
+}
+
+function fetchPipeGviz(callback) {
+  const cbName = '_pipeCb_' + Date.now();
+  // Reuse existing Apps Script — panggil dengan param action=pipeline
+  const url = APPS_SCRIPT_URL + '?callback=' + cbName + '&action=pipeline&t=' + Date.now();
+
+  const script = document.createElement('script');
+  const timer = setTimeout(function() {
+    cleanup();
+    callback(null, new Error('Timeout'));
+  }, 18000);
+
+  function cleanup() {
+    clearTimeout(timer);
+    delete window[cbName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[cbName] = function(raw) {
+    cleanup();
+    try {
+      if (raw && raw.pipeline) {
+        callback({ rows: raw.pipeline, contractBase: raw.contractBase || {}, confLog: raw.confLog || [] }, null);
+      } else {
+        callback(null, new Error('Tidak ada data pipeline dari Apps Script. Tambahkan handler action=pipeline di Apps Script lu.'));
+      }
+    } catch(e) {
+      callback(null, e);
+    }
+  };
+
+  script.onerror = function() {
+    cleanup();
+    callback(null, new Error('Script load error'));
+  };
+
+  script.src = url;
+  document.head.appendChild(script);
+}
+
+function parseGvizTable(table) {
+  // table.rows = array of pipeline entries langsung dari Apps Script
+  // format: [{sales, client, conf, mcv, tcv}, ...]
+  const entries = [];
+  const confColor = { '50%': 'b50', '80%': 'b80', '100%': 'b100' };
+  const rows = table.rows || [];
+
+  rows.forEach(function(r) {
+    if (!r.client || !r.conf) return;
+    if (r.client === '#N/A' || r.client === '') return;
+    entries.push({
+      section:   r.conf,
+      sales:     r.sales || '',
+      client:    r.client,
+      conf:      r.conf,
+      confClass: confColor[r.conf] || '',
+      mcv:       typeof r.mcv === 'number' ? r.mcv : null,
+      tcv:       typeof r.tcv === 'number' ? r.tcv : null,
+    });
+  });
+
+  console.log('[Pipeline] Parsed', entries.length, 'entries from Apps Script');
+  return entries;
+}
+
+
+/* ══════════ CONFIDENCE LOG LOGIC ══════════ */
+let _confLogData = [];
+let _confLogFilter = 'all';
+
+function renderConfLog(logs, filter) {
+  const wrap  = document.getElementById('confLogWrap');
+  const empty = document.getElementById('confLogEmpty');
+  const cards = document.getElementById('confLogCards');
+  if (!logs || logs.length === 0) {
+    wrap.style.display  = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  wrap.style.display  = 'block';
+  empty.style.display = 'none';
+
+  // Filter by sales
+  const filtered = filter === 'all' ? logs : logs.filter(l => l.sales === filter);
+
+  // Group by client
+  const byClient = {};
+  filtered.forEach(function(l) {
+    const key = (l.sales || '—') + '|' + l.client;
+    if (!byClient[key]) byClient[key] = { sales: l.sales, client: l.client, events: [] };
+    byClient[key].events.push(l);
+  });
+
+  // Sort events per client by timestamp
+  Object.values(byClient).forEach(function(g) {
+    g.events.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  });
+
+  // Sort clients: most recent first
+  const groups = Object.values(byClient).sort(function(a, b) {
+    const lastA = new Date(a.events[a.events.length-1].timestamp);
+    const lastB = new Date(b.events[b.events.length-1].timestamp);
+    return lastB - lastA;
+  });
+
+  const CONF_COLOR = { '50%': '#d97706', '80%': '#1a56ff', '100%': '#059669', '—': '#6b7280' };
+  const SALES_COLOR = PIPE_COLORS;
+
+  function fDays(ts1, ts2) {
+    const diff = Math.abs(new Date(ts2) - new Date(ts1));
+    const days = Math.round(diff / (1000 * 60 * 60 * 24));
+    if (days === 0) return 'hari yang sama';
+    return days + ' hari';
+  }
+
+  function fDateTime(ts) {
+    const d = new Date(ts);
+    return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' })
+      + ' ' + d.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  cards.innerHTML = groups.map(function(g) {
+    const color = SALES_COLOR[g.sales] || '#6b7280';
+    const events = g.events;
+
+    const timelineSteps = events.map(function(ev, idx) {
+      const daysSince = idx > 0 ? fDays(events[idx-1].timestamp, ev.timestamp) : null;
+      const fromColor = CONF_COLOR[ev.from] || '#6b7280';
+      const toColor   = CONF_COLOR[ev.to]   || '#6b7280';
+      return `
+        <div style="display:flex;align-items:flex-start;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--border2)">
+          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:2px">
+            <div style="width:8px;height:8px;border-radius:50%;background:${toColor}"></div>
+            ${idx < events.length-1 ? '<div style="width:2px;flex:1;background:var(--border);min-height:20px"></div>' : ''}
+          </div>
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.15rem">
+              <span style="font-size:.65rem;font-weight:800;padding:.15rem .45rem;border-radius:4px;background:${fromColor}22;color:${fromColor}">${ev.from}</span>
+              <span style="font-size:.6rem;color:var(--muted)">→</span>
+              <span style="font-size:.65rem;font-weight:800;padding:.15rem .45rem;border-radius:4px;background:${toColor}22;color:${toColor}">${ev.to}</span>
+              ${daysSince ? `<span style="font-size:.6rem;color:var(--muted);margin-left:.25rem">(+${daysSince})</span>` : ''}
+            </div>
+            <div style="font-size:.65rem;color:var(--muted)">${fDateTime(ev.timestamp)} · ${ev.editor || '—'}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // Total waktu dari event pertama ke terakhir
+    const totalTime = events.length > 1 ? fDays(events[0].timestamp, events[events.length-1].timestamp) : null;
+    const latestConf = events[events.length-1].to;
+    const latestColor = CONF_COLOR[latestConf] || '#6b7280';
+
+    return `
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid ${color};border-radius:var(--radius);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:.75rem;padding:.85rem 1.1rem;border-bottom:1px solid var(--border2)">
+          <div style="width:30px;height:30px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:.8rem;color:#fff;flex-shrink:0">${(g.sales||'?')[0]}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:700;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${g.client}</div>
+            <div style="font-size:.65rem;color:var(--muted)">${g.sales} · ${events.length} perubahan</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:.65rem;font-weight:800;padding:.2rem .6rem;border-radius:4px;background:${latestColor}22;color:${latestColor}">${latestConf}</div>
+            ${totalTime ? `<div style="font-size:.6rem;color:var(--muted);margin-top:.2rem">Total: ${totalTime}</div>` : ''}
+          </div>
+        </div>
+        <div style="padding:.25rem .75rem">${timelineSteps}</div>
+      </div>`;
+  }).join('');
+}
+
+function setConfLogFilter(f) {
+  _confLogFilter = f;
+  document.querySelectorAll('[id^="clFilter"]').forEach(b => b.classList.remove('active'));
+  const map = {
+    'all':'clFilterAll','Abdul':'clFilterAbdul','Chatrine':'clFilterChatrine',
+    'Desy':'clFilterDesy','Lia':'clFilterLia','Whenda':'clFilterWhenda',
+    'Jodi':'clFilterJodi','Grace':'clFilterGrace'
+  };
+  const btn = document.getElementById(map[f]);
+  if (btn) btn.classList.add('active');
+  renderConfLog(_confLogData, f);
+}
+
+function initPipelineTab() {
+  if (_pipeInited && _pipeData) return;
+
+  document.getElementById('pipeLoading').style.display = 'flex';
+  document.getElementById('pipeError').style.display   = 'none';
+  document.getElementById('pipeSalesGrid').style.display = 'none';
+
+  fetchPipeGviz(function(table, err) {
+    if (err || !table) {
+      console.error('Pipeline fetch error:', err);
+      document.getElementById('pipeLoading').style.display = 'none';
+      const errEl = document.getElementById('pipeError');
+      errEl.style.display = 'block';
+      errEl.innerHTML = '<strong>Gagal memuat data dari Google Sheets.</strong><br>'
+        + 'Pastikan spreadsheet sudah di-publish ke web (File → Share → Publish to web → pilih sheet "Monthly Projection Breakdown").<br>'
+        + '<small style="opacity:.7">Error: ' + (err ? err.message : 'Unknown') + '</small><br><br>'
+        + '<button onclick="_pipeInited=false;initPipelineTab();" style="font-family:\'Outfit\',sans-serif;font-size:.72rem;font-weight:700;padding:.4rem .9rem;background:var(--crit);color:#fff;border:none;border-radius:6px;cursor:pointer">Coba Lagi</button>';
+      setPipeRealtimeBadge(false);
+      return;
+    }
+
+    const entries = parseGvizTable(table);
+    const state   = buildPipeState(entries);
+    _pipeData     = state;
+    _pipeInited   = true;
+
+    renderPipeKPIs(state);
+    renderPipeChart(state);
+    renderPipeSalesGrid(state, _pipeFilter);
+    updatePipeFilterCount(state, _pipeFilter);
+
+    // Populate Contract Base grid
+    const cb = table.contractBase || {};
+    const cbMap = {
+      Abdul: 'cbAbdul', Chatrine: 'cbChatrine', Desy: 'cbDesy',
+      Lia: 'cbLia', Whenda: 'cbWhenda', Jodi: 'cbJodi', Grace: 'cbGrace'
+    };
+    Object.keys(cbMap).forEach(function(name) {
+      const el = document.getElementById(cbMap[name]);
+      if (!el) return;
+      const val = cb[name];
+      el.textContent = (val && val > 0) ? fPipeRp(val) : '—';
+    });
+
+    // Populate Confidence Log
+    _confLogData = table.confLog || [];
+    renderConfLog(_confLogData, _confLogFilter);
+
+    document.getElementById('pipeLoading').style.display = 'none';
+    setPipeRealtimeBadge(true);
+  });
+}
+
 </script>
 </body>
 </html>
