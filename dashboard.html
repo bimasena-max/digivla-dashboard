@@ -446,6 +446,29 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .cl-page-btn:hover:not(:disabled){border-color:#7c3aed;color:#7c3aed}
 .cl-page-btn:disabled{opacity:.3;cursor:default}
 .cl-page-info{font-size:.65rem;color:var(--muted)}
+
+/* Rekap table — baris bulan bisa diklik untuk lihat detail kontrak */
+.rekap-table tbody tr[data-bulan] { cursor: pointer; transition: background 0.12s; }
+.rekap-table tbody tr[data-bulan]:hover { background: rgba(26,86,255,0.06); }
+.kontrak-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+.kontrak-modal-overlay.open { display: flex; }
+.kontrak-modal { background: var(--surface); border-radius: 14px; width: 100%; max-width: 480px; max-height: 82vh; box-shadow: 0 20px 60px rgba(0,0,0,0.25); overflow: hidden; display: flex; flex-direction: column; }
+.kontrak-modal-head { padding: 1rem 1.25rem; background: var(--dv); color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.kontrak-modal-head h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 800; }
+.kontrak-modal-head .km-sub { font-size: 0.65rem; opacity: 0.85; font-weight: 500; margin-top: 0.15rem; }
+.kontrak-modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.kontrak-modal-body { padding: 0.75rem 1.25rem 1.25rem; overflow-y: auto; flex: 1; }
+.km-stats { display: flex; gap: 0.6rem; margin: 0.75rem 0 1rem; }
+.km-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.55rem 0.8rem; flex: 1; }
+.km-stat-label { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+.km-stat-val { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 800; line-height: 1; color: var(--dv); }
+.km-list { display: flex; flex-direction: column; gap: 0.4rem; }
+.km-item { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-radius: 9px; background: var(--bg); }
+.km-item-name { font-size: 0.74rem; font-weight: 600; line-height: 1.3; word-break: break-word; flex: 1; min-width: 0; }
+.km-item-vals { text-align: right; flex-shrink: 0; }
+.km-item-bulanan { font-size: 0.74rem; font-weight: 700; color: var(--dv); line-height: 1.3; }
+.km-item-total { font-size: 0.6rem; color: var(--muted); line-height: 1.3; }
+.km-empty { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.72rem; font-style: italic; }
 </style>
 </head>
 <body>
@@ -582,18 +605,18 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
       <table class="rekap-table">
         <thead><tr><th>Bulan</th><th>Revenue Nett</th><th>Klien</th><th>Kumulatif</th></tr></thead>
         <tbody id="rekap-tbody">
-          <tr><td><strong>Januari</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.375 Jt</td><td>56 klien</td><td style="color:var(--muted)">Rp 1.375 Jt</td></tr>
-          <tr><td><strong>Februari</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.426 Jt</td><td>59 klien</td><td style="color:var(--muted)">Rp 2.800 Jt</td></tr>
-          <tr><td><strong>Maret</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.394 Jt</td><td>58 klien</td><td style="color:var(--muted)">Rp 4.194 Jt</td></tr>
-          <tr><td><strong>April</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.071 Jt</td><td>59 klien</td><td style="color:var(--muted)">Rp 5.266 Jt</td></tr>
-          <tr><td><strong>Mei</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.085 Jt</td><td>61 klien</td><td style="color:var(--muted)">Rp 6.351 Jt</td></tr>
-          <tr><td><strong>Juni</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.015 Jt</td><td>55 klien</td><td style="color:var(--muted)">Rp 7.366 Jt</td></tr>
-          <tr><td><strong>Juli</strong></td><td style="color:var(--dv);font-weight:600">Rp 899 Jt</td><td>50 klien</td><td style="color:var(--muted)">Rp 8.266 Jt</td></tr>
-          <tr><td><strong>Agustus</strong></td><td style="color:var(--dv);font-weight:600">Rp 700 Jt</td><td>47 klien</td><td style="color:var(--muted)">Rp 8.965 Jt</td></tr>
-          <tr><td><strong>September</strong></td><td style="color:var(--dv);font-weight:600">Rp 680 Jt</td><td>46 klien</td><td style="color:var(--muted)">Rp 9.646 Jt</td></tr>
-          <tr><td><strong>Oktober</strong></td><td style="color:var(--dv);font-weight:600">Rp 580 Jt</td><td>42 klien</td><td style="color:var(--muted)">Rp 10.225 Jt</td></tr>
-          <tr><td><strong>November</strong></td><td style="color:var(--dv);font-weight:600">Rp 472 Jt</td><td>37 klien</td><td style="color:var(--muted)">Rp 10.698 Jt</td></tr>
-          <tr><td><strong>Desember</strong></td><td style="color:var(--dv);font-weight:600">Rp 467 Jt</td><td>36 klien</td><td style="color:var(--muted)">Rp 11.165 Jt</td></tr>
+          <tr data-bulan="Januari" onclick="openKontrakModal('Januari')"><td><strong>Januari</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.375 Jt</td><td>56 klien</td><td style="color:var(--muted)">Rp 1.375 Jt</td></tr>
+          <tr data-bulan="Februari" onclick="openKontrakModal('Februari')"><td><strong>Februari</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.426 Jt</td><td>59 klien</td><td style="color:var(--muted)">Rp 2.800 Jt</td></tr>
+          <tr data-bulan="Maret" onclick="openKontrakModal('Maret')"><td><strong>Maret</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.394 Jt</td><td>58 klien</td><td style="color:var(--muted)">Rp 4.194 Jt</td></tr>
+          <tr data-bulan="April" onclick="openKontrakModal('April')"><td><strong>April</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.071 Jt</td><td>59 klien</td><td style="color:var(--muted)">Rp 5.266 Jt</td></tr>
+          <tr data-bulan="Mei" onclick="openKontrakModal('Mei')"><td><strong>Mei</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.085 Jt</td><td>61 klien</td><td style="color:var(--muted)">Rp 6.351 Jt</td></tr>
+          <tr data-bulan="Juni" onclick="openKontrakModal('Juni')"><td><strong>Juni</strong></td><td style="color:var(--dv);font-weight:600">Rp 1.015 Jt</td><td>55 klien</td><td style="color:var(--muted)">Rp 7.366 Jt</td></tr>
+          <tr data-bulan="Juli" onclick="openKontrakModal('Juli')"><td><strong>Juli</strong></td><td style="color:var(--dv);font-weight:600">Rp 899 Jt</td><td>50 klien</td><td style="color:var(--muted)">Rp 8.266 Jt</td></tr>
+          <tr data-bulan="Agustus" onclick="openKontrakModal('Agustus')"><td><strong>Agustus</strong></td><td style="color:var(--dv);font-weight:600">Rp 700 Jt</td><td>47 klien</td><td style="color:var(--muted)">Rp 8.965 Jt</td></tr>
+          <tr data-bulan="September" onclick="openKontrakModal('September')"><td><strong>September</strong></td><td style="color:var(--dv);font-weight:600">Rp 680 Jt</td><td>46 klien</td><td style="color:var(--muted)">Rp 9.646 Jt</td></tr>
+          <tr data-bulan="Oktober" onclick="openKontrakModal('Oktober')"><td><strong>Oktober</strong></td><td style="color:var(--dv);font-weight:600">Rp 580 Jt</td><td>42 klien</td><td style="color:var(--muted)">Rp 10.225 Jt</td></tr>
+          <tr data-bulan="November" onclick="openKontrakModal('November')"><td><strong>November</strong></td><td style="color:var(--dv);font-weight:600">Rp 472 Jt</td><td>37 klien</td><td style="color:var(--muted)">Rp 10.698 Jt</td></tr>
+          <tr data-bulan="Desember" onclick="openKontrakModal('Desember')"><td><strong>Desember</strong></td><td style="color:var(--dv);font-weight:600">Rp 467 Jt</td><td>36 klien</td><td style="color:var(--muted)">Rp 11.165 Jt</td></tr>
           <tr class="row-total-dv"><td>TOTAL 2026</td><td id="rekap-total">Rp 11.165 Jt</td><td id="rekap-kontrak">96 kontrak</td><td></td></tr>
         </tbody>
       </table>
@@ -1106,6 +1129,9 @@ let dvCnt = FALLBACK.dvCnt.slice();
 let rsJt  = FALLBACK.rsJt.slice();
 let rsCnt = FALLBACK.rsCnt.slice();
 let rsRev = rsJt.map(v => v / 1000);
+
+// Data detail kontrak per klien per bulan (dari sheet "Detail Klien Aktif")
+let _detailKlienAktif = null;
  
 // Flag: apakah data realtime sudah datang
 let _realtimeReady = false;
@@ -1235,6 +1261,7 @@ function loadDashboardData(forceRefresh) {
       if (data.existingClients && (data.existingClients.list || Array.isArray(data.existingClients))) {
         applyExistingClientsData(data.existingClients);
       }
+      _detailKlienAktif = data.detailKlienAktif || null;
       applyRevenueData(data.revenueAkrual);
       setRealtimeBadge(true);
     } catch(e) { console.error('Error applying data:', e); showDebugPanel('JS Error: ' + e.message + ' @ ' + e.stack); setRealtimeBadge(false); }
@@ -1416,7 +1443,7 @@ function updateKPICards(months) {
     const idx = BULAN_LABEL.findIndex(b => b.toLowerCase() === String(bulanName).toLowerCase());
     return idx >= 0 ? BULAN_SHORT[idx] : (String(bulanName).substring(0,3) || '—');
   }
-  const latestKlienIdx = dvCnt.reduce((best, v, i) => v > 0 ? i : best, 0);
+  const latestKlienIdx = new Date().getMonth();
   const latestKlien    = dvCnt[latestKlienIdx] || 0;
   const latestBulan    = BULAN_SHORT[latestKlienIdx];
   const pctKlien       = (latestKlien / TARGET_KLIEN * 100).toFixed(1);
@@ -1481,12 +1508,45 @@ function updateRekapTable(months) {
     const rev = m ? (m.revenue || 0) : 0;
     cumulative += rev;
     const klien = dvCnt[i] || '—';
-    html += `<tr><td><strong>${label}</strong></td><td>${fRpFull(rev)}</td><td>${klien} klien</td><td>${fRpFull(cumulative)}</td></tr>`;
+    html += `<tr data-bulan="${label}" onclick="openKontrakModal('${label}')"><td><strong>${label}</strong></td><td>${fRpFull(rev)}</td><td>${klien} klien</td><td>${fRpFull(cumulative)}</td></tr>`;
   });
   tableBody.innerHTML = html;
   const totalDv = months.reduce((a, m) => a + (m.revenue || 0), 0);
   const elTotal = document.getElementById('rekap-total');
   if (elTotal) elTotal.textContent = fRpFull(totalDv);
+}
+
+function openKontrakModal(bulan) {
+  const overlay = document.getElementById('kontrakModal');
+  const list = (_detailKlienAktif && _detailKlienAktif[bulan]) ? _detailKlienAktif[bulan] : [];
+  function fRp(v) { if (!v || isNaN(v)) return 'Rp 0'; return 'Rp ' + Math.round(v).toLocaleString('id-ID'); }
+
+  document.getElementById('kmTitle').textContent = 'Detail Kontrak — ' + bulan;
+  document.getElementById('kmSub').textContent = list.length + ' klien aktif';
+  document.getElementById('kmTotalKlien').textContent = list.length;
+
+  const totalBulanan = list.reduce((a, c) => a + (c.bulanan || 0), 0);
+  document.getElementById('kmTotalBulanan').textContent = fRp(totalBulanan);
+
+  const listEl = document.getElementById('kmList');
+  if (!list.length) {
+    listEl.innerHTML = '<div class="km-empty">Belum ada data kontrak untuk bulan ini.</div>';
+  } else {
+    listEl.innerHTML = list.map(c => `
+      <div class="km-item">
+        <div class="km-item-name">${c.klien}</div>
+        <div class="km-item-vals">
+          <div class="km-item-bulanan">${fRp(c.bulanan)}<span style="font-size:0.6rem;color:var(--muted);font-weight:500">/bln</span></div>
+          <div class="km-item-total">Total ${fRp(c.total)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+  overlay.classList.add('open');
+}
+
+function closeKontrakModal() {
+  document.getElementById('kontrakModal').classList.remove('open');
 }
 
 function refreshSalesUI() {
@@ -1982,6 +2042,32 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 
 </div>
+</div>
+
+<!-- MODAL DETAIL KONTRAK PER BULAN -->
+<div class="kontrak-modal-overlay" id="kontrakModal" onclick="if(event.target===this) closeKontrakModal()">
+  <div class="kontrak-modal">
+    <div class="kontrak-modal-head">
+      <div>
+        <h3 id="kmTitle">Detail Kontrak — Januari</h3>
+        <div class="km-sub" id="kmSub">0 klien aktif</div>
+      </div>
+      <button class="kontrak-modal-close" onclick="closeKontrakModal()">✕</button>
+    </div>
+    <div class="kontrak-modal-body">
+      <div class="km-stats">
+        <div class="km-stat">
+          <div class="km-stat-label">Total Bulanan</div>
+          <div class="km-stat-val" id="kmTotalBulanan">Rp 0</div>
+        </div>
+        <div class="km-stat">
+          <div class="km-stat-label">Jumlah Klien</div>
+          <div class="km-stat-val" id="kmTotalKlien">0</div>
+        </div>
+      </div>
+      <div class="km-list" id="kmList"></div>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL & DELETE CONFIRM -->
