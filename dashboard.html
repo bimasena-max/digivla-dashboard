@@ -18,13 +18,13 @@
     function buildOverlay(){
       var o=document.createElement('div');
       o.id='_authOverlay';
-      o.style.cssText='position:fixed;inset:0;z-index:99999;background:#0d1117;display:flex;align-items:center;justify-content:center;font-family:Outfit,sans-serif';
+      o.style.cssText='position:fixed;inset:0;z-index:99999;background:#0d1117;display:flex;align-items:center;justify-content:center;font-family:Manrope,sans-serif';
       o.innerHTML='<div style="background:#111827;border:1px solid #1f2937;border-radius:16px;padding:2.5rem 3rem;width:100%;max-width:380px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.6)">'
-        +'<div style="font-family:\'Playfair Display\',serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:.25rem">Digivla 2026</div>'
+        +'<div style="font-family:\'Lora\',serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:.25rem">Digivla 2026</div>'
         +'<div style="font-size:.72rem;color:#6b7280;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem">Performance Dashboard &mdash; Protected</div>'
-        +'<input id="_aIn" type="password" placeholder="Masukkan password" autocomplete="current-password" style="width:100%;box-sizing:border-box;background:#1f2937;border:1.5px solid #374151;color:#fff;border-radius:10px;padding:.75rem 1rem;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;margin-bottom:.75rem;display:block" onkeydown="if(event.key===\'Enter\')window._dvL()" onfocus="this.style.borderColor=\'#1a56ff\'" onblur="this.style.borderColor=\'#374151\'">'
+        +'<input id="_aIn" type="password" placeholder="Masukkan password" autocomplete="current-password" style="width:100%;box-sizing:border-box;background:#1f2937;border:1.5px solid #374151;color:#fff;border-radius:10px;padding:.75rem 1rem;font-family:Manrope,sans-serif;font-size:.9rem;outline:none;margin-bottom:.75rem;display:block" onkeydown="if(event.key===\'Enter\')window._dvL()" onfocus="this.style.borderColor=\'#1a56ff\'" onblur="this.style.borderColor=\'#374151\'">'
         +'<div id="_aErr" style="color:#e8003d;font-size:.72rem;margin-bottom:.75rem;min-height:1.1rem"></div>'
-        +'<button onclick="window._dvL()" style="width:100%;background:#1a56ff;color:#fff;border:none;border-radius:10px;padding:.75rem;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.04em" onmouseover="this.style.background=\'#1445d4\'" onmouseout="this.style.background=\'#1a56ff\'">Masuk &rarr;</button>'
+        +'<button onclick="window._dvL()" style="width:100%;background:#1a56ff;color:#fff;border:none;border-radius:10px;padding:.75rem;font-family:Manrope,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;letter-spacing:.04em" onmouseover="this.style.background=\'#1445d4\'" onmouseout="this.style.background=\'#1a56ff\'">Masuk &rarr;</button>'
         +'<div style="font-size:.62rem;color:#374151;margin-top:1.5rem">Digivla &amp; Royston &middot; Confidential</div>'
         +'</div>';
       document.body.appendChild(o);
@@ -61,22 +61,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Performance Dashboard 2026 — Digivla & Royston</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 :root {
-  --dv:#1a56ff; --dv-soft:rgba(26,86,255,0.12); --dv-xsoft:rgba(26,86,255,0.05);
-  --rs:#e8003d; --rs-soft:rgba(232,0,61,0.12); --rs-xsoft:rgba(232,0,61,0.05);
+  --dv:#1C1D4F; --dv-soft:rgba(28,29,79,0.12); --dv-xsoft:rgba(28,29,79,0.05);
+  --rs:#2A357D; --rs-soft:rgba(42,53,125,0.12); --rs-xsoft:rgba(42,53,125,0.05);
+  --accent:#F08616; --accent-soft:rgba(240,134,22,0.14);
   --ok:#059669; --ok-soft:rgba(5,150,105,0.1);
   --warn:#d97706; --warn-soft:rgba(217,119,6,0.1);
   --crit:#dc2626; --crit-soft:rgba(220,38,38,0.1);
   --ink:#111827; --ink2:#374151; --muted:#6b7280;
   --border:#e5e7eb; --border2:#f3f4f6; --surface:#ffffff; --bg:#f9fafb; --radius:12px;
-  --c0:#1a56ff; --c1:#7c3aed; --c2:#e8003d; --c3:#d97706; --c4:#059669;
+  --c0:#1C1D4F; --c1:#7c3aed; --c2:#2A357D; --c3:#d97706; --c4:#059669;
   --target-line:#fbbf24;
 }
-body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); font-size:13px; line-height:1.5; }
+body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--ink); font-size:13px; line-height:1.5; }
 
 .tab-nav-wrap {
   position: sticky; top: 0; z-index: 100;
@@ -84,8 +85,8 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
   box-shadow: 0 2px 16px rgba(0,0,0,0.18);
 }
 .tab-nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: stretch; gap: 0; }
-.tab-brand { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 800; color: #fff; opacity: 0.9; padding: 0 1.5rem 0 0; display: flex; align-items: center; border-right: 1px solid rgba(255,255,255,0.12); margin-right: 0.5rem; letter-spacing: -0.01em; white-space: nowrap; }
-.tab-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.25rem; font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: color 0.18s, border-color 0.18s; white-space: nowrap; position: relative; bottom: -2px; }
+.tab-brand { font-family: 'Lora', serif; font-size: 0.85rem; font-weight: 800; color: #fff; opacity: 0.9; padding: 0 1.5rem 0 0; display: flex; align-items: center; border-right: 1px solid rgba(255,255,255,0.12); margin-right: 0.5rem; letter-spacing: -0.01em; white-space: nowrap; }
+.tab-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.25rem; font-family: 'Manrope', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: color 0.18s, border-color 0.18s; white-space: nowrap; position: relative; bottom: -2px; }
 .tab-btn:hover { color: rgba(255,255,255,0.75); }
 .tab-btn.active { color: #fff; border-bottom-color: #fbbf24; }
 .tab-btn .tab-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.6; flex-shrink: 0; }
@@ -94,6 +95,15 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .tab-btn.tab-survey.active .tab-dot { background: #059669; opacity: 1; }
 .tab-btn.tab-people.active .tab-dot { background: #7c3aed; opacity: 1; }
 .tab-btn.tab-pipeline.active .tab-dot { background: #059669; opacity: 1; }
+
+.subtab-nav { display: flex; gap: 0.4rem; margin-bottom: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.3rem; width: fit-content; }
+.subtab-btn { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; font-family: 'Manrope', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); background: none; border: none; border-radius: 7px; cursor: pointer; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+.subtab-btn:hover { color: var(--ink); }
+.subtab-btn.active { background: var(--ink); color: #fff; }
+.subtab-btn .subtab-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+.subtab-btn.active .subtab-dot { opacity: 1; }
+.sales-subpanel { display: none; }
+.sales-subpanel.active { display: block; }
 
 /* ── PIPELINE TAB STYLES ── */
 .pipe-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
@@ -107,14 +117,14 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .pipe-kpi.c100::before { background: #059669; }
 .pipe-kpi.ctotal::before { background: var(--ink); }
 .pipe-kpi-label { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
-.pipe-kpi-val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+.pipe-kpi-val { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
 .pipe-kpi-val.c50  { color: #d97706; }
 .pipe-kpi-val.c80  { color: #1a56ff; }
 .pipe-kpi-val.c100 { color: #059669; }
 .pipe-kpi-sub { font-size: .68rem; color: var(--muted); margin-top: .35rem; }
 
 .pipe-filter-bar { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
-.pipe-filter-btn { font-family: 'Outfit', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: .35rem .9rem; border-radius: 6px; border: 1.5px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all .15s; }
+.pipe-filter-btn { font-family: 'Manrope', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: .35rem .9rem; border-radius: 6px; border: 1.5px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all .15s; }
 .pipe-filter-btn.active { color: #fff; border-color: transparent; }
 .pipe-filter-btn.f-all.active   { background: var(--ink); }
 .pipe-filter-btn.f-50.active    { background: #d97706; }
@@ -126,10 +136,10 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 .pipe-sales-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .pipe-sales-header { display: flex; align-items: center; gap: .75rem; padding: .9rem 1.1rem; border-bottom: 1px solid var(--border); }
-.pipe-sales-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 800; font-size: .9rem; color: #fff; flex-shrink: 0; }
+.pipe-sales-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Lora', serif; font-weight: 800; font-size: .9rem; color: #fff; flex-shrink: 0; }
 .pipe-sales-name { font-weight: 700; font-size: .88rem; }
 .pipe-sales-total { font-size: .68rem; color: var(--muted); }
-.pipe-sales-tcv { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 800; margin-left: auto; }
+.pipe-sales-tcv { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 800; margin-left: auto; }
 
 .pipe-deal-list { padding: .6rem .5rem; }
 .pipe-deal-row { display: flex; align-items: center; gap: .5rem; padding: .38rem .6rem; border-radius: 7px; transition: background .1s; }
@@ -155,7 +165,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 @media(max-width:600px){ .pipe-cb-grid { grid-template-columns: repeat(2,1fr); } }
 .pipe-cb-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .85rem 1rem; text-align: center; }
 .pipe-cb-name { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
-.pipe-cb-val { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 800; }
+.pipe-cb-val { font-family: 'Lora', serif; font-size: 1.2rem; font-weight: 800; }
 
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
@@ -164,9 +174,9 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 .masthead { display:grid; grid-template-columns:1fr auto; align-items:end; gap:1rem; padding-bottom:1.5rem; margin-bottom:2rem; border-bottom:2px solid var(--ink); }
 .masthead-eyebrow { font-size:0.65rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:0.35rem; }
-.masthead h1 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; letter-spacing:-0.02em; line-height:1.15; }
+.masthead h1 { font-family:'Lora',serif; font-size:2rem; font-weight:800; letter-spacing:-0.02em; line-height:1.15; }
 .masthead-meta { text-align:right; font-size:0.72rem; color:var(--muted); line-height:1.7; }
-.masthead-meta strong { display:block; font-family:'Playfair Display',serif; font-size:0.88rem; color:var(--ink); font-weight:700; margin-bottom:0.15rem; }
+.masthead-meta strong { display:block; font-family:'Lora',serif; font-size:0.88rem; color:var(--ink); font-weight:700; margin-bottom:0.15rem; }
 
 .section-head { display:flex; align-items:center; gap:0.75rem; margin:2rem 0 1.25rem; }
 .section-badge { font-size:0.6rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#fff; padding:0.28rem 0.75rem; border-radius:4px; flex-shrink:0; }
@@ -187,16 +197,16 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 .banner { background:var(--ink); color:#fff; border-radius:var(--radius); padding:1.5rem 2rem; display:grid; grid-template-columns:1fr auto; align-items:center; gap:1rem; margin-bottom:1rem; }
 .banner-label { font-size:0.6rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; opacity:0.5; margin-bottom:0.4rem; }
-.banner-num { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; line-height:1; }
+.banner-num { font-family:'Lora',serif; font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; line-height:1; }
 .banner-sub { font-size:0.72rem; opacity:0.45; margin-top:0.3rem; }
 .banner-right { text-align:right; }
-.banner-pct { font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; color:#fbbf24; }
+.banner-pct { font-family:'Lora',serif; font-size:2rem; font-weight:800; color:#fbbf24; }
 
 .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem 1.4rem; }
-.card-dv{border-top:3px solid var(--dv)} .card-rs{border-top:3px solid var(--rs)} .card-total{border-top:3px solid var(--ink)}
+.card-dv{border-top:3px solid var(--accent)} .card-rs{border-top:3px solid var(--accent)} .card-total{border-top:3px solid var(--ink)}
 
 .kpi-label { font-size:0.62rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:0.5rem; }
-.kpi-num { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:800; letter-spacing:-0.02em; line-height:1; margin-bottom:0.45rem; }
+.kpi-num { font-family:'Lora',serif; font-size:1.75rem; font-weight:800; letter-spacing:-0.02em; line-height:1; margin-bottom:0.45rem; }
 .kpi-foot { font-size:0.72rem; color:var(--muted); display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; }
 .kpi-bar { height:3px; background:var(--border); border-radius:2px; margin-top:0.8rem; overflow:hidden; }
 .kpi-bar-fill { height:100%; border-radius:2px; }
@@ -223,7 +233,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .sp-val { font-size:0.88rem; font-weight:700; }
 
 .rekap-wrap { border:2px solid var(--border); border-radius:var(--radius); overflow:hidden; }
-.rekap-wrap-dv{border-color:var(--dv)} .rekap-wrap-rs{border-color:var(--rs)}
+.rekap-wrap-dv{border-color:var(--accent)} .rekap-wrap-rs{border-color:var(--accent)}
 .rekap-title { padding:0.7rem 1rem; text-align:center; font-size:0.68rem; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:#fff; }
 .rekap-title-dv{background:var(--dv)} .rekap-title-rs{background:var(--rs)}
 .rekap-table { width:100%; border-collapse:collapse; }
@@ -246,7 +256,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .health-card-wrap {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-top: 3px solid var(--dv);
+  border-top: 3px solid var(--accent);
   border-radius: var(--radius);
   padding: 1.25rem 1.4rem;
 }
@@ -258,18 +268,18 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .health-sub { font-size: 0.67rem; color: var(--muted); margin-top: 0.2rem; }
 .health-controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .health-select {
-  font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 600; color: var(--ink);
-  background: var(--bg); border: 1.5px solid var(--dv); border-radius: 6px;
+  font-family: 'Manrope', sans-serif; font-size: 0.72rem; font-weight: 600; color: var(--ink);
+  background: var(--bg); border: 1.5px solid var(--accent); border-radius: 6px;
   padding: 0.3rem 0.55rem; cursor: pointer; outline: none;
 }
 .health-refresh-btn {
-  font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 600;
+  font-family: 'Manrope', sans-serif; font-size: 0.68rem; font-weight: 600;
   letter-spacing: 0.04em; text-transform: uppercase; color: var(--dv);
-  background: var(--dv-soft); border: 1px solid rgba(26,86,255,0.2); border-radius: 6px;
+  background: var(--dv-soft); border: 1px solid var(--accent-soft); border-radius: 6px;
   padding: 0.3rem 0.65rem; cursor: pointer; transition: background 0.15s;
   display: flex; align-items: center; gap: 4px;
 }
-.health-refresh-btn:hover { background: rgba(26,86,255,0.18); }
+.health-refresh-btn:hover { background: rgba(28,29,79,0.18); }
 .health-refresh-btn.loading { opacity: 0.6; pointer-events: none; }
 .health-status-bar {
   display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap;
@@ -277,7 +287,11 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
   background: var(--bg); border-radius: 8px; border: 1px solid var(--border);
 }
 .hstat { font-size: 0.65rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 4px; }
+.hstat-filter { cursor:pointer; border:1.5px solid transparent; transition: all .15s; }
+.hstat-filter:hover { opacity:0.8; }
+.hstat-filter.active { border-color: currentColor; box-shadow: inset 0 0 0 1px currentColor; }
 .hstat-label { font-size: 0.65rem; color: var(--muted); margin-right: 4px; }
+.health-page-bar { display:flex; align-items:center; justify-content:center; gap:0.75rem; margin-top:1rem; }
 .health-source-tag { margin-left: auto; font-size: 0.6rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }
 .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); animation: pulse 2s infinite; }
 .live-dot.offline { background: var(--muted); animation: none; }
@@ -297,7 +311,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .hcard-accent { position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 10px 0 0 10px; }
 .hcard-name { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.35rem; padding-right: 50px; }
 .hcard-score-wrap { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.4rem; }
-.hcard-score { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 800; line-height: 1; }
+.hcard-score { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 800; line-height: 1; }
 .hcard-score-label { font-size: 0.6rem; color: var(--muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 .hcard-bar { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 0.4rem; overflow: hidden; }
 .hcard-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
@@ -326,7 +340,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 .tp-row{display:flex;align-items:center;gap:0.75rem;padding:0.45rem 0;border-bottom:1px solid var(--border2)}
 .tp-row:last-child{border-bottom:none}
-.tp-rank{font-family:'Playfair Display',serif;font-size:1rem;font-weight:800;color:var(--muted);min-width:18px}
+.tp-rank{font-family:'Lora',serif;font-size:1rem;font-weight:800;color:var(--muted);min-width:18px}
 .tp-name{flex:1;font-size:0.76rem}
 .tp-profit{font-size:0.82rem;font-weight:700;color:var(--ok);min-width:90px;text-align:right}
 
@@ -342,9 +356,9 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 .sales-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .sales-card-header{padding:1rem 1.25rem .85rem;border-bottom:1px solid var(--border2)}
-.sales-rank{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;opacity:.12;line-height:1;position:absolute;top:.75rem;right:1rem}
+.sales-rank{font-family:'Lora',serif;font-size:2rem;font-weight:900;opacity:.12;line-height:1;position:absolute;top:.75rem;right:1rem}
 .sales-name-wrap{position:relative}
-.sales-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.2rem}
+.sales-name{font-family:'Lora',serif;font-size:1.1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.2rem}
 .sales-body{padding:1rem 1.25rem}
 .sales-pct-bar{height:4px;background:var(--border);border-radius:2px;margin:.6rem 0 .8rem;overflow:hidden}
 .sales-pct-fill{height:100%;border-radius:2px}
@@ -358,14 +372,14 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 .cl-row{display:flex;align-items:center;gap:.65rem;padding:.38rem 0;border-bottom:1px solid var(--border2)}
 .cl-row:last-child{border-bottom:none}
-.cl-rank{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:800;color:var(--muted);min-width:16px}
+.cl-rank{font-family:'Lora',serif;font-size:.9rem;font-weight:800;color:var(--muted);min-width:16px}
 .cl-name{flex:1;font-size:.74rem}
 .cl-rev{font-size:.76rem;font-weight:700;text-align:right;min-width:80px}
 
 .lb-row{display:flex;align-items:center;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--border2)}
 .lb-row:last-child{border-bottom:none}
-.lb-rank{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;opacity:.2;min-width:28px}
-.lb-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.9rem;font-weight:800;color:#fff;flex-shrink:0}
+.lb-rank{font-family:'Lora',serif;font-size:1.5rem;font-weight:900;opacity:.2;min-width:28px}
+.lb-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-size:.9rem;font-weight:800;color:#fff;flex-shrink:0}
 .lb-info{flex:1}
 .lb-name{font-weight:700;font-size:.85rem;margin-bottom:.15rem}
 .lb-sub{font-size:.7rem;color:var(--muted)}
@@ -373,7 +387,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .lb-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:.2rem}
 .lb-bar-fill{height:100%;border-radius:3px}
 .lb-pct{font-size:.68rem;font-weight:700;text-align:right;color:var(--muted)}
-.lb-rev{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:800;min-width:90px;text-align:right}
+.lb-rev{font-family:'Lora',serif;font-size:.95rem;font-weight:800;min-width:90px;text-align:right}
 .badge{display:inline-block;padding:.13rem .4rem;border-radius:4px;font-size:.6rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
 
 .lline{display:inline-block;width:14px;height:2px;background:#fbbf24;border-top:2px dashed #fbbf24;margin-right:3px;vertical-align:middle}
@@ -383,15 +397,15 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 
 .prog-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .prog-toolbar-left { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-.prog-filter-btn { font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; border: 1.5px solid var(--border); background: var(--bg); color: var(--muted); border-radius: 6px; padding: 0.3rem 0.7rem; cursor: pointer; transition: all 0.15s; }
+.prog-filter-btn { font-family: 'Manrope', sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; border: 1.5px solid var(--border); background: var(--bg); color: var(--muted); border-radius: 6px; padding: 0.3rem 0.7rem; cursor: pointer; transition: all 0.15s; }
 .prog-filter-btn:hover { border-color: #7c3aed; color: #7c3aed; }
 .prog-filter-btn.active { background: #7c3aed; color: #fff; border-color: #7c3aed; }
-.prog-add-btn { display: flex; align-items: center; gap: 5px; font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 0.45rem 1rem; cursor: pointer; transition: background 0.15s; }
+.prog-add-btn { display: flex; align-items: center; gap: 5px; font-family: 'Manrope', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 0.45rem 1rem; cursor: pointer; transition: background 0.15s; }
 .prog-add-btn:hover { background: #6d28d9; }
 .prog-timeline { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.85rem; }
 .prog-month-col { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
 .prog-month-head { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0.9rem; background: #7c3aed; color: #fff; }
-.prog-month-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 800; }
+.prog-month-name { font-family: 'Lora', serif; font-size: 0.9rem; font-weight: 800; }
 .prog-month-count { font-size: 0.62rem; font-weight: 700; background: rgba(255,255,255,0.2); border-radius: 10px; padding: 0.1rem 0.4rem; }
 .prog-month-body { padding: 0.5rem; min-height: 60px; }
 .prog-item { display: flex; align-items: flex-start; gap: 0.45rem; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 0.45rem 0.55rem; margin-bottom: 0.35rem; cursor: pointer; transition: box-shadow 0.12s, border-color 0.12s; position: relative; }
@@ -405,8 +419,8 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .prog-action-btn { width: 20px; height: 20px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: background 0.12s; }
 .prog-edit-btn { background: var(--dv-soft); color: var(--dv); }
 .prog-edit-btn:hover { background: var(--dv); color: #fff; }
-.prog-del-btn { background: var(--rs-soft); color: var(--rs); }
-.prog-del-btn:hover { background: var(--rs); color: #fff; }
+.prog-del-btn { background: var(--crit-soft); color: var(--crit); }
+.prog-del-btn:hover { background: var(--crit); color: #fff; }
 .prog-add-mini { display: flex; align-items: center; gap: 4px; font-size: 0.62rem; font-weight: 600; color: #7c3aed44; padding: 0.3rem 0.5rem; border: 1.5px dashed #7c3aed33; border-radius: 6px; cursor: pointer; transition: all 0.12s; width: 100%; background: none; }
 .prog-add-mini:hover { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.05); }
 .cat-pill { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -414,54 +428,54 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 .prog-modal-overlay.open { display: flex; }
 .prog-modal { background: var(--surface); border-radius: 14px; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); overflow: hidden; }
 .prog-modal-head { padding: 1rem 1.25rem; background: #7c3aed; color: #fff; display: flex; align-items: center; justify-content: space-between; }
-.prog-modal-head h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 800; }
+.prog-modal-head h3 { font-family: 'Lora', serif; font-size: 1rem; font-weight: 800; }
 .prog-modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
 .prog-modal-body { padding: 1.25rem; }
 .prog-field { margin-bottom: 1rem; }
 .prog-field label { display: block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
-.prog-field input, .prog-field select, .prog-field textarea { width: 100%; font-family: 'Outfit', sans-serif; font-size: 0.8rem; color: var(--ink); background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px; padding: 0.55rem 0.75rem; outline: none; transition: border-color 0.15s; }
+.prog-field input, .prog-field select, .prog-field textarea { width: 100%; font-family: 'Manrope', sans-serif; font-size: 0.8rem; color: var(--ink); background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px; padding: 0.55rem 0.75rem; outline: none; transition: border-color 0.15s; }
 .prog-field input:focus, .prog-field select:focus, .prog-field textarea:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
 .prog-field textarea { resize: vertical; min-height: 70px; }
 .prog-modal-foot { display: flex; gap: 0.65rem; justify-content: flex-end; padding: 0.75rem 1.25rem 1.25rem; }
-.prog-btn-cancel { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink2); cursor: pointer; }
-.prog-btn-save { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; border: none; background: #7c3aed; color: #fff; cursor: pointer; transition: background 0.15s; }
+.prog-btn-cancel { font-family: 'Manrope', sans-serif; font-size: 0.76rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink2); cursor: pointer; }
+.prog-btn-save { font-family: 'Manrope', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; border: none; background: #7c3aed; color: #fff; cursor: pointer; transition: background 0.15s; }
 .prog-btn-save:hover { background: #6d28d9; }
 .prog-stats { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .prog-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.65rem 1rem; flex: 1; min-width: 100px; }
 .prog-stat-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
-.prog-stat-val { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 800; line-height: 1; }
+.prog-stat-val { font-family: 'Lora', serif; font-size: 1.4rem; font-weight: 800; line-height: 1; }
 .del-confirm { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1001; align-items: center; justify-content: center; }
 .del-confirm.open { display: flex; }
 .del-confirm-box { background: #fff; border-radius: 12px; padding: 1.5rem; max-width: 340px; width: 100%; text-align: center; box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
 .del-confirm-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-.del-confirm-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 800; margin-bottom: 0.35rem; }
+.del-confirm-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 800; margin-bottom: 0.35rem; }
 .del-confirm-sub { font-size: 0.76rem; color: var(--muted); margin-bottom: 1.25rem; }
 .del-confirm-actions { display: flex; gap: 0.65rem; justify-content: center; }
-.del-no { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 600; padding: 0.5rem 1.25rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink2); cursor: pointer; }
-.del-yes { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; border: none; background: var(--rs); color: #fff; cursor: pointer; }
+.del-no { font-family: 'Manrope', sans-serif; font-size: 0.76rem; font-weight: 600; padding: 0.5rem 1.25rem; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); color: var(--ink2); cursor: pointer; }
+.del-yes { font-family: 'Manrope', sans-serif; font-size: 0.76rem; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; border: none; background: var(--crit); color: #fff; cursor: pointer; }
 .empty-month { text-align: center; padding: 0.75rem; color: var(--muted); font-size: 0.68rem; font-style: italic; }
 
 .cl-pagination{display:flex;align-items:center;justify-content:space-between;padding:.5rem 0 .2rem;margin-top:.4rem;border-top:1px solid var(--border2)}
-.cl-page-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:6px;padding:.25rem .6rem;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .15s;color:var(--ink2)}
+.cl-page-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:6px;padding:.25rem .6rem;font-family:'Manrope',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .15s;color:var(--ink2)}
 .cl-page-btn:hover:not(:disabled){border-color:#7c3aed;color:#7c3aed}
 .cl-page-btn:disabled{opacity:.3;cursor:default}
 .cl-page-info{font-size:.65rem;color:var(--muted)}
 
 /* Rekap table — baris bulan bisa diklik untuk lihat detail kontrak */
 .rekap-table tbody tr[data-bulan] { cursor: pointer; transition: background 0.12s; }
-.rekap-table tbody tr[data-bulan]:hover { background: rgba(26,86,255,0.06); }
+.rekap-table tbody tr[data-bulan]:hover { background: rgba(28,29,79,0.06); }
 .kontrak-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
 .kontrak-modal-overlay.open { display: flex; }
 .kontrak-modal { background: var(--surface); border-radius: 14px; width: 100%; max-width: 480px; max-height: 82vh; box-shadow: 0 20px 60px rgba(0,0,0,0.25); overflow: hidden; display: flex; flex-direction: column; }
 .kontrak-modal-head { padding: 1rem 1.25rem; background: var(--dv); color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.kontrak-modal-head h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 800; }
+.kontrak-modal-head h3 { font-family: 'Lora', serif; font-size: 1rem; font-weight: 800; }
 .kontrak-modal-head .km-sub { font-size: 0.65rem; opacity: 0.85; font-weight: 500; margin-top: 0.15rem; }
 .kontrak-modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 26px; height: 26px; border-radius: 6px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .kontrak-modal-body { padding: 0.75rem 1.25rem 1.25rem; overflow-y: auto; flex: 1; }
 .km-stats { display: flex; gap: 0.6rem; margin: 0.75rem 0 1rem; }
 .km-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.55rem 0.8rem; flex: 1; }
 .km-stat-label { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
-.km-stat-val { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 800; line-height: 1; color: var(--dv); }
+.km-stat-val { font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 800; line-height: 1; color: var(--dv); }
 .km-list { display: flex; flex-direction: column; gap: 0.4rem; }
 .km-item { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-radius: 9px; background: var(--bg); }
 .km-item-name { font-size: 0.74rem; font-weight: 600; line-height: 1.3; word-break: break-word; flex: 1; min-width: 0; }
@@ -480,7 +494,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
       <span class="tab-dot"></span>Revenue Overview
     </button>
     <button class="tab-btn tab-sales" onclick="switchTab('sales')">
-      <span class="tab-dot"></span>Sales Performance
+      <span class="tab-dot"></span>Sales &amp; Pipeline
     </button>
     <button class="tab-btn tab-survey" onclick="switchTab('survey')">
       <span class="tab-dot"></span>Client Survey
@@ -488,10 +502,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
     <button class="tab-btn tab-people" onclick="switchTab('people')">
       <span class="tab-dot"></span>People &amp; Culture
     </button>
-    <button class="tab-btn tab-pipeline" onclick="switchTab('pipeline')">
-      <span class="tab-dot"></span>Pipeline Tracker
-    </button>
-    <button id="globalRefreshBtn" onclick="refreshAllData()" style="margin-left:auto;display:flex;align-items:center;gap:0.4rem;padding:0.45rem 0.9rem;font-family:'Outfit',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;cursor:pointer;transition:background 0.15s;white-space:nowrap">
+    <button id="globalRefreshBtn" onclick="refreshAllData()" style="margin-left:auto;display:flex;align-items:center;gap:0.4rem;padding:0.45rem 0.9rem;font-family:'Manrope',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;cursor:pointer;transition:background 0.15s;white-space:nowrap">
       <svg id="refreshIcon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
       <span id="refreshBtnLabel">Refresh Data</span>
     </button>
@@ -588,7 +599,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
         </div>
         <div class="chart-legend">
           <span><span class="ldot" style="background:var(--dv)"></span>Aktual</span>
-          <span><span class="ldot" style="background:rgba(26,86,255,0.3)"></span>Proyeksi</span>
+          <span><span class="ldot" style="background:rgba(28,29,79,0.3)"></span>Proyeksi</span>
         </div>
       </div>
       <div class="chart-wrap h-220"><canvas id="dvChart"></canvas></div>
@@ -633,6 +644,10 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
           <div class="health-sub">Performance Scoring</div>
         </div>
         <div class="health-controls">
+          <select class="health-select" id="healthTypeSelect" onchange="onHealthTypeChange()">
+            <option value="am">Health Check (AM)</option>
+            <option value="nonam">Health Check non AM</option>
+          </select>
           <select class="health-select" id="healthMonthSelect" onchange="loadHealthData()"></select>
           <button class="health-refresh-btn" id="healthRefreshBtn" onclick="loadHealthData(true)">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
@@ -711,7 +726,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
         </div>
         <div class="chart-legend">
           <span><span class="ldot" style="background:var(--rs)"></span>Aktual</span>
-          <span><span class="ldot" style="background:rgba(232,0,61,0.3)"></span>Proyeksi</span>
+          <span><span class="ldot" style="background:rgba(42,53,125,0.3)"></span>Proyeksi</span>
         </div>
       </div>
       <div class="chart-wrap h-220"><canvas id="rsChart"></canvas></div>
@@ -801,6 +816,17 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
 <div id="panel-sales" class="tab-panel">
 <div class="page">
 
+  <div class="subtab-nav">
+    <button class="subtab-btn subtab-performance active" onclick="switchSalesSubTab('performance')">
+      <span class="subtab-dot"></span>Sales Performance
+    </button>
+    <button class="subtab-btn subtab-pipeline" onclick="switchSalesSubTab('pipeline')">
+      <span class="subtab-dot"></span>Pipeline Tracker
+    </button>
+  </div>
+
+  <div id="subpanel-sales-performance" class="sales-subpanel active">
+
   <div class="masthead">
     <div>
       <div class="masthead-eyebrow">Sales Performance Dashboard · Digivla 2026</div>
@@ -860,6 +886,136 @@ body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--ink); 
   </div>
   <div class="g2 mb" id="salesGrid"></div>
 
+  </div><!-- /subpanel-sales-performance -->
+
+  <div id="subpanel-sales-pipeline" class="sales-subpanel">
+
+  <div class="masthead">
+    <div>
+      <div class="masthead-eyebrow">Pipeline Tracker · Monthly Projection Breakdown 2026</div>
+      <h1>Sales Pipeline<br>&amp; Projection 2026</h1>
+    </div>
+    <div class="masthead-meta">
+      <strong>Realtime dari Google Sheets</strong>
+      <span id="pipe-last-update">Belum dimuat</span><br>
+      <span id="pipe-realtime-badge" style="display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;margin-top:.2rem">
+        <span id="pipe-badge-dot" style="width:7px;height:7px;border-radius:50%;background:#6b7280;display:inline-block"></span>
+        <span id="pipe-badge-label">—</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="pipe-kpi-grid" id="pipeKpiGrid">
+    <div class="pipe-kpi c50">
+      <div class="pipe-kpi-label">🟡 Pipeline 50%</div>
+      <div class="pipe-kpi-val c50" id="pipeKpi50">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpi50Sub">— deals</div>
+    </div>
+    <div class="pipe-kpi c80">
+      <div class="pipe-kpi-label">🔵 Pipeline 80%</div>
+      <div class="pipe-kpi-val c80" id="pipeKpi80">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpi80Sub">— deals</div>
+    </div>
+    <div class="pipe-kpi c100">
+      <div class="pipe-kpi-label">🟢 Pipeline 100%</div>
+      <div class="pipe-kpi-val c100" id="pipeKpi100">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpi100Sub">— deals</div>
+    </div>
+    <div class="pipe-kpi ctotal">
+      <div class="pipe-kpi-label">📊 Total Pipeline TCV</div>
+      <div class="pipe-kpi-val" id="pipeKpiTotal">—</div>
+      <div class="pipe-kpi-sub" id="pipeKpiTotalSub">— deals total</div>
+    </div>
+  </div>
+
+  <!-- CHART: PIPELINE PER SALES -->
+  <div class="section-head">
+    <span class="section-badge" style="background:#059669">Pipeline</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Total TCV Pipeline per Sales</span>
+    <span class="section-line"></span>
+  </div>
+  <div class="pipe-chart-wrap mb">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">TCV Pipeline per Sales — All Confidence</div>
+        <div class="chart-sub">50% + 80% + 100% dijumlahkan per sales</div>
+      </div>
+      <div class="chart-legend" id="pipeLegend"></div>
+    </div>
+    <div class="chart-wrap h-220"><canvas id="pipeBarChart"></canvas></div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="section-head" style="margin-top:1.5rem">
+    <span class="section-badge" style="background:#059669">Deals</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Deal List per Sales</span>
+    <span class="section-line"></span>
+  </div>
+  <div class="pipe-filter-bar">
+    <span style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Filter:</span>
+    <button class="pipe-filter-btn f-all active" onclick="setPipeFilter('all')">Semua</button>
+    <button class="pipe-filter-btn f-50"  onclick="setPipeFilter('50%')">50%</button>
+    <button class="pipe-filter-btn f-80"  onclick="setPipeFilter('80%')">80%</button>
+    <button class="pipe-filter-btn f-100" onclick="setPipeFilter('100%')">100%</button>
+    <span id="pipeFilterCount" style="font-size:.68rem;color:var(--muted);margin-left:.25rem"></span>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div id="pipeLoading" class="pipe-loading">
+    <div class="pipe-spinner"></div>
+    Memuat data dari Google Sheets...
+  </div>
+  <div id="pipeError" class="pipe-error" style="display:none"></div>
+
+  <!-- SALES GRID -->
+  <div class="pipe-sales-grid" id="pipeSalesGrid" style="display:none"></div>
+
+  <!-- CONTRACT BASE SECTION -->
+  <div class="section-head" style="margin-top:2rem">
+    <span class="section-badge" style="background:var(--ink)">Contract Base</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Contract Based per Sales</span>
+    <span class="section-line"></span>
+  </div>
+  <div class="pipe-cb-grid" id="pipeCbGrid">
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Abdul</div><div class="pipe-cb-val" id="cbAbdul">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Chatrine</div><div class="pipe-cb-val" id="cbChatrine">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Desy</div><div class="pipe-cb-val" id="cbDesy">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Lia</div><div class="pipe-cb-val" id="cbLia">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Whenda</div><div class="pipe-cb-val" id="cbWhenda">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Jodi</div><div class="pipe-cb-val" id="cbJodi">—</div></div>
+    <div class="pipe-cb-card"><div class="pipe-cb-name">Grace</div><div class="pipe-cb-val" id="cbGrace">—</div></div>
+  </div>
+  <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem">* Contract Base ditarik dari sheet CB masing-masing via formula. Nilai muncul jika spreadsheet memiliki cached value.</p>
+
+  <!-- CONFIDENCE LOG SECTION -->
+  <div class="section-head" style="margin-top:2rem">
+    <span class="section-badge" style="background:#7c3aed">Confidence Log</span>
+    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Deal Progression Tracker</span>
+    <span class="section-line"></span>
+  </div>
+  <div id="confLogEmpty" style="display:none;text-align:center;padding:2rem;color:var(--muted);font-size:.8rem">
+    Belum ada log perubahan confidence. Log akan muncul otomatis saat ada deal yang naik dari 50% → 80% → 100%.
+  </div>
+  <div id="confLogWrap" style="display:none">
+    <!-- Filter bar -->
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem">
+      <span style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Filter Sales:</span>
+      <button class="pipe-filter-btn f-all active" id="clFilterAll" onclick="setConfLogFilter('all')">Semua</button>
+      <button class="pipe-filter-btn" id="clFilterAbdul"    onclick="setConfLogFilter('Abdul')">Abdul</button>
+      <button class="pipe-filter-btn" id="clFilterChatrine" onclick="setConfLogFilter('Chatrine')">Chatrine</button>
+      <button class="pipe-filter-btn" id="clFilterDesy"     onclick="setConfLogFilter('Desy')">Desy</button>
+      <button class="pipe-filter-btn" id="clFilterLia"      onclick="setConfLogFilter('Lia')">Lia</button>
+      <button class="pipe-filter-btn" id="clFilterWhenda"   onclick="setConfLogFilter('Whenda')">Whenda</button>
+      <button class="pipe-filter-btn" id="clFilterJodi"     onclick="setConfLogFilter('Jodi')">Jodi</button>
+      <button class="pipe-filter-btn" id="clFilterGrace"    onclick="setConfLogFilter('Grace')">Grace</button>
+    </div>
+    <!-- Timeline cards -->
+    <div id="confLogCards" style="display:flex;flex-direction:column;gap:.75rem"></div>
+  </div>
+
+  </div><!-- /subpanel-sales-pipeline -->
+
 </div>
 </div>
 
@@ -875,9 +1031,23 @@ function switchTab(tab) {
   if (tab === 'sales') {
     window._salesChartsInited = true;
     refreshSalesUI(); // <--- CALL THE REFRESH FUNCTION INSTEAD
+    // Init whichever sub-tab is currently active (default: performance)
+    const activeSub = document.querySelector('#panel-sales .subtab-btn.active');
+    const subView = activeSub && activeSub.classList.contains('subtab-pipeline') ? 'pipeline' : 'performance';
+    if (subView === 'pipeline') initPipelineTab();
   }
-  if (tab === 'pipeline') {
+}
+
+/* ── SALES / PIPELINE SUB-TAB SWITCH ── */
+function switchSalesSubTab(view) {
+  document.querySelectorAll('#panel-sales .sales-subpanel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#panel-sales .subtab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('subpanel-sales-' + view).classList.add('active');
+  document.querySelector('#panel-sales .subtab-btn.subtab-' + view).classList.add('active');
+  if (view === 'pipeline') {
     initPipelineTab();
+  } else {
+    refreshSalesUI();
   }
 }
 function fJt(juta) {
@@ -935,9 +1105,25 @@ function populateDropdown(rows) {
   ).join('');
 }
 
-function renderHealthSection(rows, month) {
+let healthFilter = 'excellent';
+let healthPage = 1;
+const HEALTH_PAGE_SIZE = 12;
+let _healthRowsCache = [], _healthMonthCache = '';
+
+function setHealthFilter(status) {
+  healthFilter = status;
+  healthPage = 1;
+  renderHealthSection(_healthRowsCache, _healthMonthCache, true);
+}
+function changeHealthPage(page) {
+  healthPage = page;
+  renderHealthSection(_healthRowsCache, _healthMonthCache, true);
+}
+
+function renderHealthSection(rows, month, skipCache) {
   const content = document.getElementById('healthContent');
   const statusBar = document.getElementById('healthStatusBar');
+  if(!skipCache) { _healthRowsCache = rows; _healthMonthCache = month; }
   const filtered = rows.filter(r=>(r['Bulan']||'').toLowerCase()===month.toLowerCase());
   if(!filtered.length) {
     content.innerHTML=`<div class="health-error"><strong>Tidak ada data</strong>Bulan "${month}" kosong di spreadsheet.</div>`;
@@ -950,18 +1136,34 @@ function renderHealthSection(rows, month) {
     const s = getStatusFromScore(score);
     if(counts[s] !== undefined) counts[s]++;
   });
+  const total = filtered.length;
+  const pct = n => total ? Math.round((n/total)*100) : 0;
   const ml = MONTH_LABEL[month]||month;
   let sb=`<span class="hstat-label">${ml}:</span>`;
-  if(counts.excellent) sb+=`<span class="hstat chip chip-ok">${counts.excellent} Excellent</span>`;
-  if(counts.stable)    sb+=`<span class="hstat chip chip-stable">${counts.stable} Stable</span>`;
-  if(counts['at risk']) sb+=`<span class="hstat chip chip-warn">${counts['at risk']} At Risk</span>`;
-  if(counts.critical)  sb+=`<span class="hstat chip chip-crit">${counts.critical} Critical</span>`;
+  const chipDef = [
+    ['excellent','chip-ok', counts.excellent, 'Excellent'],
+    ['stable','chip-stable', counts.stable, 'Stable'],
+    ['at risk','chip-warn', counts['at risk'], 'At Risk'],
+    ['critical','chip-crit', counts.critical, 'Critical']
+  ];
+  chipDef.forEach(([status,cls,n,label])=>{
+    if(!n) return;
+    const active = healthFilter===status ? 'active' : '';
+    sb+=`<span class="hstat chip ${cls} hstat-filter ${active}" onclick="setHealthFilter('${status}')">${n} ${label} (${pct(n)}%)</span>`;
+  });
+  const allActive = healthFilter==='all' ? 'active' : '';
+  sb+=`<span class="hstat chip chip-dark hstat-filter ${allActive}" onclick="setHealthFilter('all')">Semua</span>`;
   sb+=`<span class="hstat-label" style="margin-left:auto;font-size:0.6rem">${filtered.length} klien</span>`;
   sb+=`<div class="health-source-tag"><div class="live-dot" id="liveDot"></div><span id="lastUpdated">Live · ${new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}</span></div>`;
   statusBar.innerHTML=sb;
   const sorted = [...filtered].sort((a,b)=>parseInt(b['Final Score']||0)-parseInt(a['Final Score']||0));
+  const scoped = healthFilter==='all' ? sorted : sorted.filter(r=>getStatusFromScore(parseInt(r['Final Score']??r['Score']??0))===healthFilter);
+  const totalPages = Math.max(1, Math.ceil(scoped.length/HEALTH_PAGE_SIZE));
+  if(healthPage>totalPages) healthPage=totalPages;
+  const pageRows = scoped.slice((healthPage-1)*HEALTH_PAGE_SIZE, healthPage*HEALTH_PAGE_SIZE);
   let html = `<div class="health-grid">`;
-  sorted.forEach(row=>{
+  if(!pageRows.length) html += `<div class="health-error" style="grid-column:1/-1"><strong>Tidak ada klien</strong>Tidak ada klien dengan status ini.</div>`;
+  pageRows.forEach(row=>{
     const name=row['Client Name']||'—';
     const score=parseInt(row['Final Score']??row['Score']??0);
     const note=row['Note']||'';
@@ -977,7 +1179,7 @@ function renderHealthSection(rows, month) {
       <div class="hcard-name">${name}</div>
       <div class="hcard-score-wrap">
         <div class="hcard-score" style="color:${sc}">${isNaN(score)?'—':score}</div>
-        <div class="hcard-score-label">/ 100</div>
+        <div class="hcard-score-label">/ 100${isNaN(score)?'':` (${score}%)`}</div>
       </div>
       <div class="hcard-bar"><div class="hcard-bar-fill" style="width:${bar}%;background:${sc}"></div></div>
       ${deduct>0?`<div class="hcard-deduction" style="color:${cfg.color};font-size:0.63rem;font-weight:600">−${deduct} poin</div>`:''}
@@ -989,15 +1191,29 @@ function renderHealthSection(rows, month) {
   content.innerHTML=html;
 }
 
-let _allRows=null, _healthLoading=false;
+let _healthCache={am:null,nonam:null}, _healthLoading=false;
+let _healthType='am';
+
+function onHealthTypeChange() {
+  _healthType = document.getElementById('healthTypeSelect').value || 'am';
+  const monthSel = document.getElementById('healthMonthSelect');
+  if (monthSel) monthSel.innerHTML = '';
+  loadHealthData();
+}
 
 function loadHealthData(forceRefresh) {
   if(_healthLoading) return;
+  const type = _healthType;
   const month=document.getElementById('healthMonthSelect').value||'April';
   const btn=document.getElementById('healthRefreshBtn');
   const content=document.getElementById('healthContent');
   const statusBar=document.getElementById('healthStatusBar');
-  if(_allRows&&!forceRefresh) { renderHealthSection(_allRows,month); return; }
+  const cached = _healthCache[type];
+  if(cached && !forceRefresh) {
+    populateDropdown(cached);
+    renderHealthSection(cached, document.getElementById('healthMonthSelect').value||month);
+    return;
+  }
   _healthLoading=true;
   btn.classList.add('loading');
   btn.innerHTML=`<div class="spinner" style="width:11px;height:11px;border-width:1.5px"></div> Loading`;
@@ -1018,8 +1234,8 @@ function loadHealthData(forceRefresh) {
     btn.classList.remove('loading');
     btn.innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg> Refresh`;
     let rows=Array.isArray(data)?data:(data&&Array.isArray(data.data)?data.data:(data&&Array.isArray(data.rows)?data.rows:[]));
-    if(!rows.length){ content.innerHTML=`<div class="health-error"><strong>Data kosong</strong>Tidak ada row yang dikembalikan Apps Script.</div>`; return; }
-    _allRows=rows;
+    if(!rows.length){ content.innerHTML=`<div class="health-error"><strong>Data kosong</strong>Tidak ada row yang dikembalikan Apps Script untuk ${type==='nonam'?'Health Check non AM':'Health Check (AM)'}.</div>`; return; }
+    _healthCache[type]=rows;
     populateDropdown(rows);
     renderHealthSection(rows, document.getElementById('healthMonthSelect').value||month);
   };
@@ -1030,7 +1246,8 @@ function loadHealthData(forceRefresh) {
     content.innerHTML=`<div class="health-error"><strong>Gagal load</strong>Script error — cek URL Apps Script masih valid dan setting deploy "Anyone".</div>`;
     statusBar.innerHTML=`<span class="hstat-label">Status:</span><span class="hstat chip chip-warn">Error</span>`;
   };
-  script.src=APPS_SCRIPT_URL+'?callback='+cbName;
+  const actionParam = type==='nonam' ? '&action=healthNonAM' : '&action=health';
+  script.src=APPS_SCRIPT_URL+'?callback='+cbName+actionParam;
   document.head.appendChild(script);
 }
 
@@ -1060,7 +1277,7 @@ const dataLabelsPlugin = {
           chart.data.datasets.forEach(ds => { if (ds.stack === stackId) total += ds.data[index] || 0; });
           const labelText = dlOpts.formatter ? dlOpts.formatter(total, index, chart) : fJt(total);
           ctx.save();
-          ctx.font = `600 ${dlOpts.fontSize || 9}px Outfit, sans-serif`;
+          ctx.font = `600 ${dlOpts.fontSize || 9}px Manrope, sans-serif`;
           ctx.fillStyle = dlOpts.color || '#374151';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
@@ -1070,7 +1287,7 @@ const dataLabelsPlugin = {
         }
         const labelText = dlOpts.formatter ? dlOpts.formatter(value, index, chart) : fJt(value);
         ctx.save();
-        ctx.font = `600 ${dlOpts.fontSize || 9}px Outfit, sans-serif`;
+        ctx.font = `600 ${dlOpts.fontSize || 9}px Manrope, sans-serif`;
         ctx.fillStyle = dlOpts.color || '#374151';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
@@ -1100,7 +1317,7 @@ const targetLinePlugin = {
     ctx.stroke();
     ctx.setLineDash([]);
     ctx.fillStyle = '#fbbf24';
-    ctx.font = 'bold 9px Outfit, sans-serif';
+    ctx.font = 'bold 9px Manrope, sans-serif';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
     const unit = chart.config.options._targetUnit || 'jt';
@@ -1112,7 +1329,7 @@ const targetLinePlugin = {
 Chart.register(targetLinePlugin, dataLabelsPlugin);
 Chart.defaults.color = '#6b7280';
 Chart.defaults.borderColor = '#e5e7eb';
-Chart.defaults.font.family = "'Outfit', sans-serif";
+Chart.defaults.font.family = "'Manrope', sans-serif";
 Chart.defaults.font.size = 10;
 
 const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -1231,7 +1448,7 @@ function updateRefreshBtn(loading) {
 
 function refreshAllData() {
   if (_dashLoading) { _dashLoading = false; }
-  _allRows = null;
+  _healthCache = {am:null, nonam:null};
   updateRefreshBtn(true);
   setTimeout(function() { loadDashboardData(true); }, 50);
 }
@@ -1266,10 +1483,15 @@ function loadDashboardData(forceRefresh) {
       setRealtimeBadge(true);
     } catch(e) { console.error('Error applying data:', e); showDebugPanel('JS Error: ' + e.message + ' @ ' + e.stack); setRealtimeBadge(false); }
     if (data.healthCheck && data.healthCheck.length) {
-      _allRows = data.healthCheck;
-      populateDropdown(_allRows);
-      var selectedMonth = document.getElementById('healthMonthSelect').value || 'Juni';
-      renderHealthSection(_allRows, selectedMonth);
+      _healthCache.am = data.healthCheck;
+      if (data.healthCheckNonAM && data.healthCheckNonAM.length) {
+        _healthCache.nonam = data.healthCheckNonAM;
+      }
+      if (_healthType === 'am') {
+        populateDropdown(_healthCache.am);
+        var selectedMonth = document.getElementById('healthMonthSelect').value || 'Juni';
+        renderHealthSection(_healthCache.am, selectedMonth);
+      }
     }
   };
   script.onerror = function() { cleanup(); _dashLoading = false; setRealtimeBadge(false); updateRefreshBtn(false); };
@@ -1567,28 +1789,28 @@ _chartTotal = new Chart(document.getElementById('totalChart'), {
   data: {
     labels: months,
     datasets: [
-      { label:'Digivla', data:dvRev, backgroundColor:months.map((_,i)=>i<5?'rgba(26,86,255,0.85)':'rgba(26,86,255,0.35)'), borderRadius:0, borderSkipped:false, stack:'s', _showLabel:false },
-      { label:'Royston', data:rsRev, backgroundColor:months.map((_,i)=>i<4?'rgba(232,0,61,0.9)':'rgba(232,0,61,0.45)'), borderRadius:4, borderSkipped:false, stack:'s', _showLabel:true }
+      { label:'Digivla', data:dvRev, backgroundColor:months.map((_,i)=>i<5?'rgba(28,29,79,0.9)':'rgba(28,29,79,0.4)'), borderRadius:4, borderSkipped:false, _showLabel:true },
+      { label:'Royston', data:rsRev, backgroundColor:months.map((_,i)=>i<4?'rgba(42,53,125,0.9)':'rgba(42,53,125,0.4)'), borderRadius:4, borderSkipped:false, _showLabel:true }
     ]
   },
   options: {
     responsive:true, maintainAspectRatio:false, layout:{padding:{top:22}},
     _targetValue:3.2, _targetUnit:'M',
-    _dataLabels:{enabled:true,stackedTop:true,fontSize:9,color:'#374151',formatter:(t)=>fRevM(t)},
+    _dataLabels:{enabled:true,stackedTop:false,fontSize:8,color:'#374151',formatter:(t)=>fRevM(t)},
     plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:12,callbacks:{title:c=>`${c[0].label} 2026`,label:c=>` ${c.dataset.label}: ${fRevM(c.parsed.y)}`,afterBody:c=>{const i=c[0].dataIndex;return['───────────────',`Total: ${fRevM(dvRev[i]+rsRev[i])}`];}}}},
-    scales:{x:{grid:{display:false},stacked:true,ticks:{autoSkip:false}},y:{stacked:true,min:0,max:3.5,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v.toFixed(1)} M`}}}
+    scales:{x:{grid:{display:false},stacked:false,ticks:{autoSkip:false}},y:{stacked:false,min:0,max:1.8,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v.toFixed(1)} M`}}}
   }
 });
 
 _chartDv = new Chart(document.getElementById('dvChart'), {
   type:'bar',
-  data:{labels:months,datasets:[{label:'Revenue Digivla',data:dvRev,backgroundColor:months.map((_,i)=>i<5?'rgba(26,86,255,0.85)':'rgba(26,86,255,0.3)'),borderRadius:4,borderSkipped:false,_showLabel:true}]},
+  data:{labels:months,datasets:[{label:'Revenue Digivla',data:dvRev,backgroundColor:months.map((_,i)=>i<5?'rgba(28,29,79,0.9)':'rgba(28,29,79,0.35)'),borderRadius:4,borderSkipped:false,_showLabel:true}]},
   options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},_targetValue:2.7,_targetUnit:'M',_dataLabels:{enabled:true,fontSize:9,color:'#374151',formatter:v=>fRevM(v)},plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>` ${fRevM(c.parsed.y)}`,afterLabel:c=>`${dvCnt[c.dataIndex]} klien aktif`}}},scales:{x:{grid:{display:false},ticks:{autoSkip:false}},y:{min:0,max:3.0,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v.toFixed(1)} M`}}}}
 });
 
 _chartRs = new Chart(document.getElementById('rsChart'), {
   type:'bar',
-  data:{labels:months,datasets:[{label:'Revenue Royston',data:rsJt,backgroundColor:months.map((_,i)=>i<4?'rgba(232,0,61,0.85)':'rgba(232,0,61,0.35)'),borderRadius:4,borderSkipped:false,_showLabel:true}]},
+  data:{labels:months,datasets:[{label:'Revenue Royston',data:rsJt,backgroundColor:months.map((_,i)=>i<4?'rgba(42,53,125,0.9)':'rgba(42,53,125,0.35)'),borderRadius:4,borderSkipped:false,_showLabel:true}]},
   options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},_targetValue:500,_dataLabels:{enabled:true,fontSize:9,color:'#374151',formatter:v=>fJt(v)},plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>` ${fJt(c.parsed.y)}`,afterLabel:c=>`${rsCnt[c.dataIndex]} klien aktif`}}},scales:{x:{grid:{display:false},ticks:{autoSkip:false}},y:{min:0,max:560,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v} Jt`}}}}
 });
 
@@ -1596,7 +1818,7 @@ new Chart(document.getElementById('rsDonutChart'), {
   type:'doughnut',
   data:{
     labels:['HM Sampoerna (175jt/bln×22)','PNRE (7jt/bln×4)','Kemenperin (5jt/bln×12)','Kemenhan (5jt/bln×12)','Kominfo (47,5jt/bln×6)','BDO Indonesia','Suzuki','SEA Group','KAP Tanubrata'],
-    datasets:[{data:[3850000000,28000000,60000000,60000000,285000000,140000000,5000000,16000000,100000000],backgroundColor:['rgba(26,86,255,0.8)','rgba(236,72,153,0.8)','rgba(124,58,237,0.8)','rgba(20,83,45,0.8)','rgba(217,119,6,0.8)','rgba(232,0,61,0.85)','rgba(5,150,105,0.8)','rgba(8,145,178,0.8)','rgba(17,24,39,0.7)'],borderWidth:2,borderColor:'#fff'}]
+    datasets:[{data:[3850000000,28000000,60000000,60000000,285000000,140000000,5000000,16000000,100000000],backgroundColor:['rgba(26,86,255,0.8)','rgba(236,72,153,0.8)','rgba(124,58,237,0.8)','rgba(20,83,45,0.8)','rgba(217,119,6,0.8)','rgba(100,116,139,0.85)','rgba(5,150,105,0.8)','rgba(8,145,178,0.8)','rgba(17,24,39,0.7)'],borderWidth:2,borderColor:'#fff'}]
   },
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{font:{size:9},padding:6,boxWidth:8}},tooltip:{backgroundColor:'#111827',padding:10,callbacks:{label:c=>{const total=c.dataset.data.reduce((a,b)=>a+b,0);return ` ${fJt(c.parsed/1e6)} (${((c.parsed/total)*100).toFixed(1)}%)`;}}}}},
 });
@@ -1615,7 +1837,7 @@ const COLORS=['#1a56ff','#7c3aed','#e8003d','#d97706','#0891b2','#059669'];
 const MONTHS_S=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
 const TOTAL_S=SALES_DATA.reduce((a,s)=>a+s.rev_total,0);
 function fRp(v,short=false){if(short){return'Rp '+fJt(v/1e6);}return'Rp '+Math.round(v).toLocaleString('id-ID');}
-function calcHitMonths(s){let h=0;for(let i=0;i<4;i++){if((s.rev_monthly[i]/1e6)>=s.target_monthly)h++;}return h;}
+function calcHitMonths(s){let h=0;for(let i=0;i<12;i++){if((s.rev_monthly[i]/1e6)>=s.target_monthly)h++;}return h;}
 
 
 const PAGE_SIZE = 8;
@@ -1685,8 +1907,8 @@ function initSalesCharts(){
     const monthlyAvg=s.rev_total/12;
     const hitMonths=calcHitMonths(s);
     const targetJt=s.target_monthly;
-    const hitBadge=s.rev_total>0?`<span class="badge" style="background:${hitMonths>=3?'rgba(5,150,105,0.12)':'rgba(232,0,61,0.1)'};color:${hitMonths>=3?'#059669':'#e8003d'}">${hitMonths}/4 bln hit target</span>`:`<span class="badge" style="background:rgba(107,114,128,0.1);color:#6b7280">Belum ada revenue</span>`;
-    return `<div class="sales-card" style="border-top:3px solid ${COLORS[i]}"><div class="sales-card-header"><div class="sales-name-wrap"><div class="sales-rank">${i+1}</div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="lb-avatar" style="background:${COLORS[i]};width:32px;height:32px;font-size:.8rem">${s.name[0]}</div><div><div class="sales-name" style="color:${COLORS[i]}">${s.name}</div><div style="font-size:.68rem;color:var(--muted)">Target ${s.target_monthly} Jt/bln</div></div></div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;color:${COLORS[i]};line-height:1;margin-bottom:.3rem">${fRp(s.rev_total,true)}</div><div style="font-size:.68rem;color:var(--muted);margin-bottom:.35rem">${s.pct}% dari total tim · ${pctOfTarget}% dari target Digivla</div><div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem"><span class="badge" style="background:${COLORS[i]}15;color:${COLORS[i]}">Target ${targetJt} Jt/bln</span>${hitBadge}</div><div class="sales-pct-bar"><div class="sales-pct-fill" style="width:${s.pct}%;background:${COLORS[i]}"></div></div></div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Avg/Bulan</div><div style="font-weight:700;font-size:.85rem;color:${COLORS[i]}">${fRp(monthlyAvg,true)}</div></div><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Klien Aktif</div><div style="font-weight:700;font-size:.85rem">${s.clients}</div></div></div></div><div class="sales-body"><div style="margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Revenue Bulanan vs Target</span><span style="display:flex;align-items:center;gap:3px;font-size:.65rem;color:#fbbf24;font-weight:600"><span style="display:inline-block;width:12px;border-top:2px dashed #fbbf24"></span> Target ${targetJt} Jt</span></div><div style="margin-bottom:.75rem"><div class="chart-wrap h-140"><canvas id="schart_${i}"></canvas></div></div>${svcRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Layanan yang Dijual</div>${svcRows}<hr class="divider">`:''}${(s.client_list && s.client_list.length)?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Klien Aktif (${s.client_list.length})</div><div id="cl-list-${i}"></div>`:`<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem">target <strong>${targetJt} Jt/bln</strong></div>`}</div></div>`;
+    const hitBadge=s.rev_total>0?`<span class="badge" style="background:${hitMonths>=6?'rgba(5,150,105,0.12)':'rgba(232,0,61,0.1)'};color:${hitMonths>=6?'#059669':'#e8003d'}">${hitMonths}/12 bln hit target</span>`:`<span class="badge" style="background:rgba(107,114,128,0.1);color:#6b7280">Belum ada revenue</span>`;
+    return `<div class="sales-card" style="border-top:3px solid ${COLORS[i]}"><div class="sales-card-header"><div class="sales-name-wrap"><div class="sales-rank">${i+1}</div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="lb-avatar" style="background:${COLORS[i]};width:32px;height:32px;font-size:.8rem">${s.name[0]}</div><div><div class="sales-name" style="color:${COLORS[i]}">${s.name}</div><div style="font-size:.68rem;color:var(--muted)">Target ${s.target_monthly} Jt/bln</div></div></div><div style="font-family:'Lora',serif;font-size:1.5rem;font-weight:800;color:${COLORS[i]};line-height:1;margin-bottom:.3rem">${fRp(s.rev_total,true)}</div><div style="font-size:.68rem;color:var(--muted);margin-bottom:.35rem">${s.pct}% dari total tim · ${pctOfTarget}% dari target Digivla</div><div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem"><span class="badge" style="background:${COLORS[i]}15;color:${COLORS[i]}">Target ${targetJt} Jt/bln</span>${hitBadge}</div><div class="sales-pct-bar"><div class="sales-pct-fill" style="width:${s.pct}%;background:${COLORS[i]}"></div></div></div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Avg/Bulan</div><div style="font-weight:700;font-size:.85rem;color:${COLORS[i]}">${fRp(monthlyAvg,true)}</div></div><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Klien Aktif</div><div style="font-weight:700;font-size:.85rem">${s.clients}</div></div></div></div><div class="sales-body"><div style="margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Revenue Bulanan vs Target</span><span style="display:flex;align-items:center;gap:3px;font-size:.65rem;color:#fbbf24;font-weight:600"><span style="display:inline-block;width:12px;border-top:2px dashed #fbbf24"></span> Target ${targetJt} Jt</span></div><div style="margin-bottom:.75rem"><div class="chart-wrap h-140"><canvas id="schart_${i}"></canvas></div></div>${svcRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Layanan yang Dijual</div>${svcRows}<hr class="divider">`:''}${(s.client_list && s.client_list.length)?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Klien Aktif (${s.client_list.length})</div><div id="cl-list-${i}"></div>`:`<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem">target <strong>${targetJt} Jt/bln</strong></div>`}</div></div>`;
   }).join('');
 
   // Init client list pagination — DOM is ready now
@@ -1826,8 +2048,8 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="card">
       <div class="chart-title" style="margin-bottom:1rem">🔴 Pain Points Utama</div>
       <div style="display:flex;flex-direction:column;gap:0.5rem">
-        <div style="background:var(--rs-soft);border-left:3px solid var(--rs);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--rs);margin-bottom:0.3rem">Data Loss &amp; Crawling Error <span style="background:var(--rs-soft);color:var(--rs);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">2 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">Santos Jaya Abadi, Posthinks — data hilang, butuh effort lebih dari user</div></div>
-        <div style="background:var(--rs-soft);border-left:3px solid var(--rs);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--rs);margin-bottom:0.3rem">Dashboard Tidak User-Friendly <span style="background:var(--rs-soft);color:var(--rs);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">3 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">KAI Commuter, BPKH, Ideoworks — perlu penyempurnaan UI/UX dashboard</div></div>
+        <div style="background:var(--crit-soft);border-left:3px solid var(--crit);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--crit);margin-bottom:0.3rem">Data Loss &amp; Crawling Error <span style="background:var(--crit-soft);color:var(--crit);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">2 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">Santos Jaya Abadi, Posthinks — data hilang, butuh effort lebih dari user</div></div>
+        <div style="background:var(--crit-soft);border-left:3px solid var(--crit);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--crit);margin-bottom:0.3rem">Dashboard Tidak User-Friendly <span style="background:var(--crit-soft);color:var(--crit);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">3 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">KAI Commuter, BPKH, Ideoworks — perlu penyempurnaan UI/UX dashboard</div></div>
         <div style="background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--warn);margin-bottom:0.3rem">Sentiment AI Kurang Akurat <span style="background:var(--warn-soft);color:var(--warn);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">2 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">Astra Infra, Posthinks — judgement AI untuk sentimen perlu validasi</div></div>
         <div style="background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--warn);margin-bottom:0.3rem">Keyword Tidak Bisa Dikonfigurasi Mandiri <span style="background:var(--warn-soft);color:var(--warn);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">1 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">Ideoworks — harus lewat backend, tidak bisa self-service</div></div>
         <div style="background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:6px;padding:0.7rem 0.9rem"><div style="font-size:0.72rem;font-weight:700;color:var(--warn);margin-bottom:0.3rem">Filter Per Jam &amp; Bulk Download Berita <span style="background:var(--warn-soft);color:var(--warn);border-radius:4px;padding:0.1rem 0.4rem;font-size:0.65rem">1 klien</span></div><div style="font-size:0.72rem;color:var(--ink2)">KCI — filter waktu per jam dan bulk download berita + link</div></div>
@@ -1876,9 +2098,9 @@ window.addEventListener('DOMContentLoaded', () => {
         <tr><td><strong>Astra Infra</strong></td><td style="color:var(--muted)">Michelle G.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">4</td><td style="text-align:center"><strong style="color:var(--warn)">8</strong></td><td style="text-align:center">4</td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
         <tr><td><strong>BPKH</strong></td><td style="color:var(--muted)">Ricki P.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center"><strong style="color:var(--warn)">8</strong></td><td style="text-align:center">4</td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
         <tr><td><strong>Kemenperin</strong></td><td style="color:var(--muted)">Iman M.</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--warn)">7</strong></td><td style="text-align:center">4</td><td><span class="chip chip-ok">Ya</span></td></tr>
-        <tr><td><strong>Santos Jaya Abadi</strong></td><td style="color:var(--muted)">Septia A.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--rs)">7</strong></td><td style="text-align:center">3</td><td><span class="chip chip-warn">Pertimbangan</span></td></tr>
-        <tr><td><strong>Ideoworks</strong></td><td style="color:var(--muted)">Dipa N.</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--rs)">7</strong></td><td style="text-align:center">3</td><td><span class="chip chip-warn">Pertimbangan</span></td></tr>
-        <tr><td><strong>Posthinks</strong></td><td style="color:var(--muted)">Shania S.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--rs)">6</strong></td><td style="text-align:center">4</td><td><span class="chip chip-ok">Ya</span></td></tr>
+        <tr><td><strong>Santos Jaya Abadi</strong></td><td style="color:var(--muted)">Septia A.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--crit)">7</strong></td><td style="text-align:center">3</td><td><span class="chip chip-warn">Pertimbangan</span></td></tr>
+        <tr><td><strong>Ideoworks</strong></td><td style="color:var(--muted)">Dipa N.</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--crit)">7</strong></td><td style="text-align:center">3</td><td><span class="chip chip-warn">Pertimbangan</span></td></tr>
+        <tr><td><strong>Posthinks</strong></td><td style="color:var(--muted)">Shania S.</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center"><strong style="color:var(--crit)">6</strong></td><td style="text-align:center">4</td><td><span class="chip chip-ok">Ya</span></td></tr>
         <tr><td><strong>Ditjen Imigrasi</strong></td><td style="color:var(--muted)">Adi P.</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center"><strong style="color:var(--ok)">10</strong></td><td style="text-align:center">5</td><td><span class="chip chip-dark">Pertimbangan</span></td></tr>
         <tr style="opacity:0.5"><td><strong>Imaji Kali Aksi</strong></td><td style="color:var(--muted)">Fitang B.</td><td colspan="9" style="text-align:center;color:var(--muted)">— Survei tidak diselesaikan —</td><td><span class="chip chip-rs">Tidak Selesai</span></td></tr>
         <tr style="opacity:0.5"><td><strong>PPATK</strong></td><td style="color:var(--muted)">Dhiyah</td><td colspan="9" style="text-align:center;color:var(--muted)">— Survei tidak diselesaikan —</td><td><span class="chip chip-rs">Tidak Selesai</span></td></tr>
@@ -1961,7 +2183,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div><div class="chart-title">Engagement Score per Divisi/Departemen</div><div class="chart-sub">Skala 1–4 · merah = di bawah rata-rata (3,14)</div></div>
       <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.65rem;color:var(--muted)">
         <span style="display:inline-block;width:12px;height:3px;background:var(--ok);border-radius:2px"></span>Di atas rata-rata
-        <span style="display:inline-block;width:12px;height:3px;background:var(--rs);border-radius:2px;margin-left:6px"></span>Di bawah rata-rata
+        <span style="display:inline-block;width:12px;height:3px;background:var(--crit);border-radius:2px;margin-left:6px"></span>Di bawah rata-rata
       </div>
     </div>
     <div class="chart-wrap h-220"><canvas id="divisiBar"></canvas></div>
@@ -2003,15 +2225,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <div class="card mb">
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem">
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Feb</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Snacking Day (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Analyst Training Vol.1</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Mar</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Townhall Early Year &amp; Bukber (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Alignment Sales &amp; SA</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Apr</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Peresmian Kantor RCP &amp; CKT (All)</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Jun</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Individual Training BNSP (Estu, Wita)</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Jul</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L: Dhito, Production, GA</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Roleplay Session (All Sales &amp; Analyst)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L Royston (Brand &amp; Marketing)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Townhall Half-year (All)</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Agu</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">17 Agustus-an (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Analyst Training Vol.2</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Sep</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">L&amp;L: Analyst, Taufan, Iqbal</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Okt</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L: Alka, Faris, Analyst</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Fun Dining Analyst Team</div></div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Des</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Individual Training PM (Arri - Royston)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Individual Training (Ella - Royston)</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Feb</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Snacking Day (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Analyst Training Vol.1</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Mar</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Townhall Early Year &amp; Bukber (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Alignment Sales &amp; SA</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Apr</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Peresmian Kantor RCP &amp; CKT (All)</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Jun</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Individual Training BNSP (Estu, Wita)</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Jul</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L: Dhito, Production, GA</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Roleplay Session (All Sales &amp; Analyst)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L Royston (Brand &amp; Marketing)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Townhall Half-year (All)</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Agu</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">17 Agustus-an (All)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Analyst Training Vol.2</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Sep</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">L&amp;L: Analyst, Taufan, Iqbal</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Okt</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">L&amp;L: Alka, Faris, Analyst</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Fun Dining Analyst Team</div></div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem"><div style="font-family:'Lora',serif;font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:0.5rem">Des</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0;border-bottom:1px solid var(--border2)">Individual Training PM (Arri - Royston)</div><div style="font-size:0.68rem;color:var(--ink2);padding:0.2rem 0">Individual Training (Ella - Royston)</div></div>
     </div>
   </div>
 
@@ -2264,7 +2486,7 @@ function closeModal() {
 
 function saveProgram() {
   const name = document.getElementById('inputName').value.trim();
-  if (!name) { document.getElementById('inputName').style.borderColor='var(--rs)'; return; }
+  if (!name) { document.getElementById('inputName').style.borderColor='var(--crit)'; return; }
   document.getElementById('inputName').style.borderColor='';
 
   const editId = parseInt(document.getElementById('editingId').value);
@@ -2328,135 +2550,6 @@ document.addEventListener('keydown', function(e) {
 </script>
 
 <!-- ══════════════ TAB: PIPELINE TRACKER ══════════════ -->
-<div id="panel-pipeline" class="tab-panel">
-<div class="page">
-
-  <div class="masthead">
-    <div>
-      <div class="masthead-eyebrow">Pipeline Tracker · Monthly Projection Breakdown 2026</div>
-      <h1>Sales Pipeline<br>&amp; Projection 2026</h1>
-    </div>
-    <div class="masthead-meta">
-      <strong>Realtime dari Google Sheets</strong>
-      <span id="pipe-last-update">Belum dimuat</span><br>
-      <span id="pipe-realtime-badge" style="display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;margin-top:.2rem">
-        <span id="pipe-badge-dot" style="width:7px;height:7px;border-radius:50%;background:#6b7280;display:inline-block"></span>
-        <span id="pipe-badge-label">—</span>
-      </span>
-    </div>
-  </div>
-
-  <!-- KPI CARDS -->
-  <div class="pipe-kpi-grid" id="pipeKpiGrid">
-    <div class="pipe-kpi c50">
-      <div class="pipe-kpi-label">🟡 Pipeline 50%</div>
-      <div class="pipe-kpi-val c50" id="pipeKpi50">—</div>
-      <div class="pipe-kpi-sub" id="pipeKpi50Sub">— deals</div>
-    </div>
-    <div class="pipe-kpi c80">
-      <div class="pipe-kpi-label">🔵 Pipeline 80%</div>
-      <div class="pipe-kpi-val c80" id="pipeKpi80">—</div>
-      <div class="pipe-kpi-sub" id="pipeKpi80Sub">— deals</div>
-    </div>
-    <div class="pipe-kpi c100">
-      <div class="pipe-kpi-label">🟢 Pipeline 100%</div>
-      <div class="pipe-kpi-val c100" id="pipeKpi100">—</div>
-      <div class="pipe-kpi-sub" id="pipeKpi100Sub">— deals</div>
-    </div>
-    <div class="pipe-kpi ctotal">
-      <div class="pipe-kpi-label">📊 Total Pipeline TCV</div>
-      <div class="pipe-kpi-val" id="pipeKpiTotal">—</div>
-      <div class="pipe-kpi-sub" id="pipeKpiTotalSub">— deals total</div>
-    </div>
-  </div>
-
-  <!-- CHART: PIPELINE PER SALES -->
-  <div class="section-head">
-    <span class="section-badge" style="background:#059669">Pipeline</span>
-    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Total TCV Pipeline per Sales</span>
-    <span class="section-line"></span>
-  </div>
-  <div class="pipe-chart-wrap mb">
-    <div class="chart-header">
-      <div>
-        <div class="chart-title">TCV Pipeline per Sales — All Confidence</div>
-        <div class="chart-sub">50% + 80% + 100% dijumlahkan per sales</div>
-      </div>
-      <div class="chart-legend" id="pipeLegend"></div>
-    </div>
-    <div class="chart-wrap h-220"><canvas id="pipeBarChart"></canvas></div>
-  </div>
-
-  <!-- FILTER -->
-  <div class="section-head" style="margin-top:1.5rem">
-    <span class="section-badge" style="background:#059669">Deals</span>
-    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Deal List per Sales</span>
-    <span class="section-line"></span>
-  </div>
-  <div class="pipe-filter-bar">
-    <span style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Filter:</span>
-    <button class="pipe-filter-btn f-all active" onclick="setPipeFilter('all')">Semua</button>
-    <button class="pipe-filter-btn f-50"  onclick="setPipeFilter('50%')">50%</button>
-    <button class="pipe-filter-btn f-80"  onclick="setPipeFilter('80%')">80%</button>
-    <button class="pipe-filter-btn f-100" onclick="setPipeFilter('100%')">100%</button>
-    <span id="pipeFilterCount" style="font-size:.68rem;color:var(--muted);margin-left:.25rem"></span>
-  </div>
-
-  <!-- LOADING STATE -->
-  <div id="pipeLoading" class="pipe-loading">
-    <div class="pipe-spinner"></div>
-    Memuat data dari Google Sheets...
-  </div>
-  <div id="pipeError" class="pipe-error" style="display:none"></div>
-
-  <!-- SALES GRID -->
-  <div class="pipe-sales-grid" id="pipeSalesGrid" style="display:none"></div>
-
-  <!-- CONTRACT BASE SECTION -->
-  <div class="section-head" style="margin-top:2rem">
-    <span class="section-badge" style="background:var(--ink)">Contract Base</span>
-    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Contract Based per Sales</span>
-    <span class="section-line"></span>
-  </div>
-  <div class="pipe-cb-grid" id="pipeCbGrid">
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Abdul</div><div class="pipe-cb-val" id="cbAbdul">—</div></div>
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Chatrine</div><div class="pipe-cb-val" id="cbChatrine">—</div></div>
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Desy</div><div class="pipe-cb-val" id="cbDesy">—</div></div>
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Lia</div><div class="pipe-cb-val" id="cbLia">—</div></div>
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Whenda</div><div class="pipe-cb-val" id="cbWhenda">—</div></div>
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Jodi</div><div class="pipe-cb-val" id="cbJodi">—</div></div>
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Grace</div><div class="pipe-cb-val" id="cbGrace">—</div></div>
-  </div>
-  <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem">* Contract Base ditarik dari sheet CB masing-masing via formula. Nilai muncul jika spreadsheet memiliki cached value.</p>
-
-  <!-- CONFIDENCE LOG SECTION -->
-  <div class="section-head" style="margin-top:2rem">
-    <span class="section-badge" style="background:#7c3aed">Confidence Log</span>
-    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Deal Progression Tracker</span>
-    <span class="section-line"></span>
-  </div>
-  <div id="confLogEmpty" style="display:none;text-align:center;padding:2rem;color:var(--muted);font-size:.8rem">
-    Belum ada log perubahan confidence. Log akan muncul otomatis saat ada deal yang naik dari 50% → 80% → 100%.
-  </div>
-  <div id="confLogWrap" style="display:none">
-    <!-- Filter bar -->
-    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem">
-      <span style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Filter Sales:</span>
-      <button class="pipe-filter-btn f-all active" id="clFilterAll" onclick="setConfLogFilter('all')">Semua</button>
-      <button class="pipe-filter-btn" id="clFilterAbdul"    onclick="setConfLogFilter('Abdul')">Abdul</button>
-      <button class="pipe-filter-btn" id="clFilterChatrine" onclick="setConfLogFilter('Chatrine')">Chatrine</button>
-      <button class="pipe-filter-btn" id="clFilterDesy"     onclick="setConfLogFilter('Desy')">Desy</button>
-      <button class="pipe-filter-btn" id="clFilterLia"      onclick="setConfLogFilter('Lia')">Lia</button>
-      <button class="pipe-filter-btn" id="clFilterWhenda"   onclick="setConfLogFilter('Whenda')">Whenda</button>
-      <button class="pipe-filter-btn" id="clFilterJodi"     onclick="setConfLogFilter('Jodi')">Jodi</button>
-      <button class="pipe-filter-btn" id="clFilterGrace"    onclick="setConfLogFilter('Grace')">Grace</button>
-    </div>
-    <!-- Timeline cards -->
-    <div id="confLogCards" style="display:flex;flex-direction:column;gap:.75rem"></div>
-  </div>
-
-</div><!-- /page -->
-</div><!-- /panel-pipeline -->
 
 <script>
 /* ══════════ PIPELINE TRACKER LOGIC ══════════ */
@@ -2814,7 +2907,7 @@ function renderConfLog(logs, filter) {
     return `
       <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid ${color};border-radius:var(--radius);overflow:hidden">
         <div style="display:flex;align-items:center;gap:.75rem;padding:.85rem 1.1rem;border-bottom:1px solid var(--border2)">
-          <div style="width:30px;height:30px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:.8rem;color:#fff;flex-shrink:0">${(g.sales||'?')[0]}</div>
+          <div style="width:30px;height:30px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-weight:800;font-size:.8rem;color:#fff;flex-shrink:0">${(g.sales||'?')[0]}</div>
           <div style="flex:1;min-width:0">
             <div style="font-weight:700;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${g.client}</div>
             <div style="font-size:.65rem;color:var(--muted)">${g.sales} · ${events.length} perubahan</div>
@@ -2858,7 +2951,7 @@ function initPipelineTab() {
       errEl.innerHTML = '<strong>Gagal memuat data dari Google Sheets.</strong><br>'
         + 'Pastikan spreadsheet sudah di-publish ke web (File → Share → Publish to web → pilih sheet "Monthly Projection Breakdown").<br>'
         + '<small style="opacity:.7">Error: ' + (err ? err.message : 'Unknown') + '</small><br><br>'
-        + '<button onclick="_pipeInited=false;initPipelineTab();" style="font-family:\'Outfit\',sans-serif;font-size:.72rem;font-weight:700;padding:.4rem .9rem;background:var(--crit);color:#fff;border:none;border-radius:6px;cursor:pointer">Coba Lagi</button>';
+        + '<button onclick="_pipeInited=false;initPipelineTab();" style="font-family:\'Manrope\',sans-serif;font-size:.72rem;font-weight:700;padding:.4rem .9rem;background:var(--crit);color:#fff;border:none;border-radius:6px;cursor:pointer">Coba Lagi</button>';
       setPipeRealtimeBadge(false);
       return;
     }
