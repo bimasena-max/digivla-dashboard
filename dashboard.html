@@ -946,30 +946,12 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--ink);
     <div class="chart-wrap h-220"><canvas id="pipeBarChart"></canvas></div>
   </div>
 
-  <!-- FILTER -->
-  <div class="section-head" style="margin-top:1.5rem">
-    <span class="section-badge" style="background:#059669">Deals</span>
-    <span style="font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Deal List per Sales</span>
-    <span class="section-line"></span>
-  </div>
-  <div class="pipe-filter-bar">
-    <span style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Filter:</span>
-    <button class="pipe-filter-btn f-all active" onclick="setPipeFilter('all')">Semua</button>
-    <button class="pipe-filter-btn f-50"  onclick="setPipeFilter('50%')">50%</button>
-    <button class="pipe-filter-btn f-80"  onclick="setPipeFilter('80%')">80%</button>
-    <button class="pipe-filter-btn f-100" onclick="setPipeFilter('100%')">100%</button>
-    <span id="pipeFilterCount" style="font-size:.68rem;color:var(--muted);margin-left:.25rem"></span>
-  </div>
-
   <!-- LOADING STATE -->
   <div id="pipeLoading" class="pipe-loading">
     <div class="pipe-spinner"></div>
     Memuat data dari Google Sheets...
   </div>
   <div id="pipeError" class="pipe-error" style="display:none"></div>
-
-  <!-- SALES GRID -->
-  <div class="pipe-sales-grid" id="pipeSalesGrid" style="display:none"></div>
 
   <!-- CONTRACT BASE SECTION -->
   <div class="section-head" style="margin-top:2rem">
@@ -983,7 +965,6 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--ink);
     <div class="pipe-cb-card"><div class="pipe-cb-name">Desy</div><div class="pipe-cb-val" id="cbDesy">—</div></div>
     <div class="pipe-cb-card"><div class="pipe-cb-name">Lia</div><div class="pipe-cb-val" id="cbLia">—</div></div>
     <div class="pipe-cb-card"><div class="pipe-cb-name">Whenda</div><div class="pipe-cb-val" id="cbWhenda">—</div></div>
-    <div class="pipe-cb-card"><div class="pipe-cb-name">Jodi</div><div class="pipe-cb-val" id="cbJodi">—</div></div>
     <div class="pipe-cb-card"><div class="pipe-cb-name">Grace</div><div class="pipe-cb-val" id="cbGrace">—</div></div>
   </div>
   <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem">* Contract Base ditarik dari sheet CB masing-masing via formula. Nilai muncul jika spreadsheet memiliki cached value.</p>
@@ -1007,7 +988,6 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--ink);
       <button class="pipe-filter-btn" id="clFilterDesy"     onclick="setConfLogFilter('Desy')">Desy</button>
       <button class="pipe-filter-btn" id="clFilterLia"      onclick="setConfLogFilter('Lia')">Lia</button>
       <button class="pipe-filter-btn" id="clFilterWhenda"   onclick="setConfLogFilter('Whenda')">Whenda</button>
-      <button class="pipe-filter-btn" id="clFilterJodi"     onclick="setConfLogFilter('Jodi')">Jodi</button>
       <button class="pipe-filter-btn" id="clFilterGrace"    onclick="setConfLogFilter('Grace')">Grace</button>
     </div>
     <!-- Timeline cards -->
@@ -1554,8 +1534,7 @@ function applyRevenueData(rev) {
     'Lia':      'lia',
     'Desy':     'desy',
     'Ayu':      'ayu',
-    'Whenda':   'whenda',
-    'Jody':     'jody'
+    'Whenda':   'whenda'
   };
  
   // Apply revenue per sales dari breakdown bulanan
@@ -1829,8 +1808,7 @@ const SALES_DATA = [
   {name:"Desy",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
   {name:"Lia",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
   {name:"Ayu",target_monthly:200,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
-  {name:"Whenda",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]},
-  {name:"Jody",target_monthly:200,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]}
+  {name:"Whenda",target_monthly:400,rev_total:0,rev_monthly:[0,0,0,0,0,0,0,0,0,0,0,0],contracts:0,clients:0,pct:0,services:{},top_clients:[]}
 ];
 
 const COLORS=['#1a56ff','#7c3aed','#e8003d','#d97706','#0891b2','#059669'];
@@ -1898,6 +1876,9 @@ function initSalesCharts(){
   const totalTargetPerMonth=SALES_DATA.reduce((a,s)=>a+s.target_monthly,0);
   new Chart(document.getElementById('trendChart'),{type:'bar',data:{labels:MONTHS_S,datasets:[...SALES_DATA.map((s,i)=>({label:s.name,data:s.rev_monthly.map(v=>v/1e6),backgroundColor:MONTHS_S.map((_,mi)=>mi<4?COLORS[i]+'dd':COLORS[i]+'55'),borderRadius:i===SALES_DATA.length-1?4:0,borderSkipped:false,stack:'s',type:'bar',_showLabel:i===SALES_DATA.length-1})),{label:'Total Target',data:MONTHS_S.map(()=>totalTargetPerMonth),type:'line',borderColor:'#fbbf24',borderWidth:2,borderDash:[6,4],pointRadius:0,pointHoverRadius:4,pointBackgroundColor:'#fbbf24',fill:false,tension:0,stack:undefined,order:0,_showLabel:false}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},_dataLabels:{enabled:true,stackedTop:true,fontSize:9,color:'#374151',formatter:(total)=>fJt(total)},plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',padding:10,mode:'index',callbacks:{title:c=>`${c[0].label} 2026`,label:c=>{if(c.dataset.type==='line')return ` Target: ${fJt(c.parsed.y)}`;return ` ${c.dataset.label}: ${fJt(c.parsed.y)}`;},afterBody:c=>{const bar=c.filter(x=>x.dataset.type!=='line');const total=bar.reduce((a,x)=>a+x.parsed.y,0);return['──────────────',`Total: ${fJt(total)}`,`Target Tim: ${fJt(totalTargetPerMonth)}`];}}}},scales:{x:{grid:{display:false},stacked:true,ticks:{autoSkip:false}},y:{stacked:true,grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:v=>`${v} Jt`}}}}});
 
+  // Make sure pipeline deal data is loading/loaded so it can be embedded below
+  if (typeof initPipelineTab === 'function') initPipelineTab();
+
   const maxSvc=Math.max(...SALES_DATA.map(s=>s.services&&Object.values(s.services).length>0?Math.max(...Object.values(s.services)):0),1);
   document.getElementById('salesGrid').innerHTML=SALES_DATA.map((s,i)=>{
     const svcRows=Object.entries(s.services).map(([label,count])=>`<div class="svc-s"><span class="svc-name">${label}</span><div class="svc-track-s"><div class="svc-fill-s" style="width:${count/maxSvc*100}%;background:${COLORS[i]}"></div></div><span class="svc-count">${count}</span></div>`).join('');
@@ -1908,7 +1889,20 @@ function initSalesCharts(){
     const hitMonths=calcHitMonths(s);
     const targetJt=s.target_monthly;
     const hitBadge=s.rev_total>0?`<span class="badge" style="background:${hitMonths>=6?'rgba(5,150,105,0.12)':'rgba(232,0,61,0.1)'};color:${hitMonths>=6?'#059669':'#e8003d'}">${hitMonths}/12 bln hit target</span>`:`<span class="badge" style="background:rgba(107,114,128,0.1);color:#6b7280">Belum ada revenue</span>`;
-    return `<div class="sales-card" style="border-top:3px solid ${COLORS[i]}"><div class="sales-card-header"><div class="sales-name-wrap"><div class="sales-rank">${i+1}</div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="lb-avatar" style="background:${COLORS[i]};width:32px;height:32px;font-size:.8rem">${s.name[0]}</div><div><div class="sales-name" style="color:${COLORS[i]}">${s.name}</div><div style="font-size:.68rem;color:var(--muted)">Target ${s.target_monthly} Jt/bln</div></div></div><div style="font-family:'Lora',serif;font-size:1.5rem;font-weight:800;color:${COLORS[i]};line-height:1;margin-bottom:.3rem">${fRp(s.rev_total,true)}</div><div style="font-size:.68rem;color:var(--muted);margin-bottom:.35rem">${s.pct}% dari total tim · ${pctOfTarget}% dari target Digivla</div><div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem"><span class="badge" style="background:${COLORS[i]}15;color:${COLORS[i]}">Target ${targetJt} Jt/bln</span>${hitBadge}</div><div class="sales-pct-bar"><div class="sales-pct-fill" style="width:${s.pct}%;background:${COLORS[i]}"></div></div></div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Avg/Bulan</div><div style="font-weight:700;font-size:.85rem;color:${COLORS[i]}">${fRp(monthlyAvg,true)}</div></div><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Klien Aktif</div><div style="font-weight:700;font-size:.85rem">${s.clients}</div></div></div></div><div class="sales-body"><div style="margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Revenue Bulanan vs Target</span><span style="display:flex;align-items:center;gap:3px;font-size:.65rem;color:#fbbf24;font-weight:600"><span style="display:inline-block;width:12px;border-top:2px dashed #fbbf24"></span> Target ${targetJt} Jt</span></div><div style="margin-bottom:.75rem"><div class="chart-wrap h-140"><canvas id="schart_${i}"></canvas></div></div>${svcRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Layanan yang Dijual</div>${svcRows}<hr class="divider">`:''}${(s.client_list && s.client_list.length)?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Klien Aktif (${s.client_list.length})</div><div id="cl-list-${i}"></div>`:`<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem">target <strong>${targetJt} Jt/bln</strong></div>`}</div></div>`;
+
+    // ── Deals pipeline (merged from Pipeline Tracker) ──
+    const pipeEntry = (typeof _pipeData !== 'undefined' && _pipeData) ? _pipeData.bySales[s.name] : null;
+    let dealsBlock;
+    if (typeof _pipeData === 'undefined' || !_pipeData) {
+      dealsBlock = `<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Deals Pipeline Aktif</div><div class="pipe-deal-empty">Memuat data pipeline…</div>`;
+    } else if (!pipeEntry || !pipeEntry.deals.length) {
+      dealsBlock = `<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Deals Pipeline Aktif</div><div class="pipe-deal-empty">Tidak ada deal pipeline aktif</div>`;
+    } else {
+      const dealRows = pipeEntry.deals.map(d => `<div class="pipe-deal-row"><span class="pipe-conf-badge ${d.confClass}">${d.conf}</span><span class="pipe-deal-client" title="${d.client}">${d.client}</span><span class="pipe-deal-vals" style="text-align:right;flex-shrink:0"><span style="display:block;font-size:.68rem;font-weight:700;color:${COLORS[i]}">${fPipeRp(d.tcv)}</span><span style="display:block;font-size:.6rem;color:var(--muted)">${fPipeRp(d.mcv)}/bln</span></span></div>`).join('');
+      dealsBlock = `<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between"><span>Deals Pipeline Aktif (${pipeEntry.deals.length})</span><span style="color:${COLORS[i]};font-weight:800">${fPipeVal(pipeEntry.totalTcv/1e6)}</span></div><div class="pipe-deal-list">${dealRows}</div>`;
+    }
+
+    return `<div class="sales-card" style="border-top:3px solid ${COLORS[i]}"><div class="sales-card-header"><div class="sales-name-wrap"><div class="sales-rank">${i+1}</div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="lb-avatar" style="background:${COLORS[i]};width:32px;height:32px;font-size:.8rem">${s.name[0]}</div><div><div class="sales-name" style="color:${COLORS[i]}">${s.name}</div><div style="font-size:.68rem;color:var(--muted)">Target ${s.target_monthly} Jt/bln</div></div></div><div style="font-family:'Lora',serif;font-size:1.5rem;font-weight:800;color:${COLORS[i]};line-height:1;margin-bottom:.3rem">${fRp(s.rev_total,true)}</div><div style="font-size:.68rem;color:var(--muted);margin-bottom:.35rem">${s.pct}% dari total tim · ${pctOfTarget}% dari target Digivla</div><div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem"><span class="badge" style="background:${COLORS[i]}15;color:${COLORS[i]}">Target ${targetJt} Jt/bln</span>${hitBadge}</div><div class="sales-pct-bar"><div class="sales-pct-fill" style="width:${s.pct}%;background:${COLORS[i]}"></div></div></div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Avg/Bulan</div><div style="font-weight:700;font-size:.85rem;color:${COLORS[i]}">${fRp(monthlyAvg,true)}</div></div><div style="background:${COLORS[i]}11;border-radius:8px;padding:.5rem .75rem;text-align:center;flex:1;min-width:80px"><div class="sp-label">Klien Aktif</div><div style="font-weight:700;font-size:.85rem">${s.clients}</div></div></div></div><div class="sales-body"><div style="margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Revenue Bulanan vs Target</span><span style="display:flex;align-items:center;gap:3px;font-size:.65rem;color:#fbbf24;font-weight:600"><span style="display:inline-block;width:12px;border-top:2px dashed #fbbf24"></span> Target ${targetJt} Jt</span></div><div style="margin-bottom:.75rem"><div class="chart-wrap h-140"><canvas id="schart_${i}"></canvas></div></div>${svcRows.length?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Layanan yang Dijual</div>${svcRows}<hr class="divider">`:''}${(s.client_list && s.client_list.length)?`<div style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Klien Aktif (${s.client_list.length})</div><div id="cl-list-${i}"></div><hr class="divider">`:''}${dealsBlock}</div></div>`;
   }).join('');
 
   // Init client list pagination — DOM is ready now
@@ -2563,11 +2557,10 @@ const PIPE_COLORS = {
   Desy:     '#e8003d',
   Lia:      '#d97706',
   Whenda:   '#0891b2',
-  Jodi:     '#059669',
   Grace:    '#6b7280',
   Nadia:    '#f59e0b',
 };
-const PIPE_SALES_ORDER = ['Abdul','Chatrine','Desy','Lia','Whenda','Jodi','Grace'];
+const PIPE_SALES_ORDER = ['Abdul','Chatrine','Desy','Lia','Whenda','Grace'];
 
 let _pipeData = null;
 let _pipeFilter = 'all';
@@ -2674,65 +2667,6 @@ function renderPipeChart(state) {
       }
     }
   });
-}
-
-function renderPipeSalesGrid(state, filter) {
-  const grid = document.getElementById('pipeSalesGrid');
-  grid.innerHTML = PIPE_SALES_ORDER.map(name => {
-    const s = state.bySales[name];
-    const color = PIPE_COLORS[name] || '#6b7280';
-    const deals = filter === 'all' ? s.deals : s.deals.filter(d => d.conf === filter);
-
-    const dealRows = deals.length === 0
-      ? `<div class="pipe-deal-empty">Tidak ada deal${filter !== 'all' ? ' untuk confidence ' + filter : ''}</div>`
-      : deals.map(d => `
-          <div class="pipe-deal-row">
-            <span class="pipe-conf-badge ${d.confClass}">${d.conf}</span>
-            <span class="pipe-deal-client" title="${d.client}">${d.client}</span>
-            <span class="pipe-deal-vals" style="text-align:right;flex-shrink:0">
-              <span style="display:block;font-size:.68rem;font-weight:700;color:${color}">${fPipeRp(d.tcv)}</span>
-              <span style="display:block;font-size:.6rem;color:var(--muted)">${fPipeRp(d.mcv)}/bln</span>
-            </span>
-          </div>`).join('');
-
-    const totalTcv = filter === 'all'
-      ? s.totalTcv
-      : deals.reduce((a,d) => a + (d.tcv||0), 0);
-
-    return `
-      <div class="pipe-sales-card">
-        <div class="pipe-sales-header">
-          <div class="pipe-sales-avatar" style="background:${color}">${name[0]}</div>
-          <div>
-            <div class="pipe-sales-name">${name}</div>
-            <div class="pipe-sales-total">${deals.length} deals${filter !== 'all' ? ' ('+filter+')' : ''}</div>
-          </div>
-          <div class="pipe-sales-tcv" style="color:${color}">${fPipeVal(totalTcv/1e6)}</div>
-        </div>
-        <div class="pipe-deal-list">${dealRows}</div>
-      </div>`;
-  }).join('');
-  grid.style.display = 'grid';
-}
-
-function updatePipeFilterCount(state, filter) {
-  const total = PIPE_SALES_ORDER.reduce((a,s) => {
-    const deals = filter === 'all' ? state.bySales[s].deals : state.bySales[s].deals.filter(d => d.conf === filter);
-    return a + deals.length;
-  }, 0);
-  document.getElementById('pipeFilterCount').textContent = total + ' deals ditampilkan';
-}
-
-function setPipeFilter(f) {
-  _pipeFilter = f;
-  document.querySelectorAll('.pipe-filter-btn').forEach(b => b.classList.remove('active'));
-  const map = {'all':'f-all','50%':'f-50','80%':'f-80','100%':'f-100'};
-  const btn = document.querySelector('.pipe-filter-btn.' + map[f]);
-  if (btn) btn.classList.add('active');
-  if (_pipeData) {
-    renderPipeSalesGrid(_pipeData, f);
-    updatePipeFilterCount(_pipeData, f);
-  }
 }
 
 function setPipeRealtimeBadge(ok) {
@@ -2928,7 +2862,7 @@ function setConfLogFilter(f) {
   const map = {
     'all':'clFilterAll','Abdul':'clFilterAbdul','Chatrine':'clFilterChatrine',
     'Desy':'clFilterDesy','Lia':'clFilterLia','Whenda':'clFilterWhenda',
-    'Jodi':'clFilterJodi','Grace':'clFilterGrace'
+    'Grace':'clFilterGrace'
   };
   const btn = document.getElementById(map[f]);
   if (btn) btn.classList.add('active');
@@ -2940,7 +2874,6 @@ function initPipelineTab() {
 
   document.getElementById('pipeLoading').style.display = 'flex';
   document.getElementById('pipeError').style.display   = 'none';
-  document.getElementById('pipeSalesGrid').style.display = 'none';
 
   fetchPipeGviz(function(table, err) {
     if (err || !table) {
@@ -2963,14 +2896,14 @@ function initPipelineTab() {
 
     renderPipeKPIs(state);
     renderPipeChart(state);
-    renderPipeSalesGrid(state, _pipeFilter);
-    updatePipeFilterCount(state, _pipeFilter);
+    // Deals per sales now render inline inside each Sales Performance card
+    if (typeof refreshSalesUI === 'function') refreshSalesUI();
 
     // Populate Contract Base grid
     const cb = table.contractBase || {};
     const cbMap = {
       Abdul: 'cbAbdul', Chatrine: 'cbChatrine', Desy: 'cbDesy',
-      Lia: 'cbLia', Whenda: 'cbWhenda', Jodi: 'cbJodi', Grace: 'cbGrace'
+      Lia: 'cbLia', Whenda: 'cbWhenda', Grace: 'cbGrace'
     };
     Object.keys(cbMap).forEach(function(name) {
       const el = document.getElementById(cbMap[name]);
